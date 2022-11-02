@@ -3,10 +3,9 @@
 /// <summary>
 ///     Structure for product
 /// </summary>
-public class Product
+
+public struct Product
 {
-    public Product()
-    {
         /// <summary>
         /// Unique ID of product
         /// </summary>
@@ -44,6 +43,5 @@ public class Product
             Price: {Price},
             amount: {Amount}
         ";
-	}
 
 }

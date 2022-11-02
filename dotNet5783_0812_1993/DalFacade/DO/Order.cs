@@ -6,8 +6,6 @@
 
 public struct Order
 {
-    public Order()
-    {
         /// <summary>
         /// Unique ID of order
         /// </summary>
@@ -59,7 +57,4 @@ public struct Order
             Shipping Date: {ShippingDate},
             Delivery Date:{DeliveryDate}
         ";
-
-
-	}
 }

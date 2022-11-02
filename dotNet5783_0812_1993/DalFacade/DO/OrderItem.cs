@@ -5,8 +5,7 @@
 /// </summary>
 public struct OrderItem
 {
-    public OrderItem()
-    {
+
         /// <summary>
         /// Unique ID of item in ordering
         /// </summary>
@@ -45,7 +44,4 @@ public struct OrderItem
             amount: {Amount}
         ";
 
-
-
-    }
 }
