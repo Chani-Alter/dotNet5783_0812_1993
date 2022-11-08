@@ -1,26 +1,55 @@
-﻿using System;
+﻿using DO;
 namespace Dal;
 
 
 static class DataSource
 {
-    readonly static random randNum;
+    private static readonly Random randNum = new();
 
     internal static class Config
     {
-        internal static int indexParit = 0;//index in array
-        private static int paritId = 100000;
-        internal static int ParitId { get => ++paritId; }
+        private const int s_startOrderId = 1000;
+        private const int s_startOrderItemId = 0;
+        internal static int IndexProductArray { get; set; } = 0;
+        internal static int IndexOrderArray { get; set; } = 0;
+        internal static int IndexOrderItem { get; set; } = 0;
+        private static int orderId = s_startOrderId;
+        internal static int OrderId { get => ++orderId; }
+        private static int orderItemId = s_startOrderItemId;
+        internal static int OrderItemId { get => ++orderItemId; }
     }
-    static int[] ParitArray = new int[50];
+    
+    internal static Product[] ProductArray = new Product[50];
+    internal static Order[] OrderArray = new Order[100];
+    internal static OrderItem[] OrderItemArray = new OrderItem[200];
+
     static DataSource() => s_Initialize();
 
     static private void s_Initialize()
     {
-        initParitArray();
+        initProductArray();
+        initOrderArray();
+        initOrderItemArray();
     }
-    static private void initParitArray()
-    {
 
+    static private void initProductArray()
+    {
+        for(int i = 0; i < 10; i++)
+        {
+        }
     }
+    static private void initOrderArray()
+    {
+        for (int i = 0; i < 10; i++)
+        {
+        }
+    }
+
+    static private void initOrderItemArray()
+    {
+        for (int i = 0; i < 10; i++)
+        {
+        }
+    }
+
 }

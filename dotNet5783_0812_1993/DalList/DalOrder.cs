@@ -1,7 +1,10 @@
-﻿using System;
+﻿using DO;
 namespace Dal;
 
 public class DalOrder
 {
-    readonly static int randNum
+    public int Add(Order order)
+    {
+        
+    }
 }
