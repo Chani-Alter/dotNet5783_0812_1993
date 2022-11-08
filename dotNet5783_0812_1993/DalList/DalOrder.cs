@@ -1,8 +1,7 @@
 ﻿using System;
+namespace Dal;
 
-public class Class1
+public class DalOrder
 {
-	public Class1()
-	{
-	}
+    readonly static int randNum
 }

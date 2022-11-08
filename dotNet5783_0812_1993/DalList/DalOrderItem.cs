@@ -1,8 +1,9 @@
 ﻿using System;
+namespace Dal;
 
-public class Class1
+public class DalOrderItem
 {
-	public Class1()
+	public DalOrderItem()
 	{
 	}
 }
