@@ -12,7 +12,7 @@ static class DataSource
         private const int s_startOrderItemId = 0;
         internal static int IndexProductArray { get; set; } = 0;
         internal static int IndexOrderArray { get; set; } = 0;
-        internal static int IndexOrderItem { get; set; } = 0;
+        internal static int IndexOrderItemArray { get; set; } = 0;
         private static int orderId = s_startOrderId;
         internal static int OrderId { get => ++orderId; }
         private static int orderItemId = s_startOrderItemId;
