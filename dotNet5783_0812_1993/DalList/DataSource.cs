@@ -101,12 +101,23 @@ static class DataSource
     static private void initOrderItemArray()
 
     {
-        for (int i = 0; i < 40; i++)
+        for (int i = 1; i <= 20; i++)
         {
-            Random ran = new Random();
-            int x = ran.Next(0, 4);
+            int helpA = randNum.Next(10);
             OrderItemArray[i].ID = Config.OrderItemId;
-            OrderItemArray[i].Amount = x;
+            OrderItemArray[i].OrderID = OrderArray[i].ID;
+            OrderItemArray[i].ProductID = ProductArray[helpA].ID;
+            OrderItemArray[i].Price = ProductArray[helpA].Price;
+            OrderItemArray[i].Amount = randNum.Next(4);
+            int helpB;
+            do
+                helpB = randNum.Next(10);
+            while (helpA == helpB);
+            OrderItemArray[i*2].ID = Config.OrderItemId;
+            OrderItemArray[i*2].OrderID = OrderArray[i].ID;
+            OrderItemArray[i * 2].ProductID = ProductArray[helpB].ID;
+            OrderItemArray[i*2].Price = ProductArray[helpB].Price;
+            OrderItemArray[i * 2].Amount = randNum.Next(4);
 
 
         }
