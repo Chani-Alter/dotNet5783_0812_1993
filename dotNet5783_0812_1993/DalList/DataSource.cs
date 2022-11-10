@@ -46,8 +46,8 @@ static class DataSource
         };
         Category[] category = new Category[]
         {
-             LAPTOP,LAPTOP,LAPTOP ,dESKTOP_COMPUTER,dESKTOP_COMPUTER,SCREENS,SCREENS,
-            PERIPHERAL_EQUIPMENT,PERIPHERAL_EQUIPMENT,PERIPHERAL_EQUIPMENT
+             Category.LAPTOP,Category.LAPTOP,Category.LAPTOP ,Category.dESKTOP_COMPUTER,Category.dESKTOP_COMPUTER,Category.SCREENS,Category.SCREENS,
+            Category.PERIPHERAL_EQUIPMENT,Category.PERIPHERAL_EQUIPMENT,Category.PERIPHERAL_EQUIPMENT
         };
                 int[] price = new int[]
         {
