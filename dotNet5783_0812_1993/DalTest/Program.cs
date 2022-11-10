@@ -7,18 +7,18 @@ namespace DalTest
     enum MainMenu { EXIT, PRODUCT, ORDERITEM, ORDER };
     enum SecondaryMenu { ADD=1, GET_ALL,GET_BY_ID,UPDATE,DELETE,GET_BY_ORDERID,GET_BY_ORDER_PRODUCT};
     class Program
-    {   private DalOrder dalOrder = new DalOrder();
-        private DalProduct dalProduct = new DalProduct(); 
-        private DalOrderItem dalOrderItem = new DalOrderItem();
-        void menuProduct()
+    {   static private DalOrder dalOrder = new DalOrder();
+        static private DalProduct dalProduct = new DalProduct();
+        static private DalOrderItem dalOrderItem = new DalOrderItem();
+        static void menuProduct()
         {
 
         }
-         void menuOrderItem()
+        static void menuOrderItem()
         {
 
         }
-         void menuOrder()
+        static void menuOrder()
         {
             Console.WriteLine("order menu: \n 1-add \n 2-get all \n 3- get by id \n 4- update \n 5- delete");
             SecondaryMenu menuChoice;

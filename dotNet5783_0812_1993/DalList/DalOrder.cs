@@ -10,6 +10,8 @@ public class DalOrder
     {
         int id = Config.OrderItemId;
         order.ID= id;
+        order.ShippingDate= DateTime.MinValue;
+        order.DeliveryDate=DateTime.MinValue; 
         OrderArray[Config.IndexOrderArray++]= order;
         return id;
     }
@@ -41,6 +43,8 @@ public class DalOrder
         i++;
         for (; i < OrderArray.Length; i++)
             OrderArray[i - 1] = OrderArray[i];
+        Config.IndexOrderArray--;
+
     }
 
     public void Update(Order order)
