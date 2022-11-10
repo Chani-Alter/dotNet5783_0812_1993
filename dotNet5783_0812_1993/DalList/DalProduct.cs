@@ -28,7 +28,7 @@ public class DalProduct
         return product.ID;
 
     }
-    public Order GetById(int id)
+    public Product GetById(int id)
     {
         for (int i = 0; i < OrderArray.Length; i++)
         {
