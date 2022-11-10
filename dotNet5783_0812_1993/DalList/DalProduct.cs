@@ -12,9 +12,21 @@ public class DalProduct
         //for (i = 0; i < ProductArray.Length|| ProductArray[i].ID!=product.ID; i++) ;
         //if (i < ProductArray.Length)
         //    throw new Exception("product id already exists");
-        //return product.ID;
+
         Random randNum = new();
         int id = randNum.Next(100000,1000000);
+        int i;
+        for (i = 0; i < ProductArray.Length|| ProductArray[i].ID!=product.ID; i++) ;
+        while (i < ProductArray.Length)
+        {
+            id = randNum.Next(100000, 1000000);
+            for (i = 0; i < ProductArray.Length || ProductArray[i].ID != product.ID; i++) ;
+        }
+        product.ID = id;   
+        
+        ProductArray[Config.IndexOrderItemArray]=product;
+        return product.ID;
+
     }
     public Order GetById(int id)
     {
@@ -23,38 +35,38 @@ public class DalProduct
             if (OrderArray[i].ID == id)
                 return OrderArray[i];
         }
-        throw new Exception("Order is not exist");
+        throw new Exception("product is not exist");
     }
-    public Order[] GetAll()
+    public Product[] GetAll()
     {
-        Order[] orders = new Order[OrderArray.Length];
-        for (int i = 0; i < OrderArray.Length; i++)
+        Product[] products = new Product[ProductArray.Length];
+        for (int i = 0; i < ProductArray.Length; i++)
         {
-            orders[i] = OrderArray[i];
+            products[i] = ProductArray[i];
         }
-        return orders;
+        return products;
     }
 
     public void Delete(int id)
     {
         int i;
-        for (i = 0; i < OrderArray.Length || OrderArray[i].ID != id; i++) ;
-        if (i == OrderArray.Length)
-            throw new Exception("order is not exist");
+        for (i = 0; i < ProductArray.Length || ProductArray[i].ID != id; i++) ;
+        if (i == ProductArray.Length)
+            throw new Exception("product is not exist");
         i++;
-        for (; i < OrderArray.Length; i++)
-            OrderArray[i - 1] = OrderArray[i];
-        Config.IndexOrderArray--;
+        for (; i < ProductArray.Length; i++)
+            ProductArray[i - 1] = ProductArray[i];
+        Config.IndexProductArray--;
 
     }
 
-    public void Update(Order order)
+    public void Update(Product product)
     {
         int i;
-        for (i = 0; i < OrderArray.Length || OrderArray[i].ID != order.ID; i++) ;
-        if (i == OrderArray.Length)
-            throw new Exception("order is not exist");
-        OrderArray[i] = order;
+        for (i = 0; i < ProductArray.Length || ProductArray[i].ID != product.ID; i++) ;
+        if (i == ProductArray.Length)
+            throw new Exception("product is not exist");
+        ProductArray[i] = product;
     }
 
 }
