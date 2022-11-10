@@ -18,7 +18,7 @@ static class DataSource
         private static int orderItemId = s_startOrderItemId;
         internal static int OrderItemId { get => ++orderItemId; }
     }
-    
+  
     internal static Product[] ProductArray = new Product[50];
     internal static Order[] OrderArray = new Order[100];
     internal static OrderItem[] OrderItemArray = new OrderItem[200];
@@ -42,6 +42,7 @@ static class DataSource
     {
         for (int i = 0; i < 10; i++)
         {
+
         }
     }
 

@@ -5,5 +5,6 @@ public class DalOrderItem
 {
 	public DalOrderItem()
 	{
+		
 	}
 }
