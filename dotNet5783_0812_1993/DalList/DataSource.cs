@@ -100,7 +100,7 @@ static class DataSource
             DateTime helpE;
             do
             {
-                helpE = new DateTime(randNum.Next(2000, 2022), randNum.Next(12), randNum.Next(28), randNum.Next(23), randNum.Next(59), randNum.Next(99));
+                helpE = new DateTime(randNum.Next(2000, 2022), randNum.Next(1,12), randNum.Next(1,28), randNum.Next(23), randNum.Next(59), randNum.Next(99));
             }
             
             while (helpE >= DateTime.Now);
