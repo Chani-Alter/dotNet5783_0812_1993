@@ -32,7 +32,7 @@ static class DataSource
         initOrderArray();
         initOrderItemArray();
     }
-
+    //Product array initialization
     static private void initProductArray()
     {
         string[] productName = new string[10];
@@ -46,10 +46,10 @@ static class DataSource
         };
         Category[] category = new Category[]
         {
-             Category.LAPTOP,Category.LAPTOP,Category.LAPTOP ,Category.dESKTOP_COMPUTER,Category.dESKTOP_COMPUTER,Category.SCREENS,Category.SCREENS,
+            Category.LAPTOP,Category.LAPTOP,Category.LAPTOP ,Category.dESKTOP_COMPUTER,Category.dESKTOP_COMPUTER,Category.SCREENS,Category.SCREENS,
             Category.PERIPHERAL_EQUIPMENT,Category.PERIPHERAL_EQUIPMENT,Category.PERIPHERAL_EQUIPMENT
         };
-                int[] price = new int[]
+        int[] price = new int[]
         {
             4500,3800,3400,5000,3100,800,900,250,350,100
         };
@@ -67,6 +67,7 @@ static class DataSource
             ProductArray[i].Amount = amountAvailable[i];
         }
     }
+    //Product order initialization
     static private void initOrderArray()
     {
         String [] clientName = new String[13] {"Motti Weiss","Moshe Feld","Itzik Orlev","Ruli Dikman",
@@ -95,9 +96,29 @@ static class DataSource
             OrderArray[i].ClientName = clientName[i % 13];
             OrderArray[i].Email = email[i%13];
             OrderArray[i].Adress = address[i%13];
+            //dates initialization
+            DateTime helpE;
+            do
+            {
+                helpE = new DateTime(randNum.Next(2000, 2022), randNum.Next(12), randNum.Next(28), randNum.Next(23), randNum.Next(59), randNum.Next(99));
+            }
+            
+            while (helpE >= DateTime.Now);
+            OrderArray[i].CreateOrderDate = helpE;
+            if (i > 16)
+            {
+                TimeSpan helpD = new TimeSpan(randNum.Next(1, 10), 0, 0, 0, 0);
+                OrderArray[i].ShippingDate = OrderArray[i].CreateOrderDate + helpD;
+            }
+            if (i > 10)
+            {
+                TimeSpan helpC = new TimeSpan(randNum.Next(1, 10), 0, 0, 0, 0);
+                OrderArray[i].DeliveryDate = OrderArray[i].CreateOrderDate + helpC;
+            }
+
         }
     }
-   
+    //item in order array initialization
     static private void initOrderItemArray()
 
     {
