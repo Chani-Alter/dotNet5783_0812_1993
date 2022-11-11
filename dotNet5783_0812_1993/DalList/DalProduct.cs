@@ -4,8 +4,17 @@ using static Dal.DataSource;
 
 namespace Dal;
 
+/// <summary>
+/// A department that performs operations: 
+/// adding, updating, repeating and deleting on the product array
+/// </summary>
 public class DalProduct
 {
+    /// <summary>
+    /// Add a product to the productArray
+    /// </summary>
+    /// <param name="product">the new product to add</param>
+    /// <returns>the id of the new product</returns>
     public int Add(Product product)
     {
         //int i;
@@ -26,17 +35,28 @@ public class DalProduct
         
         ProductArray[Config.IndexOrderItemArray]=product;
         return product.ID;
-
     }
+    
+    /// <summary>
+    /// get product by id
+    /// </summary>
+    /// <param name="id">the id of the requeses product</param>
+    /// <returns>the product</returns>
+    /// <exception cref="Exception">if the product didnt exist throw exeption</exception>
     public Product GetById(int id)
     {
-        for (int i = 0; i < OrderArray.Length; i++)
+        for (int i = 0; i < ProductArray.Length; i++)
         {
-            if (OrderArray[i].ID == id)
-                return OrderArray[i];
+            if (ProductArray[i].ID == id)
+                return ProductArray[i];
         }
         throw new Exception("product is not exist");
     }
+
+    /// <summary>
+    /// get all products
+    /// </summary>
+    /// <returns>an array of all the products</returns>
     public Product[] GetAll()
     {
         Product[] products = new Product[ProductArray.Length];
@@ -47,6 +67,11 @@ public class DalProduct
         return products;
     }
 
+    /// <summary>
+    /// delete a product 
+    /// </summary>
+    /// <param name="id">the id of the product thet need to be deleted</param>
+    /// <exception cref="Exception">if the product didnt exist</exception>
     public void Delete(int id)
     {
         int i;
@@ -60,6 +85,11 @@ public class DalProduct
 
     }
 
+    /// <summary>
+    /// update a product
+    /// </summary>
+    /// <param name="product">the product new details</param>
+    /// <exception cref="Exception">if the product didnt exist</exception>
     public void Update(Product product)
     {
         int i;

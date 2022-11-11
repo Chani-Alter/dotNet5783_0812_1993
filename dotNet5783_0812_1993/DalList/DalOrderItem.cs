@@ -4,8 +4,19 @@ using static Dal.DataSource;
 
 namespace Dal;
 
+
+/// <summary>
+/// A department that performs operations: 
+/// adding, updating, repeating and deleting on the orderItem array
+/// </summary>
 public class DalOrderItem
 {
+    /// <summary>
+    /// add a orderitem to the array
+    /// </summary>
+    /// <param name="orderItem">the new order item </param>
+    /// <returns>the id of the new order item</returns>
+    /// <exception cref="Exception">if the order id or the product id doesnt exist</exception>
     public int Add(OrderItem orderItem)
     {
         int i;
@@ -20,6 +31,13 @@ public class DalOrderItem
         OrderItemArray[Config.IndexOrderItemArray++] = orderItem;
         return id;
     }
+
+    /// <summary>
+    /// get order item by id
+    /// </summary>
+    /// <param name="id">the id of the order item</param>
+    /// <returns>the requested order item</returns>
+    /// <exception cref="Exception">if the order item doesnt exist</exception>
     public OrderItem GetById(int id)
     {
         for (int i = 0; i < OrderItemArray.Length; i++)
@@ -30,6 +48,13 @@ public class DalOrderItem
         throw new Exception("Order item is not exist");
     }
 
+    /// <summary>
+    /// get order item by order id and product id
+    /// </summary>
+    /// <param name="orderId">the order item orderId</param>
+    /// <param name="productId">the order item productId</param>
+    /// <returns>the order item</returns>
+    /// <exception cref="Exception">if the order item doesnt exist</exception>
     public OrderItem GetByOrderIdAndProductId(int orderId , int productId)
     {
         for (int i = 0; i < OrderItemArray.Length; i++)
@@ -40,6 +65,12 @@ public class DalOrderItem
         throw new Exception("Order item is not exist");
     }
 
+    /// <summary>
+    /// get all order item of a specific order
+    /// </summary>
+    /// <param name="orderId">the order id</param>
+    /// <returns>an array of order items</returns>
+    /// <exception cref="Exception">if the order is not exist</exception>
     public OrderItem[] GetAllItemsByOrderId(int orderId)
     {
         OrderItem[] orderItems = new OrderItem[OrderItemArray.Length];
@@ -54,6 +85,10 @@ public class DalOrderItem
         return orderItems;
     }
 
+    /// <summary>
+    /// get all the order items
+    /// </summary>
+    /// <returns>an array of all the order items</returns>
     public OrderItem[] GetAll()
     {
         OrderItem[] orderItems = new OrderItem[OrderItemArray.Length];
@@ -64,6 +99,11 @@ public class DalOrderItem
         return orderItems;
     }
 
+    /// <summary>
+    /// delete a order item
+    /// </summary>
+    /// <param name="id">the order item id</param>
+    /// <exception cref="Exception">if the order item didnt exist</exception>
     public void Delete(int id)
     {
         int i;
@@ -76,6 +116,11 @@ public class DalOrderItem
         Config.IndexOrderItemArray--;
     }
 
+    /// <summary>
+    /// update an order item
+    /// </summary>
+    /// <param name="orderItem">the new details of the order item</param>
+    /// <exception cref="Exception">if the order cdoesnt exist</exception>
     public void Update(OrderItem orderItem)
     {
         int i;
