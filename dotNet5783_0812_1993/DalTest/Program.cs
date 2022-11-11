@@ -6,12 +6,12 @@ namespace DalTest
     /// <summary>
     /// Enum of the main menu input options
     /// </summary>
-    enum MainMenu { EXIT, PRODUCT, ORDERITEM, ORDER };
+    enum MainMenu { EXIT, PRODUCT, ORDERITEM, ORDER }
 
     /// <summary>
     /// Enum of the secondary menu input options
     /// </summary>
-    enum SecondaryMenu { ADD=1, GET_ALL,GET_BY_ID,UPDATE,DELETE,GET_BY_ORDERID,GET_BY_ORDER_PRODUCT};
+    enum SecondaryMenu { ADD=1, GET_ALL,GET_BY_ID,UPDATE,DELETE,GET_BY_ORDERID,GET_BY_ORDER_PRODUCT}
     
     /// <summary>
     /// The class of the main program
@@ -44,9 +44,12 @@ namespace DalTest
                 switch (menuChoice)
                 {
                     case SecondaryMenu.ADD:
-                        Console.WriteLine("enter product details:\n product name, category , arice ,amount");
+                        Console.WriteLine("enter product details:\n product id, product name, category , price ,amount");
+                        helpString = Console.ReadLine();
+                        int.TryParse(helpString, out helpInt);
+                        product.ID=helpInt;
                         product.ProductName = Console.ReadLine();
-                        helpString=Console.ReadLine();  
+                        helpString=Console.ReadLine();
                         int.TryParse(helpString, out helpInt);
                         product.Category = (Category)helpInt;
                         helpString = Console.ReadLine();
@@ -78,16 +81,27 @@ namespace DalTest
                         product = dalProduct.GetById(helpInt);
                         Console.WriteLine(product);
                         Console.WriteLine("enter product details:\n product name, category , arice ,amount");
-                        product.ProductName = Console.ReadLine();
                         helpString = Console.ReadLine();
-                        int.TryParse(helpString, out helpInt);
-                        product.Category = (Category)helpInt;
+                        if(helpString != "")
+                            product.ProductName = helpString;
                         helpString = Console.ReadLine();
-                        int.TryParse(helpString, out helpInt);
-                        product.Price = helpInt;
+                        if (helpString != "")
+                        {
+                            int.TryParse(helpString, out helpInt);
+                            product.Category = (Category)helpInt;
+                        }
                         helpString = Console.ReadLine();
-                        int.TryParse(helpString, out helpInt);
-                        product.Amount = helpInt;
+                        if (helpString != "")
+                        {
+                            int.TryParse(helpString, out helpInt);
+                            product.Price = helpInt;
+                        }
+                        helpString = Console.ReadLine();
+                        if (helpString != "")
+                        {
+                            int.TryParse(helpString, out helpInt);
+                            product.Amount = helpInt;
+                        }
                         dalProduct.Update(product);
                         break;
                     case SecondaryMenu.DELETE:
@@ -162,19 +176,30 @@ namespace DalTest
                         Console.WriteLine(orderItem);
                         Console.WriteLine("enter order item details:\n order id, product id , price , amount");
                         helpString = Console.ReadLine();
-                        int.TryParse(helpString, out helpInt);
-                        orderItem.OrderID = helpInt;
+                        if (helpString != "")
+                        {
+                            int.TryParse(helpString, out helpInt);
+                            orderItem.OrderID = helpInt;
+                        }
                         helpString = Console.ReadLine();
-                        int.TryParse(helpString, out helpInt);
-                        orderItem.ProductID = helpInt;
+                        if (helpString != "")
+                        {
+                            int.TryParse(helpString, out helpInt);
+                            orderItem.ProductID = helpInt;
+                        }
                         helpString = Console.ReadLine();
-                        double.TryParse(helpString, out helpDouble);
-                        orderItem.Price = helpDouble;
+                        if (helpString != "")
+                        {
+                            double.TryParse(helpString, out helpDouble);
+                            orderItem.Price = helpDouble;
+                        }
                         helpString = Console.ReadLine();
-                        int.TryParse(helpString, out helpInt);
-                        orderItem.Amount = helpInt;
-                        if (orderItem.OrderID != null && orderItem.ProductID!=null && orderItem.Price!=null && orderItem.Amount!=null)
-                            dalOrderItem.Update(orderItem);
+                        if (helpString != "")
+                        {
+                            int.TryParse(helpString, out helpInt);
+                            orderItem.Amount = helpInt;
+                        }
+                        dalOrderItem.Update(orderItem);
                         break;
                     case SecondaryMenu.DELETE:
                         Console.WriteLine("enter order item id to delete:");
@@ -237,6 +262,8 @@ namespace DalTest
                         order.Email = Console.ReadLine();
                         order.Adress = Console.ReadLine();
                         order.CreateOrderDate = DateTime.Now;
+                        order.ShippingDate=DateTime.MinValue;
+                        order.DeliveryDate=DateTime.MinValue;
                         int insertId = dalOrder.Add(order);
                         Console.WriteLine("insert id: " + insertId);
                         break;
@@ -260,20 +287,34 @@ namespace DalTest
                         order = dalOrder.GetById(helpInt);
                         Console.WriteLine(order);
                         Console.WriteLine("enter order details:\n client name, email , adress,create date , shiping date ,delivery date");
-                        order.ClientName = Console.ReadLine();
-                        order.Email = Console.ReadLine();
-                        order.Adress = Console.ReadLine();
                         helpString = Console.ReadLine();
-                        DateTime.TryParse(helpString,out helpDateTime);
-                        order.CreateOrderDate = helpDateTime;
+                        if(helpString != "")
+                            order.ClientName = Console.ReadLine();
                         helpString = Console.ReadLine();
-                        DateTime.TryParse(helpString, out helpDateTime);
-                        order.ShippingDate = helpDateTime;
+                        if (helpString != "")
+                            order.Email = helpString;
                         helpString = Console.ReadLine();
-                        DateTime.TryParse(helpString, out helpDateTime);
-                        order.DeliveryDate = helpDateTime;
-                        if(order.Adress!=""|| order.Email!=""|| order.ClientName!="")
-                            dalOrder.Update(order);
+                        if (helpString != "")
+                            order.Adress = helpString;
+                        helpString = Console.ReadLine();
+                        if (helpString != "")
+                        {
+                            DateTime.TryParse(helpString, out helpDateTime);
+                            order.CreateOrderDate = helpDateTime;
+                        }
+                        helpString = Console.ReadLine();
+                        if (helpString != "")
+                        {
+                            DateTime.TryParse(helpString, out helpDateTime);
+                            order.ShippingDate = helpDateTime;
+                        }
+                        helpString = Console.ReadLine();
+                        if (helpString != "")
+                        {
+                            DateTime.TryParse(helpString, out helpDateTime);
+                            order.DeliveryDate = helpDateTime;
+                        }
+                        dalOrder.Update(order);
                         break;
                     case SecondaryMenu.DELETE:
                         Console.WriteLine("enter order id to delete:");

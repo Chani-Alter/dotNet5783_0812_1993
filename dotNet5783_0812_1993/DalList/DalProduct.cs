@@ -17,22 +17,10 @@ public class DalProduct
     /// <returns>the id of the new product</returns>
     public int Add(Product product)
     {
-        //int i;
-        //for (i = 0; i < ProductArray.Length|| ProductArray[i].ID!=product.ID; i++) ;
-        //if (i < ProductArray.Length)
-        //    throw new Exception("product id already exists");
-
-        Random randNum = new();
-        int id = randNum.Next(100000,1000000);
         int i;
-        for (i = 0; i < ProductArray.Length|| ProductArray[i].ID!=product.ID; i++) ;
-        while (i < ProductArray.Length)
-        {
-            id = randNum.Next(100000, 1000000);
-            for (i = 0; i < ProductArray.Length || ProductArray[i].ID != product.ID; i++) ;
-        }
-        product.ID = id;   
-        
+        for (i = 0; i < ProductArray.Length || ProductArray[i].ID != product.ID; i++) ;
+        if (i < ProductArray.Length)
+            throw new Exception("product id already exists");
         ProductArray[Config.IndexOrderItemArray]=product;
         return product.ID;
     }

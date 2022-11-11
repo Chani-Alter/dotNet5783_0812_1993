@@ -19,9 +19,7 @@ public class DalOrder
     public int Add(Order order)
     {
         int id = Config.OrderItemId;
-        order.ID= id;
-        order.ShippingDate= DateTime.MinValue;
-        order.DeliveryDate=DateTime.MinValue; 
+        order.ID = id; 
         OrderArray[Config.IndexOrderArray++]= order;
         return id;
     }
