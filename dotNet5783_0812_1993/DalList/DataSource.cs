@@ -6,7 +6,7 @@ namespace Dal;
 static class DataSource
 {
     private static readonly Random randNum = new();
-
+    //A function that is responsible for indexes and IDs
     internal static class Config
     {
         private const int s_startOrderId = 1000;
@@ -23,7 +23,7 @@ static class DataSource
     internal static Product[] ProductArray = new Product[50];
     internal static Order[] OrderArray = new Order[100];
     internal static OrderItem[] OrderItemArray = new OrderItem[200];
-
+    //A function that calls the initialization functions
     static DataSource() => s_Initialize();
 
     static private void s_Initialize()
