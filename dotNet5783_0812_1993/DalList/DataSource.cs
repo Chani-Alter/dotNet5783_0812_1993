@@ -1,38 +1,94 @@
 ﻿using DO;
-using System.Globalization;
-
 namespace Dal;
 
 static class DataSource
 {
+    /// <summary>
+    /// Random field for drawing numbers in the department
+    /// </summary>
     private static readonly Random randNum = new();
-    //A function that is responsible for indexes and IDs
+
+    /// <summary>
+    /// A class is responsible for keeping the indexes of the arrays as well as the Hertz ID
+    /// </summary>
     internal static class Config
     {
+        /// <summary>
+        /// the starting id of the orders
+        /// </summary>
         private const int s_startOrderId = 1000;
+
+        /// <summary>
+        /// the starting id of the orderItems
+        /// </summary>
         private const int s_startOrderItemId = 0;
+
+        /// <summary>
+        /// the index of the free place in the product array
+        /// </summary>
         internal static int IndexProductArray { get; set; } = 0;
+
+        /// <summary>
+        /// the index of the free place in the order array
+        /// </summary>
         internal static int IndexOrderArray { get; set; } = 0;
+
+        /// <summary>
+        /// the index of the free place in the order item array
+        /// </summary>
         internal static int IndexOrderItemArray { get; set; } = 0;
+
+        /// <summary>
+        /// the next order id
+        /// </summary>
         private static int orderId = s_startOrderId;
+        /// <summary>
+        /// the propety get of the order id
+        /// </summary>
         internal static int OrderId { get => ++orderId; }
+
+        /// <summary>
+        /// the next order item id
+        /// </summary>
         private static int orderItemId = s_startOrderItemId;
+
+        /// <summary>
+        /// the get propety of the order item id
+        /// </summary>
         internal static int OrderItemId { get => ++orderItemId; }
+        static Config() => ProductArray[0] = new Product();
     }
   
+    /// <summary>
+    /// the product array
+    /// </summary>
     internal static Product[] ProductArray = new Product[50];
+    /// <summary>
+    /// the orders array
+    /// </summary>
     internal static Order[] OrderArray = new Order[100];
+    /// <summary>
+    /// the order items array
+    /// </summary>
     internal static OrderItem[] OrderItemArray = new OrderItem[200];
-    //A function that calls the initialization functions
+
+    /// <summary>
+    /// the static constractor how caled the s_Initialize function
+    /// </summary>
     static DataSource() => s_Initialize();
 
+    /// <summary>
+    /// the function caled the initializations function
+    /// </summary>
     static private void s_Initialize()
     {
         initProductArray();
         initOrderArray();
         initOrderItemArray();
     }
-    //Product array initialization
+    /// <summary>
+    /// Product array initialization
+    /// </summary>
     static private void initProductArray()
     {
         
@@ -68,7 +124,9 @@ static class DataSource
             Config.IndexProductArray++;
         }
     }
-    //Product order initialization
+    /// <summary>
+    /// Product order initialization
+    /// </summary>
     static private void initOrderArray()
     {
         String [] clientName = new String[13] {"Motti Weiss","Moshe Feld","Itzik Orlev","Ruli Dikman",
@@ -120,7 +178,10 @@ static class DataSource
         }
         
     }
-    //item in order array initialization
+
+    /// <summary>
+    /// item in order array initialization
+    /// </summary>
     static private void initOrderItemArray()
 
     {

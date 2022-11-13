@@ -20,11 +20,13 @@ public class DalOrderItem
     public int Add(OrderItem orderItem)
     {
         int i;
-        for (i = 0; i < Config.IndexOrderArray && OrderArray[i].ID != orderItem.OrderID; i++) ;
-        if (i == Config.IndexOrderArray)
+        int sizeOrders = Config.IndexOrderArray;
+        int sizeProducts = Config.IndexOrderArray;
+        for (i = 0; i < sizeOrders && OrderArray[i].ID != orderItem.OrderID; i++) ;
+        if (i == sizeOrders)
             throw new Exception("order id is not exist");
-        for (i = 0; i < Config.IndexProductArray && ProductArray[i].ID != orderItem.OrderID; i++) ;
-        if (i == Config.IndexProductArray)
+        for (i = 0; i < sizeProducts && ProductArray[i].ID != orderItem.ProductID; i++) ;
+        if (i == sizeProducts)
             throw new Exception("product id is not exist");
         int id = Config.OrderItemId;
         orderItem.ID = id;
@@ -127,7 +129,7 @@ public class DalOrderItem
         for (i = 0; i < Config.IndexOrderArray && OrderArray[i].ID != orderItem.OrderID; i++) ;
         if (i == Config.IndexOrderArray)
             throw new Exception("order id is not exist");
-        for (i = 0; i < Config.IndexProductArray && ProductArray[i].ID != orderItem.OrderID; i++) ;
+        for (i = 0; i < Config.IndexProductArray && ProductArray[i].ID != orderItem.ProductID; i++) ;
         if (i == Config.IndexProductArray)
             throw new Exception("product id is not exist");
         for (i = 0; i < Config.IndexOrderItemArray && OrderItemArray[i].ID != orderItem.ID; i++) ;

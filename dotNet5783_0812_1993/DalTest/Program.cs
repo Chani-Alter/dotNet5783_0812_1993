@@ -39,6 +39,7 @@ namespace DalTest
             int helpInt;
             double helpDouble;
             Category helpCategory;
+            
             try
             {
                 switch (menuChoice)
@@ -111,6 +112,8 @@ namespace DalTest
                         dalProduct.Delete(helpInt);
                         break;
                     default:
+                        Console.WriteLine("not valid choise");
+
                         break;
                 }
             }
@@ -127,7 +130,7 @@ namespace DalTest
         /// </summary>
         static private void menuOrderItem()
         {
-            Console.WriteLine("order menu: \n 1-add \n 2-get all \n 3- get by id \n 4- update \n 5- delete \n 6- get by order id and product id \n 7- getitems by order id");
+            Console.WriteLine("order menu: \n 1-add \n 2-get all \n 3- get by id \n 4- update \n 5- delete \n 6- getitems by order id \n 7- get by order id and product id");
             SecondaryMenu menuChoice;
             string helpString = Console.ReadLine();
             SecondaryMenu.TryParse(helpString, out menuChoice);
@@ -228,6 +231,7 @@ namespace DalTest
                             Console.WriteLine(ordItem);
                         break;
                     default:
+                        Console.WriteLine("not valid choise");
                         break;
                 }
             }
@@ -323,6 +327,8 @@ namespace DalTest
                         dalOrder.Delete(helpInt);    
                         break;
                     default:
+                        Console.WriteLine("not valid choise");
+
                         break;
                 }
             }
@@ -341,7 +347,6 @@ namespace DalTest
             Console.WriteLine("Shop menu: \n 0-exit \n 1-product \n 2-order item \n 3-order.");
             string choice = Console.ReadLine();
             MainMenu.TryParse(choice, out menuChoice);
-
             while (menuChoice != MainMenu.EXIT)
             {
                 switch (menuChoice)
@@ -356,6 +361,8 @@ namespace DalTest
                         menuOrder();
                         break;
                     default:
+                        Console.WriteLine("not valid choise");
+
                         break;
                 }
 
