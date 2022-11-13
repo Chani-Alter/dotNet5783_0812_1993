@@ -35,12 +35,12 @@ static class DataSource
     //Product array initialization
     static private void initProductArray()
     {
-        string[] productName = new string[10];
+        
         int[] orderId = new int[]
         {
             793154,885632,958742,125412,563258,745896,125458,458796,236974,012587
         };
-        productName = new string[]{
+        string[] productName = new string[]{
          "Dell Vostro","Lenovo ThinkBook","Lenovo IdeaPad","Apple Mac mini","Lenovo legion","Dell 24 inch","Xiaomi 30 inch",
          "JBL tune 510","Apple AirPods","mouse and keyboard DOQO"
         };
@@ -60,11 +60,12 @@ static class DataSource
 
         for (int i = 0; i < 10; i++)
         {
-            ProductArray[i].ID = orderId[i];
-            ProductArray[i].ProductName = productName[i];
-            ProductArray[i].Category = category[i];
-            ProductArray[i].Price = price[i];
-            ProductArray[i].Amount = amountAvailable[i];
+            ProductArray[i].ID = orderId[Config.IndexProductArray];
+            ProductArray[i].ProductName = productName[Config.IndexProductArray];
+            ProductArray[i].Category = category[Config.IndexProductArray];
+            ProductArray[i].Price = price[Config.IndexProductArray];
+            ProductArray[i].Amount = amountAvailable[Config.IndexProductArray];
+            Config.IndexProductArray++;
         }
     }
     //Product order initialization
@@ -92,31 +93,32 @@ static class DataSource
        
         for (int i = 0; i < 20; i++)
         {
-            OrderArray[i].ID = Config.OrderId;
-            OrderArray[i].ClientName = clientName[i % 13];
-            OrderArray[i].Email = email[i%13];
-            OrderArray[i].Adress = address[i%13];
-            //dates initialization
+            OrderArray[Config.IndexOrderArray].ID = Config.OrderId;
+            OrderArray[Config.IndexOrderArray].ClientName = clientName[i % 13];
+            OrderArray[Config.IndexOrderArray].Email = email[i%13];
+            OrderArray[Config.IndexOrderArray].Adress = address[i%13];
             DateTime helpE;
             do
             {
-                helpE = new DateTime(randNum.Next(2000, 2022), randNum.Next(1,12), randNum.Next(1,28), randNum.Next(23), randNum.Next(59), randNum.Next(99));
+                helpE = new DateTime(randNum.Next(2000, 2022), randNum.Next(1, 13), randNum.Next(1, 29), randNum.Next(24), randNum.Next(60), randNum.Next(60));
             }
-            
             while (helpE >= DateTime.Now);
-            OrderArray[i].CreateOrderDate = helpE;
-            if (i > 16)
+            OrderArray[Config.IndexOrderArray].CreateOrderDate = helpE;
+            TimeSpan helpC;
+            if (i < 16)
             {
-                TimeSpan helpD = new TimeSpan(randNum.Next(1, 10), 0, 0, 0, 0);
-                OrderArray[i].ShippingDate = OrderArray[i].CreateOrderDate + helpD;
-            }
-            if (i > 10)
-            {
-                TimeSpan helpC = new TimeSpan(randNum.Next(1, 10), 0, 0, 0, 0);
-                OrderArray[i].DeliveryDate = OrderArray[i].CreateOrderDate + helpC;
-            }
+                helpC = new TimeSpan(randNum.Next(1, 10), 0, 0, 0, 0);
+                OrderArray[Config.IndexOrderArray].ShippingDate = OrderArray[i].CreateOrderDate + helpC;
 
+            }
+            if (i < 8)
+            {
+                helpC = new TimeSpan(randNum.Next(1, 10), 0, 0, 0, 0);
+                OrderArray[Config.IndexOrderArray].DeliveryDate = OrderArray[i].DeliveryDate + helpC;
+            }
+            Config.IndexOrderArray++;
         }
+        
     }
     //item in order array initialization
     static private void initOrderItemArray()
@@ -125,21 +127,22 @@ static class DataSource
         for (int i = 1; i <= 20; i++)
         {
             int helpA = randNum.Next(10);
-            OrderItemArray[i].ID = Config.OrderItemId;
-            OrderItemArray[i].OrderID = OrderArray[i].ID;
-            OrderItemArray[i].ProductID = ProductArray[helpA].ID;
-            OrderItemArray[i].Price = ProductArray[helpA].Price;
-            OrderItemArray[i].Amount = randNum.Next(4);
+            OrderItemArray[Config.IndexOrderItemArray].ID = Config.OrderItemId;
+            OrderItemArray[Config.IndexOrderItemArray].OrderID = OrderArray[i].ID;
+            OrderItemArray[Config.IndexOrderItemArray].ProductID = ProductArray[helpA].ID;
+            OrderItemArray[Config.IndexOrderItemArray].Price = ProductArray[helpA].Price;
+            OrderItemArray[Config.IndexOrderItemArray].Amount = randNum.Next(4);
+            Config.IndexOrderItemArray++;
             int helpB;
             do
                 helpB = randNum.Next(10);
             while (helpA == helpB);
-            OrderItemArray[i*2].ID = Config.OrderItemId;
-            OrderItemArray[i*2].OrderID = OrderArray[i].ID;
-            OrderItemArray[i * 2].ProductID = ProductArray[helpB].ID;
-            OrderItemArray[i*2].Price = ProductArray[helpB].Price;
-            OrderItemArray[i * 2].Amount = randNum.Next(4);
-
+            OrderItemArray[Config.IndexOrderItemArray].ID = Config.OrderItemId;
+            OrderItemArray[Config.IndexOrderItemArray].OrderID = OrderArray[i].ID;
+            OrderItemArray[Config.IndexOrderItemArray].ProductID = ProductArray[helpB].ID;
+            OrderItemArray[Config.IndexOrderItemArray].Price = ProductArray[helpB].Price;
+            OrderItemArray[Config.IndexOrderItemArray].Amount = randNum.Next(4);
+            Config.IndexOrderItemArray++;
 
         }
     }

@@ -32,7 +32,7 @@ public class DalOrder
     /// <exception cref="Exception">if the order doesnt exist</exception>
     public Order GetById(int id)
     {
-        for(int i = 0; i < OrderArray.Length; i++)
+        for(int i = 0; i < Config.IndexOrderArray; i++)
         {
            if( OrderArray[i].ID == id)
                 return OrderArray[i];
@@ -46,8 +46,8 @@ public class DalOrder
     /// <returns>an array of orders</returns>
     public Order[] GetAll()
     {
-        Order[] orders = new Order[OrderArray.Length];  
-        for (int i = 0; i < OrderArray.Length; i++)
+        Order[] orders = new Order[Config.IndexOrderArray];  
+        for (int i = 0; i < Config.IndexOrderArray; i++)
         {
             orders[i] = OrderArray[i];
         }
@@ -62,11 +62,11 @@ public class DalOrder
     public void Delete(int id)
     {
         int i;
-        for ( i = 0; i < OrderArray.Length || OrderArray[i].ID != id; i++) ;
-        if(i== OrderArray.Length)
+        for ( i = 0; i < Config.IndexOrderArray && OrderArray[i].ID != id; i++) ;
+        if(i== Config.IndexOrderArray)
             throw new Exception("order is not exist");
         i++;
-        for (; i < OrderArray.Length; i++)
+        for (; i < Config.IndexOrderArray; i++)
             OrderArray[i - 1] = OrderArray[i];
         Config.IndexOrderArray--;
 
@@ -80,8 +80,8 @@ public class DalOrder
     public void Update(Order order)
     {
         int i;
-        for (i = 0; i < OrderArray.Length || OrderArray[i].ID != order.ID; i++) ;
-        if (i == OrderArray.Length)
+        for (i = 0; i < Config.IndexOrderArray && OrderArray[i].ID != order.ID; i++) ;
+        if (i == Config.IndexOrderArray)
             throw new Exception("order is not exist");
         OrderArray[i]= order;
     }
