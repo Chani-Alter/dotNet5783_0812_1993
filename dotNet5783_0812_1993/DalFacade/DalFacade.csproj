@@ -10,7 +10,8 @@
 	  <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
 	  <UseCommonOutputDirectory>true</UseCommonOutputDirectory>
 	  <RootNamespace />
-	  <PlatformTarget>ARM64</PlatformTarget>
+	  <PlatformTarget>AnyCPU</PlatformTarget>
+	  <Platforms>AnyCPU;x86;x64</Platforms>
   </PropertyGroup>
 
 </Project>
