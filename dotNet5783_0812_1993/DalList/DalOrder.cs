@@ -10,7 +10,6 @@ namespace Dal;
 /// </summary>
 public class DalOrder
 {
-
     /// <summary>
     /// add a order to the order array
     /// </summary>
