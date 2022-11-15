@@ -12,7 +12,7 @@ namespace DalTest
     /// Enum of the secondary menu input options
     /// </summary>
     enum SecondaryMenu { ADD=1, GET_ALL,GET_BY_ID,UPDATE,DELETE,GET_BY_ORDERID,GET_BY_ORDER_PRODUCT}
-    
+
     /// <summary>
     /// The class of the main program
     /// </summary>
@@ -30,7 +30,7 @@ namespace DalTest
         ///when the user requests to perform operations on the product array
         /// </summary>
         static private void menuProduct()
-        {
+        { 
             Console.WriteLine("order menu: \n 1-add \n 2-get all \n 3- get by id \n 4- update \n 5- delete");
             SecondaryMenu menuChoice;
             string helpString = Console.ReadLine();
