@@ -18,10 +18,10 @@ public class DalProduct
     public int Add(Product product)
     {
         int i;
-        for (i = 0; i < Config.IndexProductArray && ProductArray[i].ID != product.ID; i++) ;
-        if (i < Config.IndexProductArray)
+        for (i = 0; i < IndexProductArray && ProductArray[i].ID != product.ID; i++) ;
+        if (i < IndexProductArray)
             throw new Exception("product id already exists");
-        ProductArray[Config.IndexProductArray++]=product;
+        ProductArray[IndexProductArray++]=product;
         return product.ID;
     }
     
@@ -33,7 +33,7 @@ public class DalProduct
     /// <exception cref="Exception">if the product didnt exist throw exeption</exception>
     public Product GetById(int id)
     {
-        for (int i = 0; i < Config.IndexProductArray; i++)
+        for (int i = 0; i < IndexProductArray; i++)
         {
             if (ProductArray[i].ID == id)
                 return ProductArray[i];
@@ -47,8 +47,8 @@ public class DalProduct
     /// <returns>an array of all the products</returns>
     public Product[] GetAll()
     {
-        Product[] products = new Product[Config.IndexProductArray];
-        for (int i = 0; i < Config.IndexProductArray; i++)
+        Product[] products = new Product[IndexProductArray];
+        for (int i = 0; i < IndexProductArray; i++)
         {
             products[i] = ProductArray[i];
         }
@@ -63,13 +63,13 @@ public class DalProduct
     public void Delete(int id)
     {
         int i;
-        for (i = 0; i < Config.IndexProductArray && ProductArray[i].ID != id; i++) ;
-        if (i == Config.IndexProductArray)
+        for (i = 0; i < IndexProductArray && ProductArray[i].ID != id; i++) ;
+        if (i == IndexProductArray)
             throw new Exception("product is not exist");
         i++;
         for (; i < ProductArray.Length; i++)
             ProductArray[i - 1] = ProductArray[i];
-        Config.IndexProductArray--;
+       IndexProductArray--;
 
     }
 
@@ -81,8 +81,8 @@ public class DalProduct
     public void Update(Product product)
     {
         int i;
-        for (i = 0; i < Config.IndexProductArray && ProductArray[i].ID != product.ID; i++) ;
-        if (i == Config.IndexProductArray)
+        for (i = 0; i < IndexProductArray && ProductArray[i].ID != product.ID; i++) ;
+        if (i == IndexProductArray)
             throw new Exception("product is not exist");
         ProductArray[i] = product;
     }
