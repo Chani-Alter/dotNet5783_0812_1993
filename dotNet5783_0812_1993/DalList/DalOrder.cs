@@ -17,9 +17,9 @@ public class DalOrder
     /// <returns>the insert new order id</returns>
     public int Add(Order order)
     {
-        int id = OrderItemId;
+        int id = Config.OrderItemId;
         order.ID = id; 
-        OrderArray[IndexOrderArray++]= order;
+        OrderArray[Config.IndexOrderArray++]= order;
         return id;
     }
 
@@ -31,7 +31,7 @@ public class DalOrder
     /// <exception cref="Exception">if the order doesnt exist</exception>
     public Order GetById(int id)
     {
-        for(int i = 0; i < IndexOrderArray; i++)
+        for(int i = 0; i < Config.IndexOrderArray; i++)
         {
            if( OrderArray[i].ID == id)
                 return OrderArray[i];
@@ -45,8 +45,8 @@ public class DalOrder
     /// <returns>an array of orders</returns>
     public Order[] GetAll()
     {
-        Order[] orders = new Order[IndexOrderArray];  
-        for (int i = 0; i < IndexOrderArray; i++)
+        Order[] orders = new Order[Config.IndexOrderArray];  
+        for (int i = 0; i < Config.IndexOrderArray; i++)
         {
             orders[i] = OrderArray[i];
         }
@@ -61,13 +61,13 @@ public class DalOrder
     public void Delete(int id)
     {
         int i;
-        for ( i = 0; i < IndexOrderArray && OrderArray[i].ID != id; i++) ;
-        if(i== IndexOrderArray)
+        for ( i = 0; i < Config.IndexOrderArray && OrderArray[i].ID != id; i++) ;
+        if(i== Config.IndexOrderArray)
             throw new Exception("order is not exist");
         i++;
-        for (; i < IndexOrderArray; i++)
+        for (; i < Config.IndexOrderArray; i++)
             OrderArray[i - 1] = OrderArray[i];
-        IndexOrderArray--;
+        Config.IndexOrderArray--;
 
     }
 
@@ -79,8 +79,8 @@ public class DalOrder
     public void Update(Order order)
     {
         int i;
-        for (i = 0; i < IndexOrderArray && OrderArray[i].ID != order.ID; i++) ;
-        if (i == IndexOrderArray)
+        for (i = 0; i < Config.IndexOrderArray && OrderArray[i].ID != order.ID; i++) ;
+        if (i == Config.IndexOrderArray)
             throw new Exception("order is not exist");
         OrderArray[i]= order;
     }
