@@ -16,14 +16,15 @@ namespace DalTest
     /// <summary>
     /// The class of the main program
     /// </summary>
-    class Program
+    public class Program
     {
         /// <summary>
         /// Instances of the data access classes
         /// </summary>
-        static private DalOrder dalOrder = new DalOrder();
-        static private DalProduct dalProduct = new DalProduct();
-        static private DalOrderItem dalOrderItem = new DalOrderItem();
+        static private DalList.DalList dalList = new DalList.DalList();
+        //static private DalOrder dalOrder = new DalOrder();
+        //static private DalProduct dalProduct = new DalProduct();
+        //static private DalOrderItem dalOrderItem = new DalOrderItem();
 
         /// <summary>
         ///A static private function, that is called by the main program
@@ -59,11 +60,12 @@ namespace DalTest
                         helpString = Console.ReadLine();
                         int.TryParse(helpString, out helpInt);
                         product.Amount = helpInt;
-                        int insertId = dalProduct.Add(product);
+                        int insertId = dalList.Product.Add(product);
                         Console.WriteLine("insert id: " + insertId);
                         break;
                     case SecondaryMenu.GET_ALL:
-                        Product[] products = dalProduct.GetAll();
+                        //Product[] products = dalProduct.GetAll();
+                        IEnumerable<Product> products = dalList.Product.GetAll();
                         Console.WriteLine("products: ");
                         foreach (Product prod in products)
                             Console.WriteLine(prod);
@@ -72,14 +74,15 @@ namespace DalTest
                         Console.WriteLine("enter product id:");
                         helpString = Console.ReadLine();
                         int.TryParse(helpString, out helpInt);
-                        product = dalProduct.GetById(helpInt);
+                        //product = dalProduct.GetById(helpInt);
+                        product = dalList.Product.GetById(helpInt);
                         Console.WriteLine(product);
                         break;
                     case SecondaryMenu.UPDATE:
                         Console.WriteLine("enter product id:");
                         helpString = Console.ReadLine();
                         int.TryParse(helpString, out helpInt);
-                        product = dalProduct.GetById(helpInt);
+                        //product = dalProduct.GetById(helpInt);
                         Console.WriteLine(product);
                         Console.WriteLine("enter product details:\n product name, category , arice ,amount");
                         helpString = Console.ReadLine();
@@ -103,13 +106,15 @@ namespace DalTest
                             int.TryParse(helpString, out helpInt);
                             product.Amount = helpInt;
                         }
-                        dalProduct.Update(product);
+                        dalList.Product.Update(product);
+                        //dalProduct.Update(product);
                         break;
                     case SecondaryMenu.DELETE:
                         Console.WriteLine("enter product id to delete:");
                         helpString = Console.ReadLine();
                         int.TryParse(helpString, out helpInt);
-                        dalProduct.Delete(helpInt);
+                        //dalProduct.Delete(helpInt);
+                        dalList.Product.Delete(helpInt);
                         break;
                     default:
                         Console.WriteLine("not valid choise");
@@ -155,11 +160,12 @@ namespace DalTest
                         helpString = Console.ReadLine();
                         int.TryParse(helpString, out helpInt);
                         orderItem.Amount=helpInt;
-                        int insertId = dalOrderItem.Add(orderItem);
+                        //int insertId = dalOrderItem.Add(orderItem);
+                        int insertId = dalList.OrderItem.Add(orderItem);
                         Console.WriteLine("insert id: " + insertId);
                         break;
                     case SecondaryMenu.GET_ALL:
-                        OrderItem[] ordersItems = dalOrderItem.GetAll();
+                        IEnumerable<OrderItem> ordersItems = dalList.OrderItem.GetAll();
                         Console.WriteLine("orderItems: ");
                         foreach (OrderItem ordItem in ordersItems)
                             Console.WriteLine(ordItem);
@@ -168,14 +174,13 @@ namespace DalTest
                         Console.WriteLine("enter order item id:");
                         helpString = Console.ReadLine();
                         int.TryParse(helpString, out helpInt);
-                        orderItem = dalOrderItem.GetById(helpInt);
-                        Console.WriteLine(orderItem);
+                        orderItem = dalList.OrderItem.GetById(helpInt); Console.WriteLine(orderItem);
                         break;
                     case SecondaryMenu.UPDATE:
                         Console.WriteLine("enter order item id:");
                         helpString = Console.ReadLine();
                         int.TryParse(helpString, out helpInt);
-                        orderItem = dalOrderItem.GetById(helpInt);
+                        //orderItem = dalOrderItem.GetById(helpInt);
                         Console.WriteLine(orderItem);
                         Console.WriteLine("enter order item details:\n order id, product id , price , amount");
                         helpString = Console.ReadLine();
@@ -202,13 +207,13 @@ namespace DalTest
                             int.TryParse(helpString, out helpInt);
                             orderItem.Amount = helpInt;
                         }
-                        dalOrderItem.Update(orderItem);
+                        dalList.OrderItem.Update(orderItem);
                         break;
                     case SecondaryMenu.DELETE:
                         Console.WriteLine("enter order item id to delete:");
                         helpString = Console.ReadLine();
                         int.TryParse(helpString, out helpInt);
-                        dalOrderItem.Delete(helpInt);
+                        dalList.OrderItem.Delete(helpInt);
                         break;
                     case SecondaryMenu.GET_BY_ORDER_PRODUCT:
                         Console.WriteLine("enter order id:");
@@ -219,15 +224,14 @@ namespace DalTest
                         int prodId;
                         helpString = Console.ReadLine();
                         int.TryParse(helpString, out prodId);
-                        orderItem = dalOrderItem.GetByOrderIdAndProductId(orderId,prodId);  
+                        orderItem = dalList.OrderItem.GetByOrderIdAndProductId(orderId, prodId);
                         Console.WriteLine(orderItem);
                         break;
                     case SecondaryMenu.GET_BY_ORDERID:
                         Console.WriteLine("enter order id:");
                         helpString = Console.ReadLine();
                         int.TryParse(helpString, out helpInt);
-                        OrderItem[] orderItems = dalOrderItem.GetAllItemsByOrderId(helpInt);
-                        foreach (OrderItem ordItem in orderItems)
+                        IEnumerable<OrderItem> orderItems = dalList.OrderItem.GetAllItemsByOrderId(helpInt); foreach (OrderItem ordItem in orderItems)
                             Console.WriteLine(ordItem);
                         break;
                     default:
@@ -268,11 +272,11 @@ namespace DalTest
                         order.CreateOrderDate = DateTime.Now;
                         order.ShippingDate=DateTime.MinValue;
                         order.DeliveryDate=DateTime.MinValue;
-                        int insertId = dalOrder.Add(order);
+                        int insertId = dalList.Order.Add(order);
                         Console.WriteLine("insert id: " + insertId);
                         break;
                     case SecondaryMenu.GET_ALL:
-                        Order[] orders = dalOrder.GetAll();
+                        IEnumerable<Order> orders = dalList.Order.GetAll();
                         Console.WriteLine("orders: ");
                         foreach(Order ord in orders)
                             Console.WriteLine(ord);
@@ -281,14 +285,14 @@ namespace DalTest
                         Console.WriteLine("enter order id:");
                         helpString = Console.ReadLine();
                         int.TryParse(helpString, out helpInt);
-                        order = dalOrder.GetById(helpInt);
+                        order = dalList.Order.GetById(helpInt);
                         Console.WriteLine(order);
                         break;
                     case SecondaryMenu.UPDATE:
                         Console.WriteLine("enter order id:");
                         helpString = Console.ReadLine();
                         int.TryParse(helpString, out helpInt);
-                        order = dalOrder.GetById(helpInt);
+                        //order = dalOrder.GetById(helpInt);
                         Console.WriteLine(order);
                         Console.WriteLine("enter order details:\n client name, email , adress,create date , shiping date ,delivery date");
                         helpString = Console.ReadLine();
@@ -318,13 +322,13 @@ namespace DalTest
                             DateTime.TryParse(helpString, out helpDateTime);
                             order.DeliveryDate = helpDateTime;
                         }
-                        dalOrder.Update(order);
+                        dalList.Order.Update(order);
                         break;
                     case SecondaryMenu.DELETE:
                         Console.WriteLine("enter order id to delete:");
                         helpString = Console.ReadLine();
                         int.TryParse(helpString, out helpInt);
-                        dalOrder.Delete(helpInt);    
+                        dalList.Order.Delete(helpInt);
                         break;
                     default:
                         Console.WriteLine("not valid choise");

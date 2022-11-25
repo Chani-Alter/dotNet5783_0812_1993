@@ -7,7 +7,7 @@ using DO;
 
 namespace DalApi
 {
-    internal interface IDal
+    public interface IDal
     {
         public IOrder Order { get; }
         public IOrderItem OrderItem { get; }
