@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,6 @@ namespace DalApi
         void Delete(int id);
         void Update(T obj);
         T GetById(int id);
-        T[] GetAll();
+        public IEnumerable<T> GetAll();
     }
 }
