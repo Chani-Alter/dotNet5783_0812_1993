@@ -20,20 +20,20 @@ static class DataSource
         /// </summary>
         private const int s_startOrderItemId = 0;
 
-        /// <summary>
-        /// the index of the free place in the product array
-        /// </summary>
-        internal static int IndexProductArray { get; set; } = 0;
+        ///// <summary>
+        ///// the index of the free place in the product array
+        ///// </summary>
+        //internal static int IndexProductArray { get; set; } = 0;
 
-        /// <summary>
-        /// the index of the free place in the order array
-        /// </summary>
-        internal static int IndexOrderArray { get; set; } = 0;
+        ///// <summary>
+        ///// the index of the free place in the order array
+        ///// </summary>
+        //internal static int IndexOrderArray { get; set; } = 0;
 
-        /// <summary>
-        /// the index of the free place in the order item array
-        /// </summary>
-        internal static int IndexOrderItemArray { get; set; } = 0;
+        ///// <summary>
+        ///// the index of the free place in the order item array
+        ///// </summary>
+        //internal static int IndexOrderItemArray { get; set; } = 0;
 
         /// <summary>
         /// the next order id
@@ -170,7 +170,7 @@ static class DataSource
                 DeliveryDate1 = helpE + helpC;
 
             }
-            IndexOrderArray++;
+            //IndexOrderArray++;
             OrderList.Add(new Order { ID = OrderId, ClientName = clientName[i % 13],Email = email[i % 13],Adress = address[i % 13], CreateOrderDate = helpE, ShippingDate = ShipDate, DeliveryDate = DeliveryDate1 });
         }
         

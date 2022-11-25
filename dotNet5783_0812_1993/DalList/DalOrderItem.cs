@@ -1,6 +1,8 @@
-﻿using DO;
+﻿using DalApi;
+using DO;
 using System;
 using static Dal.DataSource;
+
 
 namespace Dal;
 
@@ -9,7 +11,7 @@ namespace Dal;
 /// A department that performs operations: 
 /// adding, updating, repeating and deleting on the orderItem array
 /// </summary>
-public class DalOrderItem
+internal class DalOrderItem:IOrderItem
 {
     /// <summary>
     /// add a orderitem to the array
@@ -20,18 +22,15 @@ public class DalOrderItem
     public int Add(OrderItem orderItem)
     {
         int i;
-        int sizeOrders = IndexOrderArray;
-        int sizeProducts = IndexOrderArray;
-        for (i = 0; i < sizeOrders && OrderArray[i].ID != orderItem.OrderID; i++) ;
-        if (i == sizeOrders)
-            throw new Exception("order id is not exist");
-        for (i = 0; i < sizeProducts && ProductArray[i].ID != orderItem.ProductID; i++) ;
-        if (i == sizeProducts)
-            throw new Exception("product id is not exist");
-        int id = OrderItemId;
-        orderItem.ID = id;
-        OrderItemArray[IndexOrderItemArray++] = orderItem;
-        return id;
+        for (i = 0; i < OrderList.Count && OrderList[i].ID != orderItem.OrderID; i++) ;
+        if (i == OrderList.Count)
+            throw new DalDoesNotExistException("order id is not exist");
+        for (i = 0; i < ProductList.Count && ProductList[i].ID != orderItem.ProductID; i++) ;
+        if (i == ProductList.Count)
+            throw new DalDoesNotExistException("product id is not exist");
+        orderItem.ID =OrderItemId;
+        OrderItemList.Add(orderItem);
+        return orderItem.ID;
     }
 
     /// <summary>
@@ -42,12 +41,11 @@ public class DalOrderItem
     /// <exception cref="Exception">if the order item doesnt exist</exception>
     public OrderItem GetById(int id)
     {
-        for (int i = 0; i < IndexOrderItemArray; i++)
-        {
-            if (OrderItemArray[i].ID == id)
-                return OrderItemArray[i];
-        }
-        throw new Exception("Order item is not exist");
+        int index = search(id);
+        if (index != -1)
+            return OrderItemList[index];
+        else
+            throw new DalDoesNotExistException(" OrderItem is not exist");
     }
 
     /// <summary>
@@ -59,12 +57,12 @@ public class DalOrderItem
     /// <exception cref="Exception">if the order item doesnt exist</exception>
     public OrderItem GetByOrderIdAndProductId(int orderId , int productId)
     {
-        for (int i = 0; i < IndexOrderItemArray; i++)
+        for (int i = 0; i < OrderItemList.Count; i++)
         {
-            if (OrderItemArray[i].ProductID == productId && OrderItemArray[i].OrderID==orderId)
-                return OrderItemArray[i];
+            if (OrderItemList[i].ProductID == productId && OrderItemList[i].OrderID == orderId)
+                return OrderItemList[i];
         }
-        throw new Exception("Order item is not exist");
+        throw new DalDoesNotExistException("Order item is not exist");
     }
 
     /// <summary>
@@ -73,17 +71,20 @@ public class DalOrderItem
     /// <param name="orderId">the order id</param>
     /// <returns>an array of order items</returns>
     /// <exception cref="Exception">if the order is not exist</exception>
-    public OrderItem[] GetAllItemsByOrderId(int orderId)
+    public IEnumerable<OrderItem> GetAllItemsByOrderId(int orderId)
     {
-        OrderItem[] orderItems = new OrderItem[IndexOrderItemArray];
-        int index = 0;
-        for (int i = 0; i < IndexOrderItemArray; i++)
+        List<OrderItem> orderItems = new List<OrderItem>();
+        bool flag = false;
+        for (int i = (OrderItemList.Count) - 1; i >= 0; i--)
         {
-            if (OrderItemArray[i].OrderID == orderId)
-                orderItems[index++] = OrderItemArray[i];
+            if (OrderItemList[i].OrderID == orderId)
+            {
+                flag = true;
+                orderItems.Add(OrderItemList[i]);
+            }
         }
-        if(index==0)
-            throw new Exception("Order item is not exist");
+        if (flag == false)
+            throw new DalDoesNotExistException("Order item is not exist");
         return orderItems;
     }
 
@@ -91,12 +92,12 @@ public class DalOrderItem
     /// get all the order items
     /// </summary>
     /// <returns>an array of all the order items</returns>
-    public OrderItem[] GetAll()
+    public IEnumerable<OrderItem> GetAll()
     {
-        OrderItem[] orderItems = new OrderItem[IndexOrderItemArray];
-        for (int i = 0; i < IndexOrderItemArray; i++)
+        List<OrderItem> orderItems = new List<OrderItem>();
+        for (int i = (OrderItemList.Count) - 1; i >= 0; i--)
         {
-            orderItems[i] = OrderItemArray[i];
+            orderItems.Add(OrderItemList[i]);
         }
         return orderItems;
     }
@@ -108,14 +109,13 @@ public class DalOrderItem
     /// <exception cref="Exception">if the order item didnt exist</exception>
     public void Delete(int id)
     {
-        int i;
-        for (i = 0; i < IndexOrderItemArray && OrderItemArray[i].ID != id; i++) ;
-        if (i == IndexOrderItemArray)
-            throw new Exception("order item is not exist");
-        i++;
-        for (; i < IndexOrderItemArray; i++)
-            OrderItemArray[i - 1] = OrderItemArray[i];
-        IndexOrderItemArray--;
+        int index = search(id);
+        if (index != -1)
+        {
+            OrderItemList.RemoveAt(index);
+        }
+        else
+            throw new DalDoesNotExistException(" OrderItem is not exist");
     }
 
     /// <summary>
@@ -125,18 +125,26 @@ public class DalOrderItem
     /// <exception cref="Exception">if the order cdoesnt exist</exception>
     public void Update(OrderItem orderItem)
     {
-        int i;
-        for (i = 0; i < IndexOrderArray && OrderArray[i].ID != orderItem.OrderID; i++) ;
-        if (i == IndexOrderArray)
-            throw new Exception("order id is not exist");
-        for (i = 0; i < IndexProductArray && ProductArray[i].ID != orderItem.ProductID; i++) ;
-        if (i == IndexProductArray)
-            throw new Exception("product id is not exist");
-        for (i = 0; i < IndexOrderItemArray && OrderItemArray[i].ID != orderItem.ID; i++) ;
-        if (i == IndexOrderItemArray)
-            throw new Exception("order item is not exist");
-        OrderItemArray[i] = orderItem;
-    }
+        int index = search(orderItem.ID);
+        if (index != -1)
+            OrderItemList[index] = orderItem;
+        else
+            throw new DalDoesNotExistException(" OrderItem is not exist");
 
+    }
+    /// <summary>
+    ///search function
+    /// </summary>
+    /// <returns>returns the index of the member found</returns>
+
+    private int search(int id)
+    {
+        for (int i = 0; i < OrderItemList.Count; i++)
+        {
+            if (OrderItemList[i].ID == id)
+                return i;
+        }
+        return -1;
+    }
 
 }
