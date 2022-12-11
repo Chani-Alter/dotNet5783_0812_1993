@@ -1,16 +1,15 @@
 ﻿using DO;
 using System.Drawing;
 using static Dal.DataSource;
-
+using DalApi;
 namespace Dal;
 
 /// <summary>
 /// A department that performs operations: 
 /// adding, updating, repeating and deleting on the order array
 /// </summary>
-public class DalOrder
+internal class DalOrder:IOrder
 {
-
     /// <summary>
     /// add a order to the order array
     /// </summary>
@@ -18,10 +17,9 @@ public class DalOrder
     /// <returns>the insert new order id</returns>
     public int Add(Order order)
     {
-        int id = OrderItemId;
-        order.ID = id; 
-        OrderArray[IndexOrderArray++]= order;
-        return id;
+        order.ID = OrderId;
+        OrderList.Add(order);
+        return order.ID;
     }
 
     /// <summary>
@@ -32,28 +30,26 @@ public class DalOrder
     /// <exception cref="Exception">if the order doesnt exist</exception>
     public Order GetById(int id)
     {
-        for(int i = 0; i < IndexOrderArray; i++)
-        {
-           if( OrderArray[i].ID == id)
-                return OrderArray[i];
-        }
-        throw new Exception("Order is not exist");
+        int index = search(id);
+        if (index != -1)
+            return OrderList[index];
+        else
+            throw new DalDoesNotExistException("order is not exist");
     }
 
     /// <summary>
     /// get all the orders
     /// </summary>
     /// <returns>an array of orders</returns>
-    public Order[] GetAll()
+    public IEnumerable<Order> GetAll()
     {
-        Order[] orders = new Order[IndexOrderArray];  
-        for (int i = 0; i < IndexOrderArray; i++)
+        List<Order> orders = new List<Order>();
+        for (int i = (OrderList.Count) - 1; i >= 0; i--)
         {
-            orders[i] = OrderArray[i];
+            orders.Add(OrderList[i]);
         }
-            return orders;
+        return orders;
     }
-
     /// <summary>
     /// delete an order
     /// </summary>
@@ -61,15 +57,13 @@ public class DalOrder
     /// <exception cref="Exception">if the order didnt exist</exception>
     public void Delete(int id)
     {
-        int i;
-        for ( i = 0; i < IndexOrderArray && OrderArray[i].ID != id; i++) ;
-        if(i== IndexOrderArray)
-            throw new Exception("order is not exist");
-        i++;
-        for (; i < IndexOrderArray; i++)
-            OrderArray[i - 1] = OrderArray[i];
-        IndexOrderArray--;
-
+        int index = search(id);
+        if (index != -1)
+        {
+            OrderList.RemoveAt(index);
+        }
+        else
+            throw new DalDoesNotExistException("order is not exist");
     }
 
     /// <summary>
@@ -79,13 +73,25 @@ public class DalOrder
     /// <exception cref="Exception">if the order doesnt exist</exception>
     public void Update(Order order)
     {
-        int i;
-        for (i = 0; i < IndexOrderArray && OrderArray[i].ID != order.ID; i++) ;
-        if (i == IndexOrderArray)
-            throw new Exception("order is not exist");
-        OrderArray[i]= order;
+        int index = search(order.ID);
+        if (index != -1)
+            OrderList[index] = order;
+        else
+            throw new DalDoesNotExistException("order is not exist");
     }
-    
 
+    /// <summary>
+    ///search function
+    /// </summary>
+    /// <returns>returns the index of the member found</returns>
+    private int search(int id)
+    {
+        for (int i = 0; i < OrderList.Count; i++)
+        {
+            if (OrderList[i].ID == id)
+                return i;
+        }
+        return -1;
+    }
 
 }

@@ -1,4 +1,5 @@
-﻿using DO;
+﻿using DalApi;
+using DO;
 using System;
 using static Dal.DataSource;
 
@@ -8,7 +9,7 @@ namespace Dal;
 /// A department that performs operations: 
 /// adding, updating, repeating and deleting on the product array
 /// </summary>
-public class DalProduct
+internal class DalProduct:IProduct
 {
     /// <summary>
     /// Add a product to the productArray
@@ -16,12 +17,13 @@ public class DalProduct
     /// <param name="product">the new product to add</param>
     /// <returns>the id of the new product</returns>
     public int Add(Product product)
-    {
-        int i;
-        for (i = 0; i < IndexProductArray && ProductArray[i].ID != product.ID; i++) ;
-        if (i < IndexProductArray)
-            throw new Exception("product id already exists");
-        ProductArray[IndexProductArray++]=product;
+    {        foreach (Product p in ProductList)
+        {
+            if (p.ID == product.ID)
+                throw new DalAlreadyExistException("product id already exists");
+        }
+
+        ProductList.Add(product);
         return product.ID;
     }
     
@@ -33,24 +35,23 @@ public class DalProduct
     /// <exception cref="Exception">if the product didnt exist throw exeption</exception>
     public Product GetById(int id)
     {
-        for (int i = 0; i < IndexProductArray; i++)
-        {
-            if (ProductArray[i].ID == id)
-                return ProductArray[i];
-        }
-        throw new Exception("product is not exist");
+        int index = search(id);
+        if (index != -1)
+            return ProductList[index];
+        else
+            throw new DalDoesNotExistException("product is not exist");
     }
 
     /// <summary>
     /// get all products
     /// </summary>
     /// <returns>an array of all the products</returns>
-    public Product[] GetAll()
+    public IEnumerable <Product> GetAll()
     {
-        Product[] products = new Product[IndexProductArray];
-        for (int i = 0; i < IndexProductArray; i++)
+        List<Product> products = new List<Product>();
+        for (int i = (ProductList.Count) - 1; i >= 0; i--)
         {
-            products[i] = ProductArray[i];
+            products.Add(ProductList[i]);
         }
         return products;
     }
@@ -62,15 +63,13 @@ public class DalProduct
     /// <exception cref="Exception">if the product didnt exist</exception>
     public void Delete(int id)
     {
-        int i;
-        for (i = 0; i < IndexProductArray && ProductArray[i].ID != id; i++) ;
-        if (i == IndexProductArray)
-            throw new Exception("product is not exist");
-        i++;
-        for (; i < ProductArray.Length; i++)
-            ProductArray[i - 1] = ProductArray[i];
-       IndexProductArray--;
-
+        int index = search(id);
+        if (index != -1)
+        {
+            ProductList.RemoveAt(index);
+        }
+        else
+            throw new DalDoesNotExistException("product is not exist");
     }
 
     /// <summary>
@@ -80,11 +79,19 @@ public class DalProduct
     /// <exception cref="Exception">if the product didnt exist</exception>
     public void Update(Product product)
     {
-        int i;
-        for (i = 0; i < IndexProductArray && ProductArray[i].ID != product.ID; i++) ;
-        if (i == IndexProductArray)
-            throw new Exception("product is not exist");
-        ProductArray[i] = product;
+        int index = search(product.ID);
+        if (index != -1)
+            ProductList[index] = product;
+        else
+            throw new DalDoesNotExistException("product is not exist");
     }
-
+    private int search(int id)
+    {
+        for (int i = 0; i < ProductList.Count; i++)
+        {
+            if (ProductList[i].ID == id)
+                return i;
+        }
+        return -1;
+    }
 }
