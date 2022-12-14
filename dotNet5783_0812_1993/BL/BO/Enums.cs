@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+namespace BO;
 
-namespace BO
+/// <summary>
+/// the product categorys enum
+/// </summary>
+public enum Category
 {
-    /// <summary>
-    /// A class for enums
-    /// </summary>
-
-    public enum Category
-    {
-        LAPTOP = 1, dESKTOP_COMPUTER, SCREENS, PERIPHERAL_EQUIPMENT
-    }
-    public enum OrderStatus
-    {
-        CONFIRMED_ORDER, SEND_ORDER, PROVIDED_ORDER
-    }
+    LAPTOP = 1, dESKTOP_COMPUTER, SCREENS, PERIPHERAL_EQUIPMENT
+}
+/// <summary>
+/// The order statuses enum
+/// </summary>
+public enum OrderStatus
+{
+    CONFIRMED_ORDER, SEND_ORDER, PROVIDED_ORDER
 }

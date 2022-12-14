@@ -24,10 +24,10 @@ internal class DalOrderItem:IOrderItem
         int i;
         for (i = 0; i < OrderList.Count && OrderList[i].ID != orderItem.OrderID; i++) ;
         if (i == OrderList.Count)
-            throw new DalDoesNotExistException("order id is not exist");
+            throw new DoesNotExistedDalException("order id is not exist");
         for (i = 0; i < ProductList.Count && ProductList[i].ID != orderItem.ProductID; i++) ;
         if (i == ProductList.Count)
-            throw new DalDoesNotExistException("product id is not exist");
+            throw new DoesNotExistedDalException("product id is not exist");
         orderItem.ID =OrderItemId;
         OrderItemList.Add(orderItem);
         return orderItem.ID;
@@ -45,7 +45,7 @@ internal class DalOrderItem:IOrderItem
         if (index != -1)
             return OrderItemList[index];
         else
-            throw new DalDoesNotExistException(" OrderItem is not exist");
+            throw new DoesNotExistedDalException(" OrderItem is not exist");
     }
 
     /// <summary>
@@ -62,7 +62,7 @@ internal class DalOrderItem:IOrderItem
             if (OrderItemList[i].ProductID == productId && OrderItemList[i].OrderID == orderId)
                 return OrderItemList[i];
         }
-        throw new DalDoesNotExistException("Order item is not exist");
+        throw new DoesNotExistedDalException("Order item is not exist");
     }
 
     /// <summary>
@@ -84,7 +84,7 @@ internal class DalOrderItem:IOrderItem
             }
         }
         if (flag == false)
-            throw new DalDoesNotExistException("Order item is not exist");
+            throw new DoesNotExistedDalException("Order item is not exist");
         return orderItems;
     }
 
@@ -115,7 +115,7 @@ internal class DalOrderItem:IOrderItem
             OrderItemList.RemoveAt(index);
         }
         else
-            throw new DalDoesNotExistException(" OrderItem is not exist");
+            throw new DoesNotExistedDalException(" OrderItem is not exist");
     }
 
     /// <summary>
@@ -129,7 +129,7 @@ internal class DalOrderItem:IOrderItem
         if (index != -1)
             OrderItemList[index] = orderItem;
         else
-            throw new DalDoesNotExistException(" OrderItem is not exist");
+            throw new DoesNotExistedDalException(" OrderItem is not exist");
 
     }
     /// <summary>

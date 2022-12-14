@@ -34,7 +34,7 @@ internal class DalOrder:IOrder
         if (index != -1)
             return OrderList[index];
         else
-            throw new DalDoesNotExistException("order is not exist");
+            throw new DoesNotExistedDalException("order is not exist");
     }
 
     /// <summary>
@@ -63,7 +63,7 @@ internal class DalOrder:IOrder
             OrderList.RemoveAt(index);
         }
         else
-            throw new DalDoesNotExistException("order is not exist");
+            throw new DoesNotExistedDalException("order is not exist");
     }
 
     /// <summary>
@@ -77,7 +77,7 @@ internal class DalOrder:IOrder
         if (index != -1)
             OrderList[index] = order;
         else
-            throw new DalDoesNotExistException("order is not exist");
+            throw new DoesNotExistedDalException("order is not exist");
     }
 
     /// <summary>

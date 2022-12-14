@@ -1,44 +1,43 @@
 ﻿using System.Collections;
 using System.Reflection;
 
-namespace BO
+namespace BO;
+
+/// <summary>
+/// class for exteonsion method
+/// </summary>
+static class Tools
 {
     /// <summary>
-    /// class for exteonsion method
+    /// A method that prints attributes of entities
     /// </summary>
-    static class Tools
+    /// <typeparam name="T"></typeparam>
+    /// <param name="t"></param>
+    /// <returns>string</returns>
+    public static string ToStringProperty<T>(this T entity)
     {
-        /// <summary>
-        /// A method that prints attributes of entities
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="t"></param>
-        /// <returns>string</returns>
-        public static string ToStringProperty<T>(this T t)
+
+        string st = "";
+        foreach (PropertyInfo item in entity.GetType().GetProperties())
         {
+            var enumerable = item.GetValue(entity, null);
 
-            string str = "";
-            foreach (PropertyInfo item in t.GetType().GetProperties())
+            if ((enumerable is IEnumerable) && !(enumerable is string))
             {
-                var enumerable = item.GetValue(t, null);
-
-                if ((enumerable is IEnumerable) && !(enumerable is string))
+                IEnumerable en = enumerable as IEnumerable;
+                foreach (var _item in en)
                 {
-                    IEnumerable e = enumerable as IEnumerable;
-                    foreach (var a in e)
-                    {
-                        str += a.ToStringProperty();
+                    st += _item.ToStringProperty();
 
-                    }
-                }
-                else
-                {
-                    str += "\n" + item.Name +
-               ": " + item.GetValue(t, null);
                 }
             }
-            return str;
+            else
+            {
+                st += "\n" + item.Name +
+           ": " + item.GetValue(entity, null);
+            }
         }
+        return st;
     }
-
 }
+

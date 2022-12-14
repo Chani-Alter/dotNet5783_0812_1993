@@ -9,42 +9,42 @@ namespace DO
     static class Tools
     {
         /// <summary>
-        /// A method that prints attributes of entities
+        ///A function that prints the field values of an entity
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="t"></param>
-        /// <returns>a string describing the entity</returns>
-        public static string ToStringProperty<T>(this T t)
+        /// <returns>A string describing the entity and consistring of the details of the relevant fields</returns>
+        public static string TostringProperty<T>(this T entity)
         {
 
-            string str = "";
-            foreach (PropertyInfo item in t.GetType().GetProperties())
+            string st = "";
+            foreach (PropertyInfo item in entity.GetType().GetProperties())
             {
-                var enumerable = item.GetValue(t, null);
+                var enumerable = item.GetValue(entity, null);
 
                 if ((enumerable is IEnumerable) && !(enumerable is string))
                 {
                     IEnumerable e = enumerable as IEnumerable;
                     foreach (var a in e)
                     {
-                        str += a.ToStringProperty();
+                        st += a.TostringProperty();
 
                     }
                 }
                 else
                 {
-                    str += "\n" + item.Name +
-               ": " + item.GetValue(t, null);
+                    st += "\n" + item.Name +
+               "- " + item.GetValue(entity, null);
                 }
             }
-            return str;
+            return st;
         }
-        public static void ToStringPropertyToIEnumerable(IEnumerable collection, string str)
+        public static void TostringPropertyToIEnumerable(IEnumerable collection, string st)
         {
             foreach (var item in collection)
             {
 
-                str += item;
+                st += item;
             }
         }
     }

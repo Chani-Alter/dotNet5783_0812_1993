@@ -124,7 +124,7 @@ namespace BLTest
                         break;
                 }
             }
-            catch (BO.BLDoesNotExistException ex)
+            catch (BO.DoesNotExistedBlException ex)
             {
                 Console.WriteLine(ex);
                 Console.WriteLine(ex.InnerException?.ToString());
@@ -134,11 +134,11 @@ namespace BLTest
                 Console.WriteLine(ex);
                 Console.WriteLine(ex.InnerException?.ToString());
             }
-            catch (BO.BLImpossibleActionException ex)
+            catch (BO.ImpossibleActionBlException ex)
             {
                 Console.WriteLine(ex);
             }
-            catch (BO.BLInvalidInputException ex)
+            catch (BO.InvalidInputBlException ex)
             {
                 Console.WriteLine(ex);
             }
@@ -222,7 +222,7 @@ namespace BLTest
                 }
 
             }
-            catch (BO.BLDoesNotExistException ex)
+            catch (BO.DoesNotExistedBlException ex)
             {
                 Console.WriteLine(ex);
                 Console.WriteLine(ex.InnerException?.ToString());
@@ -232,11 +232,11 @@ namespace BLTest
                 Console.WriteLine(ex);
                 Console.WriteLine(ex.InnerException?.ToString());
             }
-            catch (BO.BLImpossibleActionException ex)
+            catch (BO.ImpossibleActionBlException ex)
             {
                 Console.WriteLine(ex);
             }
-            catch (BO.BLInvalidInputException ex)
+            catch (BO.InvalidInputBlException ex)
             {
                 Console.WriteLine(ex);
             }
@@ -292,7 +292,7 @@ namespace BLTest
                         break;
                 }
             }
-            catch (BO.BLDoesNotExistException ex)
+            catch (BO.DoesNotExistedBlException ex)
             {
                 Console.WriteLine(ex);
                 Console.WriteLine(ex.InnerException?.ToString());
@@ -302,11 +302,11 @@ namespace BLTest
                 Console.WriteLine(ex);
                 Console.WriteLine(ex.InnerException?.ToString());
             }
-            catch (BO.BLImpossibleActionException ex)
+            catch (BO.ImpossibleActionBlException ex)
             {
                 Console.WriteLine(ex);
             }
-            catch (BO.BLInvalidInputException ex)
+            catch (BO.InvalidInputBlException ex)
             {
                 Console.WriteLine(ex);
             }

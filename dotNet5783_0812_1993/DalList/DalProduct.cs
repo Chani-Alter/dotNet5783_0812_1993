@@ -20,7 +20,7 @@ internal class DalProduct:IProduct
     {        foreach (Product p in ProductList)
         {
             if (p.ID == product.ID)
-                throw new DalAlreadyExistException("product id already exists");
+                throw new DuplicateDalException("product id already exists");
         }
 
         ProductList.Add(product);
@@ -39,7 +39,7 @@ internal class DalProduct:IProduct
         if (index != -1)
             return ProductList[index];
         else
-            throw new DalDoesNotExistException("product is not exist");
+            throw new DoesNotExistedDalException("product is not exist");
     }
 
     /// <summary>
@@ -69,7 +69,7 @@ internal class DalProduct:IProduct
             ProductList.RemoveAt(index);
         }
         else
-            throw new DalDoesNotExistException("product is not exist");
+            throw new DoesNotExistedDalException("product is not exist");
     }
 
     /// <summary>
@@ -83,7 +83,7 @@ internal class DalProduct:IProduct
         if (index != -1)
             ProductList[index] = product;
         else
-            throw new DalDoesNotExistException("product is not exist");
+            throw new DoesNotExistedDalException("product is not exist");
     }
     private int search(int id)
     {

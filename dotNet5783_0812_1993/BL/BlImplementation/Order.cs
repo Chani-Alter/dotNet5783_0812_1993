@@ -16,7 +16,7 @@ internal class Order : BlApi.IOrder
     /// function that returns all orders
     /// </summary>
     /// <returns>list of orders</returns>
-    /// <exception cref="BO.BLDoesNotExistException"></exception>
+    /// <exception cref="BO.DoesNotExistedBlException"></exception>
     public IEnumerable<BO.OrderForList> GetOrderList()
     {
         try
@@ -57,9 +57,9 @@ internal class Order : BlApi.IOrder
 
             return ordersForList;
         }
-        catch (DO.DalDoesNotExistException ex)
+        catch (DO.DoesNotExistedDalException ex)
         {
-            throw new BO.BLDoesNotExistException("order doesnot exist", ex);
+            throw new BO.DoesNotExistedBlException("order doesnot exist", ex);
         }
     }
     /// <summary>
@@ -67,7 +67,7 @@ internal class Order : BlApi.IOrder
     /// </summary>
     /// <param name="id"></param>
     /// <returns>order</returns>
-    /// <exception cref="BO.BLDoesNotExistException"></exception>
+    /// <exception cref="BO.DoesNotExistedBlException"></exception>
     public BO.Order GetOrderById(int id)
     {
 
@@ -80,17 +80,17 @@ internal class Order : BlApi.IOrder
         {
             orderDal = dal.Order.GetById(id);
         }
-        catch (DO.DalDoesNotExistException ex)
+        catch (DO.DoesNotExistedDalException ex)
         {
-            throw new BO.BLDoesNotExistException("order doesnot exist", ex);
+            throw new BO.DoesNotExistedBlException("order doesnot exist", ex);
         }
         try
         {
             orderitemsDal = dal.OrderItem.GetAllItemsByOrderId(id);
         }
-        catch (DO.DalDoesNotExistException ex)
+        catch (DO.DoesNotExistedDalException ex)
         {
-            throw new BO.BLDoesNotExistException("order doesnot exist", ex);
+            throw new BO.DoesNotExistedBlException("order doesnot exist", ex);
         }
 
         double totalPrice = 0;
@@ -107,9 +107,9 @@ internal class Order : BlApi.IOrder
             {
                 product = dal.Product.GetById(orderitem.ProductID);
             }
-            catch (DO.DalDoesNotExistException ex)
+            catch (DO.DoesNotExistedDalException ex)
             {
-                throw new BO.BLDoesNotExistException("order does not exist", ex);
+                throw new BO.DoesNotExistedBlException("order does not exist", ex);
             }
             orderitem.Name = product.Name;
             orderitems.Add(orderitem);
@@ -144,8 +144,8 @@ internal class Order : BlApi.IOrder
     /// </summary>
     /// <param name="id"></param>
     /// <returns>update order</returns>
-    /// <exception cref="BO.BLDoesNotExistException"></exception>
-    /// <exception cref="BO.BLImpossibleActionException"></exception>
+    /// <exception cref="BO.DoesNotExistedBlException"></exception>
+    /// <exception cref="BO.ImpossibleActionBlException"></exception>
     /// <exception cref="BO.BLMistakeUpdateException"></exception>
     public BO.Order UpdateSendOrderByManager(int id)
     {
@@ -158,12 +158,12 @@ internal class Order : BlApi.IOrder
         {
             orderDal = dal.Order.GetById(id);
         }
-        catch (DO.DalDoesNotExistException ex)
+        catch (DO.DoesNotExistedDalException ex)
         {
-            throw new BO.BLDoesNotExistException("order does not exist", ex);
+            throw new BO.DoesNotExistedBlException("order does not exist", ex);
         }
         if (orderDal.ShippingDate < DateTime.Now && orderDal.ShippingDate != DateTime.MinValue)
-            throw new BO.BLImpossibleActionException("order send");
+            throw new BO.ImpossibleActionBlException("order send");
         else
         {
             if (orderDal.ShippingDate == DateTime.MinValue)
@@ -173,18 +173,18 @@ internal class Order : BlApi.IOrder
             {
                 dal.Order.Update(orderDal);
             }
-            catch (DO.DalDoesNotExistException ex)
+            catch (DO.DoesNotExistedDalException ex)
             {
-                throw new BO.BLDoesNotExistException("order does not exist", ex);
+                throw new BO.DoesNotExistedBlException("order does not exist", ex);
             }
         }
         try
         {
             orderitemsDal = dal.OrderItem.GetAllItemsByOrderId(id);
         }
-        catch (DO.DalDoesNotExistException ex)
+        catch (DO.DoesNotExistedDalException ex)
         {
-            throw new BO.BLDoesNotExistException("order doesnot exist", ex);
+            throw new BO.DoesNotExistedBlException("order doesnot exist", ex);
         }
         double totalPrice = 0;
 
@@ -200,9 +200,9 @@ internal class Order : BlApi.IOrder
             {
                 product = dal.Product.GetById(orderitem.ProductID);
             }
-            catch (DO.DalDoesNotExistException ex)
+            catch (DO.DoesNotExistedDalException ex)
             {
-                throw new BO.BLDoesNotExistException("product doesnot exist", ex);
+                throw new BO.DoesNotExistedBlException("product doesnot exist", ex);
             }
 
             orderitem.Name = product.Name;
@@ -227,8 +227,8 @@ internal class Order : BlApi.IOrder
     /// </summary>
     /// <param name="id"></param>
     /// <returns>update order</returns>
-    /// <exception cref="BO.BLDoesNotExistException"></exception>
-    /// <exception cref="BO.BLImpossibleActionException"></exception>
+    /// <exception cref="BO.DoesNotExistedBlException"></exception>
+    /// <exception cref="BO.ImpossibleActionBlException"></exception>
     public BO.Order UpdateSupplyOrderByManager(int id)
     {
         BO.Order order = new BO.Order();
@@ -241,39 +241,39 @@ internal class Order : BlApi.IOrder
         {
             orderDal = dal.Order.GetById(id);
         }
-        catch (DO.DalDoesNotExistException ex)
+        catch (DO.DoesNotExistedDalException ex)
         {
-            throw new BO.BLDoesNotExistException("order doesnot exist", ex);
+            throw new BO.DoesNotExistedBlException("order doesnot exist", ex);
         }
         if (orderDal.DeliveryDate < DateTime.Now && orderDal.DeliveryDate != DateTime.MinValue)
-            throw new BO.BLImpossibleActionException("order Delivery");
+            throw new BO.ImpossibleActionBlException("order Delivery");
         else
         {
 
             if (orderDal.ShippingDate > DateTime.Now)
-                throw new BO.BLImpossibleActionException("It is not possible to update a delivery date before a shipping date");
+                throw new BO.ImpossibleActionBlException("It is not possible to update a delivery date before a shipping date");
             else
             {
                 if (orderDal.DeliveryDate == DateTime.MinValue)
-                    throw new BO.BLImpossibleActionException(" No delivery date");
+                    throw new BO.ImpossibleActionBlException(" No delivery date");
             }
             orderDal.DeliveryDate = DateTime.Now;
             try
             {
                 dal.Order.Update(orderDal);
             }
-            catch (DO.DalDoesNotExistException ex)
+            catch (DO.DoesNotExistedDalException ex)
             {
-                throw new BO.BLDoesNotExistException("order dosent exsit", ex);
+                throw new BO.DoesNotExistedBlException("order dosent exsit", ex);
             }
         }
         try
         {
             orderitemsDal = dal.OrderItem.GetAllItemsByOrderId(id);
         }
-        catch (DO.DalDoesNotExistException ex)
+        catch (DO.DoesNotExistedDalException ex)
         {
-            throw new BO.BLDoesNotExistException("order doesnot exist", ex);
+            throw new BO.DoesNotExistedBlException("order doesnot exist", ex);
         }
         double totalPrice = 0;
         foreach (DO.OrderItem item in orderitemsDal)
@@ -288,9 +288,9 @@ internal class Order : BlApi.IOrder
             {
                 product = dal.Product.GetById(orderitem.ProductID);
             }
-            catch (DO.DalDoesNotExistException ex)
+            catch (DO.DoesNotExistedDalException ex)
             {
-                throw new BO.BLDoesNotExistException("product does not exsit", ex);
+                throw new BO.DoesNotExistedBlException("product does not exsit", ex);
             }
             orderitem.Name = product.Name;
             orderitems.Add(orderitem);
@@ -315,7 +315,7 @@ internal class Order : BlApi.IOrder
     /// </summary>
     /// <param name="id"></param>
     /// <returns>order tracking</returns>
-    /// <exception cref="BO.BLDoesNotExistException"></exception>
+    /// <exception cref="BO.DoesNotExistedBlException"></exception>
     public BO.OrderTracking TrackingOrder(int id)
     {
         DO.Order order = new DO.Order();
@@ -324,9 +324,9 @@ internal class Order : BlApi.IOrder
         {
             order = dal.Order.GetById(id);
         }
-        catch (DO.DalDoesNotExistException ex)
+        catch (DO.DoesNotExistedDalException ex)
         {
-            throw new BO.BLDoesNotExistException("order doesnot exist", ex);
+            throw new BO.DoesNotExistedBlException("order doesnot exist", ex);
         }
         orderTracking.ID = order.ID;
         if (order.DeliveryDate < DateTime.Now && order.DeliveryDate != DateTime.MinValue)
@@ -361,9 +361,9 @@ internal class Order : BlApi.IOrder
     /// <param name="idProduct"></param>
     /// <param name="amount"></param>
     /// <returns>update order</returns>
-    /// <exception cref="BO.BLDoesNotExistException"></exception>
-    /// <exception cref="BO.BLImpossibleActionException"></exception>
-    /// <exception cref="BO.BLInvalidInputException"></exception>
+    /// <exception cref="BO.DoesNotExistedBlException"></exception>
+    /// <exception cref="BO.ImpossibleActionBlException"></exception>
+    /// <exception cref="BO.InvalidInputBlException"></exception>
     /// <exception cref="Exception"></exception>
     public BO.OrderItem UpdateAmountOfOProductInOrder(int idOrder, int idProduct, int amount)
     {
@@ -372,34 +372,34 @@ internal class Order : BlApi.IOrder
         {
             item = dal.OrderItem.GetByOrderIdAndProductId(idOrder, idProduct);
         }
-        catch (DO.DalDoesNotExistException ex)
+        catch (DO.DoesNotExistedDalException ex)
         {
-            throw new BO.BLDoesNotExistException($"{ex.EntityName}  are does not exist", ex);
+            throw new BO.DoesNotExistedBlException($"{ex.EntityName}  are does not exist", ex);
         }
         DO.Order order = new DO.Order();
         try
         {
             order = dal.Order.GetById(idOrder);
         }
-        catch (DO.DalDoesNotExistException ex)
+        catch (DO.DoesNotExistedDalException ex)
         {
-            throw new BO.BLDoesNotExistException("order does not exist", ex);
+            throw new BO.DoesNotExistedBlException("order does not exist", ex);
         }
         DO.Product product = new DO.Product();
         BO.OrderItem orderItem = new BO.OrderItem();
         if (order.ShippingDate != DateTime.MinValue && order.ShippingDate < DateTime.Now)
         {
-            throw new BO.BLImpossibleActionException("It is not possible to update an order after it has been sent");
+            throw new BO.ImpossibleActionBlException("It is not possible to update an order after it has been sent");
         }
         if (amount < 0)
-            throw new BO.BLInvalidInputException("invalid amount");
+            throw new BO.InvalidInputBlException("invalid amount");
         try
         {
             product = dal.Product.GetById(item.ProductID);
         }
-        catch (DO.DalDoesNotExistException ex)
+        catch (DO.DoesNotExistedDalException ex)
         {
-            throw new BO.BLDoesNotExistException("product does not exist", ex);
+            throw new BO.DoesNotExistedBlException("product does not exist", ex);
         }
         product.InStock += item.Amount;
         item.Amount = amount;
@@ -407,18 +407,18 @@ internal class Order : BlApi.IOrder
         {
             dal.OrderItem.Update(item);
         }
-        catch (DO.DalDoesNotExistException ex)
+        catch (DO.DoesNotExistedDalException ex)
         {
-            throw new BO.BLDoesNotExistException($"{ex.EntityName} does not exist", ex);
+            throw new BO.DoesNotExistedBlException($"{ex.EntityName} does not exist", ex);
         }
         product.InStock -= amount;
         try
         {
             dal.Product.Update(product);
         }
-        catch (DO.DalDoesNotExistException ex)
+        catch (DO.DoesNotExistedDalException ex)
         {
-            throw new BO.BLDoesNotExistException(" product does not exist", ex);
+            throw new BO.DoesNotExistedBlException(" product does not exist", ex);
         }
         if (amount == 0)
         {
@@ -426,9 +426,9 @@ internal class Order : BlApi.IOrder
             {
                 dal.OrderItem.Delete(item.ID);
             }
-            catch (DO.DalDoesNotExistException ex)
+            catch (DO.DoesNotExistedDalException ex)
             {
-                throw new BO.BLDoesNotExistException("id does not exist", ex);
+                throw new BO.DoesNotExistedBlException("id does not exist", ex);
             }
             throw new Exception("The product remove from the order");
         }

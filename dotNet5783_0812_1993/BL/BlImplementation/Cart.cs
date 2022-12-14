@@ -4,20 +4,24 @@ using BO;
 using DalApi;
 namespace BlImplementation;
 
+/// <summary>
+/// A class that implements the icart interface
+/// </summary>
 internal class Cart : ICart
 {
     /// <summary>
-    /// A class that implements the icart interface
+    /// An attribute that contains access to all the dallist data
     /// </summary>
     private IDal dal = new DalList.DalList();
+
     /// <summary>
-    ///function that adds a product to the cart
+    ///Adding product to the cart
     /// </summary>
     /// <param name="cart"></param>
     /// <param name="idProduct"></param>
-    /// <returns>update cart</returns>
-    /// <exception cref="BO.BLImpossibleActionException"></exception>
-    /// <exception cref="BO.BLDoesNotExistException"></exception>
+    /// <returns>the cart after adding</returns>
+    /// <exception cref="BO.ImpossibleActionBlException"></exception>
+    /// <exception cref="BO.DoesNotExistedBlException"></exception>
     public BO.Cart AddProductToCart(BO.Cart cart, int idProduct)
     {
         try
@@ -29,7 +33,7 @@ internal class Cart : ICart
                 foreach (BO.OrderItem orderItem in cart.Items)
                 {
                     if (orderItem.ProductID == idProduct)
-                        throw new BO.BLImpossibleActionException("product exist in cart");
+                        throw new BO.ImpossibleActionBlException("product exist in cart");
                 }
             }
             else
@@ -38,7 +42,7 @@ internal class Cart : ICart
             }
             product = dal.Product.GetById(idProduct);
             if (product.InStock <= 0)
-                throw new BO.BLImpossibleActionException("product not exist in stock");
+                throw new BO.ImpossibleActionBlException("product not exist in stock");
             orderItem1.Name = product.Name;
             orderItem1.ProductID = idProduct;
             orderItem1.Amount = 1;
@@ -48,9 +52,9 @@ internal class Cart : ICart
             cart.TotalPrice += orderItem1.TotalPrice;
             return cart;
         }
-        catch (DO.DalDoesNotExistException ex)
+        catch (DO.DoesNotExistedDalException ex)
         {
-            throw new BO.BLDoesNotExistException("product dosent exsit", ex);
+            throw new BO.DoesNotExistedBlException("product dosent exsit", ex);
         }
     }
     /// <summary>
@@ -60,10 +64,10 @@ internal class Cart : ICart
     /// <param name="idProduct"></param>
     /// <param name="amount"></param>
     /// <returns>update curt</returns>
-    /// <exception cref="BO.BLImpossibleActionException"></exception>
-    /// <exception cref="BO.BLInvalidInputException"></exception>
-    /// <exception cref="BLImpossibleActionException"></exception>
-    /// <exception cref="BO.BLDoesNotExistException"></exception>
+    /// <exception cref="BO.ImpossibleActionBlException"></exception>
+    /// <exception cref="BO.InvalidInputBlException"></exception>
+    /// <exception cref="ImpossibleActionBlException"></exception>
+    /// <exception cref="BO.DoesNotExistedBlException"></exception>
     public BO.Cart UpdateProductAmountInCart(BO.Cart cart, int idProduct, int amount)
     {
         bool flag = false;
@@ -72,7 +76,7 @@ internal class Cart : ICart
             DO.Product product = new DO.Product();
             product = dal.Product.GetById(idProduct);
             if (product.InStock < amount)
-                throw new BO.BLImpossibleActionException("product not exist in stock");
+                throw new BO.ImpossibleActionBlException("product not exist in stock");
             if (cart.Items != null)
             {
                 foreach (BO.OrderItem orderItem in cart.Items)
@@ -83,7 +87,7 @@ internal class Cart : ICart
                         flag = true;
                         if (amount < 0)
                         {
-                            throw new BO.BLInvalidInputException("invalid amount");
+                            throw new BO.InvalidInputBlException("invalid amount");
                         }
                         else
                         {
@@ -104,16 +108,16 @@ internal class Cart : ICart
                 }
                 if (flag == false)
                 {
-                    throw new BLImpossibleActionException("This item is not in the cart");
+                    throw new ImpossibleActionBlException("This item is not in the cart");
                 }
             }
             else
-                throw new BLImpossibleActionException("There are no items in the cart");
+                throw new ImpossibleActionBlException("There are no items in the cart");
             return cart;
         }
-        catch (DO.DalDoesNotExistException ex)
+        catch (DO.DoesNotExistedDalException ex)
         {
-            throw new BO.BLDoesNotExistException("product dosent exsit", ex);
+            throw new BO.DoesNotExistedBlException("product dosent exsit", ex);
         }
 
     }
@@ -121,10 +125,10 @@ internal class Cart : ICart
     /// function that confirms an order
     /// </summary>
     /// <param name="cart"></param>
-    /// <exception cref="BO.BLInvalidInputException"></exception>
-    /// <exception cref="BLImpossibleActionException"></exception>
-    /// <exception cref="BO.BLDoesNotExistException"></exception>
-    /// <exception cref="BO.BLImpossibleActionException"></exception>
+    /// <exception cref="BO.InvalidInputBlException"></exception>
+    /// <exception cref="ImpossibleActionBlException"></exception>
+    /// <exception cref="BO.DoesNotExistedBlException"></exception>
+    /// <exception cref="BO.ImpossibleActionBlException"></exception>
     public void MakeOrder(BO.Cart cart)
     {
         try
@@ -133,10 +137,10 @@ internal class Cart : ICart
             DO.Product product = new DO.Product();
             if (cart.CustomerName == "" || cart.CustomerEmail == "" || cart.CustomerAdress == "")
             {
-                throw new BO.BLInvalidInputException("Invalid details");
+                throw new BO.InvalidInputBlException("Invalid details");
             }
             if (cart.Items == null)
-                throw new BLImpossibleActionException("There are no items in the cart.");
+                throw new ImpossibleActionBlException("There are no items in the cart.");
             order.CreateOrderDate = DateTime.Now;
             order.ShippingDate = new DateTime();
             order.DeliveryDate = new DateTime();
@@ -147,14 +151,14 @@ internal class Cart : ICart
                 {
                     product = dal.Product.GetById(orderItem.ProductID);
                 }
-                catch (DO.DalDoesNotExistException ex)
+                catch (DO.DoesNotExistedDalException ex)
                 {
-                    throw new BO.BLDoesNotExistException("product dosent exsit", ex);
+                    throw new BO.DoesNotExistedBlException("product dosent exsit", ex);
                 }
                 if (orderItem.Amount <= 0)
-                    throw new BO.BLImpossibleActionException("invalid amount");
+                    throw new BO.ImpossibleActionBlException("invalid amount");
                 if (product.InStock < orderItem.Amount)
-                    throw new BO.BLImpossibleActionException("amount not in stock ");
+                    throw new BO.ImpossibleActionBlException("amount not in stock ");
                 DO.OrderItem orderItem1 = new DO.OrderItem();
                 orderItem1.OrderID = id;
                 orderItem1.ProductID = orderItem.ProductID;
@@ -165,23 +169,23 @@ internal class Cart : ICart
                 {
                     dal.Product.Update(product);
                 }
-                catch (DO.DalDoesNotExistException ex)
+                catch (DO.DoesNotExistedDalException ex)
                 {
-                    throw new BO.BLDoesNotExistException("product dosent exsit", ex);
+                    throw new BO.DoesNotExistedBlException("product dosent exsit", ex);
                 }
                 try
                 {
                     dal.OrderItem.Add(orderItem1);
                 }
-                catch (DO.DalDoesNotExistException ex)
+                catch (DO.DoesNotExistedDalException ex)
                 {
-                    throw new BO.BLDoesNotExistException($"{ex.EntityName} dosent exsit", ex);
+                    throw new BO.DoesNotExistedBlException($"{ex.EntityName} dosent exsit", ex);
                 }
             }
         }
-        catch (DO.DalDoesNotExistException ex)
+        catch (DO.DoesNotExistedDalException ex)
         {
-            throw new BO.BLDoesNotExistException("product dosent exsit", ex);
+            throw new BO.DoesNotExistedBlException("product dosent exsit", ex);
         }
 
     }

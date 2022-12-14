@@ -1,21 +1,30 @@
-﻿namespace DO;
+﻿using System.Security.Cryptography;
+
+namespace DO;
 /// <summary>
-/// Throws class for non-existent items
+///A class for errors thrown when non-existent items are requested
 /// </summary>
+
 [Serializable]
-public class DalDoesNotExistException : Exception
+public class DoesNotExistedDalException : Exception
 {
     public int EntityId;
     public string EntityName;
-    public DalDoesNotExistException(int id, string name) : base()
-    { EntityId = id; EntityName = name; }
+    public DoesNotExistedDalException(int _id, string _name) : base()
+    { 
+        EntityId = _id; EntityName = _name; 
+    }
 
-    public DalDoesNotExistException(int id, string name, string message) : base(message)
-    { EntityId = id; EntityName = name; }
+    public DoesNotExistedDalException(int _id, string _name, string _message) : base(_message)
+    { 
+        EntityId = _id; EntityName = _name; 
+    }
 
-    public DalDoesNotExistException(int id, string name, string message, Exception innerException) : base(message, innerException)
-    { EntityId = id; EntityName = name; }
-    public DalDoesNotExistException(string? message) : base(message)
+    public DoesNotExistedDalException(int _id, string _name, string _message, Exception innerException) : base(_message, innerException)
+    {
+        EntityId = _id; EntityName = _name;
+    }
+    public DoesNotExistedDalException(string? _message) : base(_message)
     { }
     public override string ToString()
     {
@@ -27,23 +36,30 @@ public class DalDoesNotExistException : Exception
     }
 }
 /// <summary>
-/// Throws class for items that exist in duplicates
+/// A class for errors thrown when items  exist in duplicates
 /// </summary>
+
 [Serializable]
-public class DalAlreadyExistException : Exception
+public class DuplicateDalException : Exception
 {
     public int EntityId;
     public string EntityName;
 
-    public DalAlreadyExistException(int id, string name) : base()
-    { EntityId = id; EntityName = name; }
+    public DuplicateDalException(int _id, string _name) : base()
+    {
+        EntityId = _id; EntityName = _name;
+    }
 
-    public DalAlreadyExistException(int id, string name, string message) : base(message)
-    { EntityId = id; EntityName = name; }
+    public DuplicateDalException(int _id, string _name, string _message) : base(_message)
+    {
+        EntityId = _id; EntityName = _name;
+    }
 
-    public DalAlreadyExistException(int id, string name, string message, Exception innerException) : base(message, innerException)
-    { EntityId = id; EntityName = name; }
-    public DalAlreadyExistException(string? message) : base(message)
+    public DuplicateDalException(int _id, string _name, string _message, Exception innerException) : base(_message, innerException)
+    { 
+        EntityId = _id; EntityName = _name; 
+    }
+    public DuplicateDalException(string? _message) : base(_message)
     { }
 
     public override string ToString() => $"id:{EntityId} of type {EntityName} is already exist.";
