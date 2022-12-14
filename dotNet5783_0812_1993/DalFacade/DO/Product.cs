@@ -36,12 +36,6 @@ public struct Product
     /// </summary>
     /// <returns>string with the ordered item details</returns>
 
-    public override string ToString() => $@"
-            product id:{ID},
-            Product Name: {Name},
-            Category: {Category},
-            Price: {Price},
-            InStock: {InStock}
-        ";
+    public override string ToString() => this.ToStringProperty();
 
 }

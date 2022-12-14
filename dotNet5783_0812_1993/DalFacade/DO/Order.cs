@@ -49,15 +49,7 @@ public struct Order
     /// </summary>
     /// <returns>string with the order details</returns>
 
-    public override string ToString() => $@"
-            order ID: {ID},
-            ordering name: {CustomerName},
-            CustomerEmail: {CustomerEmail},
-            delivery CustomerAdress: {CustomerAdress}
-            Create Order Date: {CreateOrderDate},
-            Shipping Date: {ShippingDate},
-            Delivery Date:{DeliveryDate}
-        ";
+    public override string ToString() => this.ToStringProperty();
 }
 
 

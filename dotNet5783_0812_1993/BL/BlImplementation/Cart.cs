@@ -37,7 +37,7 @@ internal class Cart : ICart
                 cart.Items = new List<BO.OrderItem>();
             }
             product = dal.Product.GetById(idProduct);
-            if (product.Amount <= 0)
+            if (product.InStock <= 0)
                 throw new BO.BLImpossibleActionException("product not exist in stock");
             orderItem1.Name = product.Name;
             orderItem1.ProductID = idProduct;
@@ -71,7 +71,7 @@ internal class Cart : ICart
         {
             DO.Product product = new DO.Product();
             product = dal.Product.GetById(idProduct);
-            if (product.Amount < amount)
+            if (product.InStock < amount)
                 throw new BO.BLImpossibleActionException("product not exist in stock");
             if (cart.Items != null)
             {
@@ -153,14 +153,14 @@ internal class Cart : ICart
                 }
                 if (orderItem.Amount <= 0)
                     throw new BO.BLImpossibleActionException("invalid amount");
-                if (product.Amount < orderItem.Amount)
+                if (product.InStock < orderItem.Amount)
                     throw new BO.BLImpossibleActionException("amount not in stock ");
                 DO.OrderItem orderItem1 = new DO.OrderItem();
                 orderItem1.OrderID = id;
                 orderItem1.ProductID = orderItem.ProductID;
                 orderItem1.Amount = orderItem.Amount;
                 orderItem1.Price = orderItem.Price;
-                product.Amount -= orderItem.Amount;
+                product.InStock -= orderItem.Amount;
                 try
                 {
                     dal.Product.Update(product);
@@ -175,7 +175,7 @@ internal class Cart : ICart
                 }
                 catch (DO.DalDoesNotExistException ex)
                 {
-                    throw new BO.BLDoesNotExistException($"{ex.} dosent exsit", ex);
+                    throw new BO.BLDoesNotExistException($"{ex.EntityName} dosent exsit", ex);
                 }
             }
         }
