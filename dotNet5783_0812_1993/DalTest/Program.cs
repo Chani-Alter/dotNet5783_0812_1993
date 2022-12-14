@@ -50,7 +50,7 @@ namespace DalTest
                         helpString = Console.ReadLine();
                         int.TryParse(helpString, out helpInt);
                         product.ID=helpInt;
-                        product.ProductName = Console.ReadLine();
+                        product.Name = Console.ReadLine();
                         helpString=Console.ReadLine();
                         int.TryParse(helpString, out helpInt);
                         product.Category = (Category)helpInt;
@@ -87,7 +87,7 @@ namespace DalTest
                         Console.WriteLine("enter product details:\n product name, category , arice ,amount");
                         helpString = Console.ReadLine();
                         if(helpString != "")
-                            product.ProductName = helpString;
+                            product.Name = helpString;
                         helpString = Console.ReadLine();
                         if (helpString != "")
                         {
@@ -265,10 +265,10 @@ namespace DalTest
                 switch (menuChoice)
                 {
                     case SecondaryMenu.ADD:
-                        Console.WriteLine("enter order details:\n client name, email , adress");
-                        order.ClientName = Console.ReadLine();
-                        order.Email = Console.ReadLine();
-                        order.Adress = Console.ReadLine();
+                        Console.WriteLine("enter order details:\n client name, CustomerEmail , CustomerAdress");
+                        order.CustomerName = Console.ReadLine();
+                        order.CustomerEmail = Console.ReadLine();
+                        order.CustomerAdress = Console.ReadLine();
                         order.CreateOrderDate = DateTime.Now;
                         order.ShippingDate=DateTime.MinValue;
                         order.DeliveryDate=DateTime.MinValue;
@@ -294,16 +294,16 @@ namespace DalTest
                         int.TryParse(helpString, out helpInt);
                         //order = dalOrder.GetById(helpInt);
                         Console.WriteLine(order);
-                        Console.WriteLine("enter order details:\n client name, email , adress,create date , shiping date ,delivery date");
+                        Console.WriteLine("enter order details:\n client name, CustomerEmail , CustomerAdress,create date , shiping date ,delivery date");
                         helpString = Console.ReadLine();
                         if(helpString != "")
-                            order.ClientName = Console.ReadLine();
+                            order.CustomerName = Console.ReadLine();
                         helpString = Console.ReadLine();
                         if (helpString != "")
-                            order.Email = helpString;
+                            order.CustomerEmail = helpString;
                         helpString = Console.ReadLine();
                         if (helpString != "")
-                            order.Adress = helpString;
+                            order.CustomerAdress = helpString;
                         helpString = Console.ReadLine();
                         if (helpString != "")
                         {

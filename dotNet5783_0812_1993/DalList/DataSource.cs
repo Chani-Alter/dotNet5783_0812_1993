@@ -92,7 +92,7 @@ static class DataSource
         {
             793154,885632,958742,125412,563258,745896,125458,458796,236974,012587
         };
-        string[] productName = new string[]{
+        string[] Name = new string[]{
          "Dell Vostro","Lenovo ThinkBook","Lenovo IdeaPad","Apple Mac mini","Lenovo legion","Dell 24 inch","Xiaomi 30 inch",
          "JBL tune 510","Apple AirPods","mouse and keyboard DOQO"
         };
@@ -105,14 +105,14 @@ static class DataSource
         {
             4500,3800,3400,5000,3100,800,900,250,350,100
         };
-        int[] amountAvailable = new int[]
+        int[] InStockAvailable = new int[]
         {
             150,180,120,80,92,46,39,300,0,523
         };
 
         for (int i = 0; i < 10; i++)
         {
-            ProductList.Add(new Product { ID = productId[i], ProductName = productName[i], Category = category[i], Price = price[i], Amount = amountAvailable[i] });
+            ProductList.Add(new Product { ID = productId[i], Name = Name[i], Category = category[i], Price = price[i], InStock = InStockAvailable[i] });
         }
     }
 
@@ -121,11 +121,11 @@ static class DataSource
     /// </summary>
     static private void initOrderArray()
     {
-        String [] clientName = new String[13] {"Motti Weiss","Moshe Feld","Itzik Orlev","Ruli Dikman",
+        String [] CustomerName = new String[13] {"Motti Weiss","Moshe Feld","Itzik Orlev","Ruli Dikman",
         "Ari Hill","Shuli Rand","Ishay Ribo","Beri Weber","Simcha Friedman","Avraam Fried","Mordechai Ben David",
         "Yaakov Shwekey","Naftali Kempeh"
         };  
-        string[] email = new string[]
+        string[] CustomerEmail = new string[]
         {
             "MottiWeiss@gmail.com","MosheFeld@gmail.com","ItzikOrlev@gmail.com","RuliDikman@gmail.com",
         "AriHill@gmail.com","ShuliRand@gmail.com","IshayRibo@gmail.com","BeriWeber@gmail.com",
@@ -144,10 +144,10 @@ static class DataSource
         for (int i = 0; i < 20; i++)
         {
             //OrderList[IndexOrderArray].ID = OrderId;
-            //OrderArray[IndexOrderArray].ClientName = clientName[i % 13];
-            //OrderArray[IndexOrderArray].Email = email[i%13];
-            //OrderArray[IndexOrderArray].Adress = address[i%13];
-            DateTime ShipDate = new DateTime();
+            //OrderArray[IndexOrderArray].CustomerName = CustomerName[i % 13];
+            //OrderArray[IndexOrderArray].CustomerEmail = CustomerEmail[i%13];
+            //OrderArray[IndexOrderArray].CustomerAdress = address[i%13];
+            DateTime ShippingDate = new DateTime();
             DateTime DeliveryDate1 = new DateTime();
             DateTime helpE;
             do
@@ -161,7 +161,7 @@ static class DataSource
             {
                 helpC = new TimeSpan(randNum.Next(1, 10), 0, 0, 0, 0);
                 //OrderArray[IndexOrderArray].ShippingDate = OrderArray[i].CreateOrderDate + helpC;
-                ShipDate = helpE + helpC;
+                ShippingDate = helpE + helpC;
 
             }
             if (i < 8)
@@ -172,7 +172,7 @@ static class DataSource
 
             }
             //IndexOrderArray++;
-            OrderList.Add(new Order { ID = OrderId, ClientName = clientName[i % 13],Email = email[i % 13],Adress = address[i % 13], CreateOrderDate = helpE, ShippingDate = ShipDate, DeliveryDate = DeliveryDate1 });
+            OrderList.Add(new Order { ID = OrderId, CustomerName = CustomerName[i % 13],CustomerEmail = CustomerEmail[i % 13],CustomerAdress = address[i % 13], CreateOrderDate = helpE, ShippingDate = ShippingDate, DeliveryDate = DeliveryDate1 });
         }
         
     }
@@ -208,7 +208,7 @@ static class DataSource
                     break;
                 }
             }
-            OrderItemList.Add(new OrderItem { ID = OrderItemId, OrderID = o.ID, ProductID = ProductList[randA].ID, Price = price, Amount = randNum.Next(1, 5) });
+            OrderItemList.Add(new OrderItem { ID = OrderItemId, OrderID = o.ID, ProductID = ProductList[randA].ID, Price = price , Amount = randNum.Next(1, 5) });
             OrderItemList.Add(new OrderItem { ID = OrderItemId, OrderID = o.ID, ProductID = ProductList[randB].ID, Price = price2, Amount = randNum.Next(1, 5) });
 
         }
@@ -240,8 +240,8 @@ static class DataSource
         //                break;
         //            }
         //        }
-        //        OrderItemList.Add(new OrderItem { ID = OrderItemId, OrderID = o.ID, ProductID = ProductList[randA].ID, Price = price, Amount = randNum.Next(1, 5) });
-        //        OrderItemList.Add(new OrderItem { ID = OrderItemId, OrderID = o.ID, ProductID = ProductList[randB].ID, Price = price2, Amount = randNum.Next(1, 5) });
+        //        OrderItemList.Add(new OrderItem { ID = OrderItemId, OrderID = o.ID, ProductID = ProductList[randA].ID, Price = price, InStock = randNum.Next(1, 5) });
+        //        OrderItemList.Add(new OrderItem { ID = OrderItemId, OrderID = o.ID, ProductID = ProductList[randB].ID, Price = price2, InStock = randNum.Next(1, 5) });
 
         //    }
         //int helpA = randNum.Next(10);
@@ -249,7 +249,7 @@ static class DataSource
         //OrderItemArray[IndexOrderItemArray].OrderID = OrderArray[i].ID;
         //OrderItemArray[IndexOrderItemArray].ProductID = ProductArray[helpA].ID;
         //OrderItemArray[IndexOrderItemArray].Price = ProductArray[helpA].Price;
-        //OrderItemArray[IndexOrderItemArray].Amount = randNum.Next(4);
+        //OrderItemArray[IndexOrderItemArray].InStock = randNum.Next(4);
         //IndexOrderItemArray++;
         //int helpB;
         //do
@@ -259,7 +259,7 @@ static class DataSource
         //OrderItemArray[IndexOrderItemArray].OrderID = OrderArray[i].ID;
         //OrderItemArray[IndexOrderItemArray].ProductID = ProductArray[helpB].ID;
         //OrderItemArray[IndexOrderItemArray].Price = ProductArray[helpB].Price;
-        //OrderItemArray[IndexOrderItemArray].Amount = randNum.Next(4);
+        //OrderItemArray[IndexOrderItemArray].InStock = randNum.Next(4);
         //IndexOrderItemArray++;
 
     }

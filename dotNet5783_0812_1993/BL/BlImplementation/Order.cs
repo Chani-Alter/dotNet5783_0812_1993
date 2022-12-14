@@ -43,11 +43,11 @@ internal class Order : BlApi.IOrder
                 orderForList.TotalPrice = totalPrice;
 
 
-                if (order.DeliveryrDate < DateTime.Now && order.DeliveryrDate != DateTime.MinValue)
+                if (order.DeliveryDate < DateTime.Now && order.DeliveryDate != DateTime.MinValue)
                     orderForList.Status = BO.OrderStatus.PROVIDED_ORDER;
                 else
                 {
-                    if (order.ShipDate < DateTime.Now && order.ShipDate != DateTime.MinValue)
+                    if (order.ShippingDate < DateTime.Now && order.ShippingDate != DateTime.MinValue)
                         orderForList.Status = BO.OrderStatus.SEND_ORDER;
                     else
                         orderForList.Status = BO.OrderStatus.CONFIRMED_ORDER;
@@ -118,18 +118,18 @@ internal class Order : BlApi.IOrder
         }
         order.ID = orderDal.ID;
         order.CustomerName = orderDal.CustomerName;
-        order.CustomerAddress = orderDal.CustomerAdress;
+        order.CustomerAdress = orderDal.CustomerAdress;
         order.CustomerEmail = orderDal.CustomerEmail;
-        order.OrderDate = orderDal.OrderDate;
-        order.ShipDate = orderDal.ShipDate;
-        order.DeliveryDate = orderDal.DeliveryrDate;
+        order.CreateOrderDate = orderDal.CreateOrderDate;
+        order.ShippingDate = orderDal.ShippingDate;
+        order.DeliveryDate = orderDal.DeliveryDate;
         order.TotalPrice = totalPrice;
         order.Items = orderitems;
-        if (orderDal.DeliveryrDate < DateTime.Now && orderDal.DeliveryrDate != DateTime.MinValue)
+        if (orderDal.DeliveryDate < DateTime.Now && orderDal.DeliveryDate != DateTime.MinValue)
             order.Status = BO.OrderStatus.PROVIDED_ORDER;
         else
         {
-            if (order.ShipDate < DateTime.Now && orderDal.ShipDate != DateTime.MinValue)
+            if (order.ShippingDate < DateTime.Now && orderDal.ShippingDate != DateTime.MinValue)
                 order.Status = BO.OrderStatus.SEND_ORDER;
             else
                 order.Status = BO.OrderStatus.CONFIRMED_ORDER;
@@ -162,13 +162,13 @@ internal class Order : BlApi.IOrder
         {
             throw new BO.BLDoesNotExistException("order does not exist", ex);
         }
-        if (orderDal.ShipDate < DateTime.Now && orderDal.ShipDate != DateTime.MinValue)
+        if (orderDal.ShippingDate < DateTime.Now && orderDal.ShippingDate != DateTime.MinValue)
             throw new BO.BLImpossibleActionException("order send");
         else
         {
-            if (orderDal.ShipDate == DateTime.MinValue)
+            if (orderDal.ShippingDate == DateTime.MinValue)
                 throw new BO.BLMistakeUpdateException("No shipping date");
-            orderDal.ShipDate = DateTime.Now;
+            orderDal.ShippingDate = DateTime.Now;
             try
             {
                 dal.Order.Update(orderDal);
@@ -212,11 +212,11 @@ internal class Order : BlApi.IOrder
         }
         order.ID = orderDal.ID;
         order.CustomerName = orderDal.CustomerName;
-        order.CustomerAddress = orderDal.CustomerAdress;
+        order.CustomerAdress = orderDal.CustomerAdress;
         order.CustomerEmail = orderDal.CustomerEmail;
-        order.OrderDate = orderDal.OrderDate;
-        order.ShipDate = orderDal.ShipDate;
-        order.DeliveryDate = orderDal.DeliveryrDate;
+        order.CreateOrderDate = orderDal.CreateOrderDate;
+        order.ShippingDate = orderDal.ShippingDate;
+        order.DeliveryDate = orderDal.DeliveryDate;
         order.TotalPrice = totalPrice;
         order.Items = orderitems;
         order.Status = BO.OrderStatus.SEND_ORDER;
@@ -245,19 +245,19 @@ internal class Order : BlApi.IOrder
         {
             throw new BO.BLDoesNotExistException("order doesnot exist", ex);
         }
-        if (orderDal.DeliveryrDate < DateTime.Now && orderDal.DeliveryrDate != DateTime.MinValue)
+        if (orderDal.DeliveryDate < DateTime.Now && orderDal.DeliveryDate != DateTime.MinValue)
             throw new BO.BLImpossibleActionException("order Delivery");
         else
         {
 
-            if (orderDal.ShipDate > DateTime.Now)
+            if (orderDal.ShippingDate > DateTime.Now)
                 throw new BO.BLImpossibleActionException("It is not possible to update a delivery date before a shipping date");
             else
             {
-                if (orderDal.DeliveryrDate == DateTime.MinValue)
+                if (orderDal.DeliveryDate == DateTime.MinValue)
                     throw new BO.BLImpossibleActionException(" No delivery date");
             }
-            orderDal.DeliveryrDate = DateTime.Now;
+            orderDal.DeliveryDate = DateTime.Now;
             try
             {
                 dal.Order.Update(orderDal);
@@ -299,11 +299,11 @@ internal class Order : BlApi.IOrder
         }
         order.ID = orderDal.ID;
         order.CustomerName = orderDal.CustomerName;
-        order.CustomerAddress = orderDal.CustomerAdress;
+        order.CustomerAdress = orderDal.CustomerAdress;
         order.CustomerEmail = orderDal.CustomerEmail;
-        order.OrderDate = orderDal.OrderDate;
-        order.ShipDate = orderDal.ShipDate;
-        order.DeliveryDate = orderDal.DeliveryrDate;
+        order.CreateOrderDate = orderDal.CreateOrderDate;
+        order.ShippingDate = orderDal.ShippingDate;
+        order.DeliveryDate = orderDal.DeliveryDate;
         order.TotalPrice = totalPrice;
         order.Items = orderitems;
         order.Status = BO.OrderStatus.PROVIDED_ORDER;
@@ -329,26 +329,26 @@ internal class Order : BlApi.IOrder
             throw new BO.BLDoesNotExistException("order doesnot exist", ex);
         }
         orderTracking.ID = order.ID;
-        if (order.DeliveryrDate < DateTime.Now && order.DeliveryrDate != DateTime.MinValue)
+        if (order.DeliveryDate < DateTime.Now && order.DeliveryDate != DateTime.MinValue)
             orderTracking.Status = BO.OrderStatus.PROVIDED_ORDER;
         else
         {
-            if (order.ShipDate < DateTime.Now && order.ShipDate != DateTime.MinValue)
+            if (order.ShippingDate < DateTime.Now && order.ShippingDate != DateTime.MinValue)
                 orderTracking.Status = BO.OrderStatus.SEND_ORDER;
             else
                 orderTracking.Status = BO.OrderStatus.CONFIRMED_ORDER;
         }
         List<Tuple<DateTime, string>> tList = new List<Tuple<DateTime, string>>
             {
-                new Tuple<DateTime, string>(order.OrderDate, "the order has been created")
+                new Tuple<DateTime, string>(order.CreateOrderDate, "the order has been created")
              };
-        if (order.ShipDate != DateTime.MinValue)
+        if (order.ShippingDate != DateTime.MinValue)
         {
-            tList.Add(new Tuple<DateTime, string>(order.ShipDate, "the order has been sent"));
+            tList.Add(new Tuple<DateTime, string>(order.ShippingDate, "the order has been sent"));
         }
-        if (order.DeliveryrDate != DateTime.MinValue)
+        if (order.DeliveryDate != DateTime.MinValue)
         {
-            tList.Add(new Tuple<DateTime, string>(order.DeliveryrDate, "the order provided"));
+            tList.Add(new Tuple<DateTime, string>(order.DeliveryDate, "the order provided"));
         }
         orderTracking.Tuples = tList;
         return orderTracking;
@@ -387,7 +387,7 @@ internal class Order : BlApi.IOrder
         }
         DO.Product product = new DO.Product();
         BO.OrderItem orderItem = new BO.OrderItem();
-        if (order.ShipDate != DateTime.MinValue && order.ShipDate < DateTime.Now)
+        if (order.ShippingDate != DateTime.MinValue && order.ShippingDate < DateTime.Now)
         {
             throw new BO.BLImpossibleActionException("It is not possible to update an order after it has been sent");
         }

@@ -14,7 +14,7 @@ public struct Product
     /// <summary>
     /// the name of the product
     /// </summary>
-    public string ProductName { get; set; }
+    public string Name { get; set; }
 
     /// <summary>
     /// the category of the product
@@ -27,9 +27,9 @@ public struct Product
     public double Price { get; set; }
 
     /// <summary>
-    /// amount available
+    /// InStock available
     /// </summary>
-    public int Amount { get; set; }
+    public int InStock { get; set; }
 
     /// <summary>
     /// to string function to the product struct
@@ -38,10 +38,10 @@ public struct Product
 
     public override string ToString() => $@"
             product id:{ID},
-            Product Name: {ProductName},
+            Product Name: {Name},
             Category: {Category},
             Price: {Price},
-            amount: {Amount}
+            InStock: {InStock}
         ";
 
 }
