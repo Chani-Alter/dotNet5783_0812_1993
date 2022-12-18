@@ -1,6 +1,6 @@
-﻿using System.Security.Cryptography;
-
+﻿
 namespace DO;
+
 /// <summary>
 ///A class for errors thrown when non-existent items are requested
 /// </summary>

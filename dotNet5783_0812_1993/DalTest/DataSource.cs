@@ -1,5 +1,4 @@
-﻿using DalApi;
-using DO;
+﻿using DO;
 namespace Dal;
 
 static class DataSource
@@ -98,8 +97,8 @@ static class DataSource
         };
         Category[] category = new Category[]
         {
-            Category.LAPTOP,Category.LAPTOP,Category.LAPTOP ,Category.dESKTOP_COMPUTER,Category.dESKTOP_COMPUTER,Category.SCREENS,Category.SCREENS,
-            Category.PERIPHERAL_EQUIPMENT,Category.PERIPHERAL_EQUIPMENT,Category.PERIPHERAL_EQUIPMENT
+            Category.Laptop,Category.Laptop,Category.Laptop ,Category.DesktopComputer,Category.DesktopComputer,Category.Screens,Category.Screens,
+            Category.PeripheralEquipment,Category.PeripheralEquipment,Category.PeripheralEquipment
         };
         int[] price = new int[]
         {

@@ -1,12 +1,11 @@
-﻿
-namespace BO;
+﻿namespace BO;
 
 /// <summary>
 /// the product categorys enum
 /// </summary>
 public enum Category
 {
-    LAPTOP = 1, dESKTOP_COMPUTER, SCREENS, PERIPHERAL_EQUIPMENT
+    Laptop = 1, DesktopComputer, Screens, PeripheralEquipment
 }
 /// <summary>
 /// The order statuses enum

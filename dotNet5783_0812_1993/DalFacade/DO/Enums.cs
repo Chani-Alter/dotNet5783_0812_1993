@@ -2,5 +2,5 @@
 
 	public enum Category
 	{
-        LAPTOP=1 ,dESKTOP_COMPUTER,SCREENS,PERIPHERAL_EQUIPMENT
+        Laptop=1 ,DesktopComputer ,Screens ,PeripheralEquipment
     }

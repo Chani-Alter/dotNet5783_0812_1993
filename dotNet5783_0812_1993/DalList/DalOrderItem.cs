@@ -1,11 +1,8 @@
 ﻿using DalApi;
 using DO;
-using System;
 using static Dal.DataSource;
 
-
 namespace Dal;
-
 
 /// <summary>
 /// A department that performs operations: 
@@ -75,7 +72,7 @@ internal class DalOrderItem:IOrderItem
     {
         List<OrderItem> orderItems = new List<OrderItem>();
         bool flag = false;
-        for (int i = (OrderItemList.Count) - 1; i >= 0; i--)
+        for (int i = OrderItemList.Count - 1; i >= 0; i--)
         {
             if (OrderItemList[i].OrderID == orderId)
             {
@@ -95,7 +92,7 @@ internal class DalOrderItem:IOrderItem
     public IEnumerable<OrderItem> GetAll()
     {
         List<OrderItem> orderItems = new List<OrderItem>();
-        for (int i = (OrderItemList.Count) - 1; i >= 0; i--)
+        for (int i = OrderItemList.Count - 1; i >= 0; i--)
         {
             orderItems.Add(OrderItemList[i]);
         }

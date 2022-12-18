@@ -1,6 +1,5 @@
 ﻿using DalApi;
 using DO;
-using System;
 using static Dal.DataSource;
 
 namespace Dal;
@@ -11,6 +10,7 @@ namespace Dal;
 /// </summary>
 internal class DalProduct:IProduct
 {
+
     /// <summary>
     /// Add a product to the productArray
     /// </summary>

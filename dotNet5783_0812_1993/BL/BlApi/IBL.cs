@@ -1,22 +1,23 @@
-﻿
-namespace BlApi
+﻿namespace BlApi;
+
+/// <summary>
+/// An interface that contains all the secondary interfaces
+/// </summary>
+public interface IBl
 {
     /// <summary>
-    /// A main interface that centers all the interfaces of the logical layer
+    /// returns the Iproduct
     /// </summary>
-    public interface IBl
-    {
-        /// <summary>
-        /// A property that returns the IProduct entity
-        /// </summary>
-        public IProduct Product { get; }
-        /// <summary>
-        /// A property that returns the IOrder entity
-        /// </summary>
-        public IOrder Order { get; }
-        /// <summary>
-        /// A property that returns the ICart entity
-        /// </summary>
-        public ICart cart { get; }
-    }
+    public IProduct Product { get; }
+
+    /// <summary>
+    ///  returns the IOrder 
+    /// </summary>
+    public IOrder Order { get; }
+
+    /// <summary>
+    /// returns the ICart 
+    /// </summary>
+    public ICart cart { get; }
+
 }

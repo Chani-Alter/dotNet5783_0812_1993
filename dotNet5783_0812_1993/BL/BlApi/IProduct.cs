@@ -1,50 +1,55 @@
 ﻿using BO;
 
-namespace BlApi
+namespace BlApi;
+
+/// <summary>
+/// Interface to the product entity
+/// </summary>
+public interface IProduct
 {
     /// <summary>
-    /// Interface for a product logical entity
+    /// A function Defination that returns a list of all products for the manager
     /// </summary>
-    public interface IProduct
-    {
-        /// <summary>
-        /// Definition of a function that returns a list of all products for the manager
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<ProductForList> GetProductListForManager();
-        /// <summary>
-        /// Definition of a function that returns a product by id for the manager
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public Product GetProductByIdForManager(int id);
-        /// <summary>
-        /// Definition of a function that add a product
-        /// </summary>
-        /// <param name="product"></param>
-        /// <returns></returns>
-        public Product AddProduct(Product product);
-        /// <summary>
-        /// Definition of a function that delete a product
-        /// </summary>
-        /// <param name="id"></param>
-        public void DeleteProduct(int id);
-        /// <summary>
-        /// Definition of a function that update a product
-        /// </summary>
-        /// <param name="product"></param>
-        /// <returns></returns>
-        public Product UpdateProduct(Product product);
-        /// <summary>
-        /// Definition of a function that returns a list of all products for the customer
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<ProductItem> GetProductListForCustomer();
-        /// <summary>
-        /// Definition of a function that returns a product by id for the customer
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public ProductItem GetProductByIdForCustomer(int id);
-    }
+    /// <returns></returns>
+    public IEnumerable<ProductForList> GetProductListManager();
+
+    /// <summary>
+    ///A function Defination for return a product by id for manager
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public Product GetProductByIdManager(int id);
+
+    /// <summary>
+    /// A function Defination for adding a product
+    /// </summary>
+    /// <param name="product"></param>
+    /// <returns></returns>
+    public Product AddProduct(Product product);
+
+    /// <summary>
+    /// A function Defination for deleteing a product
+    /// </summary>
+    /// <param name="id"></param>
+    public void DeleteProduct(int id);
+
+    /// <summary>
+    /// A function Defination for updateing a product
+    /// </summary>
+    /// <param name="product"></param>
+    /// <returns></returns>
+    public Product UpdateProduct(Product product);
+
+    /// <summary>
+    /// A function Defination for return a list of all products for the customer
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerable<ProductItem> GetProductListForCustomer();
+
+    /// <summary>
+    /// A function Defination for return a product by id for the customer
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public ProductItem GetProductByIdCustomer(int id);
 }

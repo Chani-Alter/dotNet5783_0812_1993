@@ -1,52 +1,51 @@
 ﻿using System.Collections;
 using System.Reflection;
 
-namespace DO
+namespace DO;
+
+/// <summary>
+/// class for exteonsion method
+/// </summary>
+static class Tools
 {
     /// <summary>
-    /// class for exteonsion method
+    ///A function that prints the field values of an entity
     /// </summary>
-    static class Tools
+    /// <typeparam name="T"></typeparam>
+    /// <param name="t"></param>
+    /// <returns>A string describing the entity and consistring of the details of the relevant fields</returns>
+    public static string ToStringProperty<T>(this T entity)
     {
-        /// <summary>
-        ///A function that prints the field values of an entity
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="t"></param>
-        /// <returns>A string describing the entity and consistring of the details of the relevant fields</returns>
-        public static string TostringProperty<T>(this T entity)
+
+        string st = "";
+        foreach (PropertyInfo item in entity.GetType().GetProperties())
         {
+            var enumerable = item.GetValue(entity, null);
 
-            string st = "";
-            foreach (PropertyInfo item in entity.GetType().GetProperties())
+            if ((enumerable is IEnumerable) && !(enumerable is string))
             {
-                var enumerable = item.GetValue(entity, null);
-
-                if ((enumerable is IEnumerable) && !(enumerable is string))
+                IEnumerable e = enumerable as IEnumerable;
+                foreach (var a in e)
                 {
-                    IEnumerable e = enumerable as IEnumerable;
-                    foreach (var a in e)
-                    {
-                        st += a.TostringProperty();
+                    st += a.ToStringProperty();
 
-                    }
-                }
-                else
-                {
-                    st += "\n" + item.Name +
-               "- " + item.GetValue(entity, null);
                 }
             }
-            return st;
+            else
+            {
+                st += "\n" + item.Name +
+           "- " + item.GetValue(entity, null);
+            }
         }
-        public static void TostringPropertyToIEnumerable(IEnumerable collection, string st)
+        return st;
+    }
+    public static void ToStringPropertyToIEnumerable(IEnumerable collection, string st)
+    {
+        foreach (var item in collection)
         {
-            foreach (var item in collection)
-            {
 
-                st += item;
-            }
+            st += item;
         }
     }
-
 }
+

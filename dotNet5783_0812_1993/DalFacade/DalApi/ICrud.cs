@@ -1,18 +1,40 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace DalApi;
 
-namespace DalApi
+/// <summary>
+/// icrud generic interface that defines functions on the data entities
+/// </summary>
+/// <typeparam name="T"></typeparam>
+public interface ICrud<T>
 {
-    public interface ICrud<T>
-    {
-        public int Add(T obj);
-        public void Delete(int id);
-        public void Update(T obj);
-        public T GetById(int id);
-        public IEnumerable<T> GetAll();
-    }
+    /// <summary>
+    /// A function that defines adding a data entity
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <returns></returns>
+    public int Add(T obj);
+
+    /// <summary>
+    /// A function that defines delete a data entity
+    /// </summary>
+    /// <param name="id"></param>
+   
+    public void Delete(int id);
+    /// <summary>
+    /// A function that defines update a data entity
+    /// </summary>
+    /// <param name="obj"></param>
+    
+    public void Update(T obj);
+    /// <summary>
+    /// A function that defines a data entity return by id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public T GetById(int id);
+
+    /// <summary>
+    /// A function that defines returning a list of data entities
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerable<T> GetAll();
 }

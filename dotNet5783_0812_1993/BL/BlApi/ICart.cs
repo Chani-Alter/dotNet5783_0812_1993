@@ -1,32 +1,33 @@
 ﻿using BO;
 
-namespace BlApi
+namespace BlApi;
+
+/// <summary>
+/// Interface to the cart entity
+/// </summary>
+public interface ICart
 {
     /// <summary>
-    /// Interface for a cart logical entity
+    /// A function Defination for Adding a item to the cart
     /// </summary>
-    public interface ICart
-    {
-        /// <summary>
-        /// Definition of a function that adds a product to the cart
-        /// </summary>
-        /// <param name="cart"></param>
-        /// <param name="idProduct"></param>
-        /// <returns>cart</returns>
-        public Cart AddProductToCart(Cart cart, int idProduct);
-        /// <summary>
-        /// Definition of a function that update the amount of product in the cart
-        /// </summary>
-        /// <param name="cart"></param>
-        /// <param name="idProduct"></param>
-        /// <param name="amount"></param>
-        /// <returns>cart</returns>
-        public Cart UpdateProductAmountInCart(Cart cart, int idProduct, int amount);
-        /// <summary>
-        /// Definition of a function that confirms an order
-        /// </summary>
-        /// <param name="cart"></param>
-        public void MakeOrder(Cart cart);
+    /// <param name="cart"></param>
+    /// <param name="productId"></param>
+    /// <returns>the cart</returns>
+    public Cart AddProductToCart(Cart cart, int productId);
 
-    }
+    /// <summary>
+    ///  A function Defination for update the amount of single product in the cart
+    /// </summary>
+    /// <param name="cart"></param>
+    /// <param name="productId"></param>
+    /// <param name="amount"></param>
+    /// <returns>cart</returns>
+    public Cart UpdateProductAmountInCart(Cart cart, int productId, int amount);
+
+    /// <summary>
+    ///  A function Defination for  confirm an order
+    /// </summary>
+    /// <param name="cart"></param>
+    public void MakeOrder(Cart cart);
+
 }

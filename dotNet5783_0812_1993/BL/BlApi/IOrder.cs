@@ -1,47 +1,52 @@
 ﻿using BO;
 
-namespace BlApi
-{
+namespace BlApi;
+
+/// <summary>
+/// Interface to the order entity
+/// </summary>
+public interface IOrder
+{   
     /// <summary>
-    /// Interface for a order logical entity
+    ///A function Defination that returns the list of the orders
     /// </summary>
-    public interface IOrder
-    {   /// <summary>
-        /// Definition of a function that returns all orders
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<OrderForList> GetOrderList();
-        /// <summary>
-        /// Definition of a function that returns order by id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public Order GetOrderById(int id);
-        /// <summary>
-        /// Definition of a function that update the send order
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public Order UpdateSendOrderByManager(int id);
-        /// <summary>
-        /// Definition of a function that update the supply order
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public Order UpdateSupplyOrderByManager(int id);
-        /// <summary>
-        /// Definition of a function that tracks the order
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public OrderTracking TrackingOrder(int id);
-        /// <summary>
-        /// bonus:Definition of a function that updates the quantity of a product in the order
-        /// </summary>
-        /// <param name="idOrder"></param>
-        /// <param name="idProduct"></param>
-        /// <param name="amount"></param>
-        /// <returns></returns>
-        public OrderItem UpdateAmountOfOProductInOrder(int idOrder, int idProduct, int amount);
-    }
+    /// <returns></returns>
+    public IEnumerable<OrderForList> GetOrderList();
+
+    /// <summary>
+    ///A function Defination that returns order by id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public Order GetOrderById(int id);
+
+    /// <summary>
+    ///A function Defination updateing the send order
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public Order UpdateSendOrderByManager(int id);
+
+    /// <summary>
+    ///A function Defination that update the supply order
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public Order UpdateSupplyOrderByManager(int id);
+
+    /// <summary>
+    ///A function Defination that tracks the order
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public OrderTracking TrackingOrder(int id);
+
+    /// <summary>
+    /// A function Defination that updates the quantity of a product in the order
+    /// </summary>
+    /// <param name="orderId"></param>
+    /// <param name="productId"></param>
+    /// <param name="amount"></param>
+    /// <returns>the updated order item</returns>
+    public OrderItem UpdateAmountOfOProductInOrder(int orderId, int productId, int amount);
 }
