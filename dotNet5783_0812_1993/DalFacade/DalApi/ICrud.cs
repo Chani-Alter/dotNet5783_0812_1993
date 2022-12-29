@@ -4,7 +4,7 @@
 /// icrud generic interface that defines functions on the data entities
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public interface ICrud<T>
+public interface ICrud<T>where T:struct
 {
     /// <summary>
     /// A function that defines adding a data entity
@@ -25,16 +25,13 @@ public interface ICrud<T>
     /// <param name="obj"></param>
     
     public void Update(T obj);
-    /// <summary>
-    /// A function that defines a data entity return by id
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    public T GetById(int id);
 
     /// <summary>
     /// A function that defines returning a list of data entities
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<T> GetAll();
+    public IEnumerable<T?> GetList(Func<T ?, bool>? predicate = null);
+
+    public T GetByCondition(Func<T ?, bool> predicate);
+
 }

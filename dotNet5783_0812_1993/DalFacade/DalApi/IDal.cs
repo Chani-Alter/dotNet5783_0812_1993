@@ -1,4 +1,5 @@
-﻿namespace DalApi;
+﻿
+namespace DalApi;
 
 /// <summary>
 /// A main interface that centers all the interfaces of the data layer

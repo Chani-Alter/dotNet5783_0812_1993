@@ -32,7 +32,7 @@ enum CartOptions { Add = 1, Update, MakeOrder }
 public class Program
 {
     static private DalList.DalList dalList = new DalList.DalList();
-    static string readString;
+    static string? readString;
     static int readInt;
     static int orderId;
     static int productId;
@@ -50,11 +50,12 @@ public class Program
     {
         Console.WriteLine("Product menu: \n 1- add \n 2- get for manager \n 3- get for customer \n 4- get list for manager \n 5- get list for customer  \n 6- update \n 7- delete");
         readString = Console.ReadLine();
-        ProductOptions productOptions = (ProductOptions)int.Parse(readString);
+        ProductOptions productOptions;
+        ProductOptions.TryParse(readString ,out productOptions);
         Product product = new Product();
         ProductItem productItem = new ProductItem();
-        IEnumerable<ProductForList> productsForList = new List<ProductForList>();
-        IEnumerable<ProductItem> productsItem = new List<ProductItem>();
+        IEnumerable<ProductForList?> productsForList = new List<ProductForList?>();
+        IEnumerable<ProductItem?> productsItem = new List<ProductItem?>();
         try
         {
             switch (productOptions)
@@ -97,14 +98,14 @@ public class Program
                 case ProductOptions.GetListForManager:
                     productsForList = iBl.Product.GetProductListManager();
                     
-                    foreach (ProductForList productForList in productsForList)
+                    foreach (ProductForList? productForList in productsForList)
                         Console.WriteLine(productForList);
                     break;
 
                 case ProductOptions.GetListForCustomer:
                     productsItem = iBl.Product.GetProductListForCustomer();
                    
-                    foreach (ProductItem item in productsItem)
+                    foreach (ProductItem? item in productsItem)
                         Console.WriteLine(item);
                     break;
 
@@ -175,7 +176,8 @@ public class Program
     {
         Console.WriteLine("Order menu: \n 1- get \n 2- get all \n 3- update shipping order \n 4- update delivery order  \n 5- order tracking \n 6- update amount of product in order");
         readString = Console.ReadLine();
-        OrderOptions orderOptions = (OrderOptions)int.Parse(readString);
+        OrderOptions orderOptions;
+        OrderOptions.TryParse(readString , out orderOptions);
         Order order = new Order();
         OrderItem orderItem = new OrderItem();
         OrderTracking orderTracking = new OrderTracking();
@@ -281,7 +283,8 @@ public class Program
 
         Console.WriteLine("cart menu: \n 1- add \n 2- update  \n 3- make order ");
         readString = Console.ReadLine();
-        CartOptions cartOptions = (CartOptions)int.Parse(readString);
+        CartOptions cartOptions;
+        CartOptions.TryParse(readString , out cartOptions);
         currentCart.CustomerName = "david coen";
         currentCart.CustomerEmail = "davidcoen@gmail.com";
         currentCart.CustomerAdress = "micael 15 petach tikva";
@@ -352,7 +355,7 @@ public class Program
     {
         MainMenu MainMenu;
         Console.WriteLine("Shop menu: \n 0-Exit \n 1-product \n 2-order\n 3-cart");
-        string choice = Console.ReadLine();
+        string? choice = Console.ReadLine();
         MainMenu.TryParse(choice, out MainMenu);
 
         while (MainMenu != MainMenu.Exit)

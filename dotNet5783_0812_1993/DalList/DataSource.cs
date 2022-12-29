@@ -55,15 +55,15 @@ static class DataSource
     /// <summary>
     /// the product array
     /// </summary>
-    internal static List <Product> ProductList= new List <Product>();
+    internal static List <Product?> ProductList= new List <Product?>();
     /// <summary>
     /// the orders array
     /// </summary>
-    internal static List <Order> OrderList = new List<Order>() ;
+    internal static List <Order?> OrderList = new List<Order?>() ;
     /// <summary>
     /// the order items array
     /// </summary>
-    internal static List <OrderItem> OrderItemList = new List <OrderItem>() ;
+    internal static List <OrderItem?> OrderItemList = new List <OrderItem?>() ;
 
     /// <summary>
     /// the static constractor how caled the s_Initialize function
@@ -140,10 +140,6 @@ static class DataSource
        
         for (int i = 0; i < 20; i++)
         {
-            //OrderList[IndexOrderArray].ID = OrderId;
-            //OrderArray[IndexOrderArray].CustomerName = CustomerName[i % 13];
-            //OrderArray[IndexOrderArray].CustomerEmail = CustomerEmail[i%13];
-            //OrderArray[IndexOrderArray].CustomerAdress = address[i%13];
             DateTime ShippingDate = new DateTime();
             DateTime DeliveryDate1 = new DateTime();
             DateTime helpE;
@@ -180,16 +176,16 @@ static class DataSource
     static private void initOrderItemArray()
 
     {
-        foreach (Order o in OrderList)
+        foreach (Order? o in OrderList)
         {
             int randA = randNum.Next(9);
             double price = new double();
             double price2 = new double();
-            foreach (Product p in ProductList)
+            foreach (Product? p in ProductList)
             {
-                if (p.ID == ProductList[randA].ID)
+                if (p?.ID == ProductList[randA]?.ID)
                 {
-                    price = p.Price;
+                    price = p?.Price??0;
                     break;
                 }
             }
@@ -197,16 +193,16 @@ static class DataSource
             do
                 randB = randNum.Next(9);
             while (randA == randB);
-            foreach (Product p in ProductList)
+            foreach (Product? p in ProductList)
             {
-                if (p.ID == ProductList[randB].ID)
+                if (p?.ID == ProductList[randB]?.ID)
                 {
-                    price2 = p.Price;
+                    price2 = p?.Price??0;
                     break;
                 }
             }
-            OrderItemList.Add(new OrderItem { ID = OrderItemId, OrderID = o.ID, ProductID = ProductList[randA].ID, Price = price , Amount = randNum.Next(1, 5) });
-            OrderItemList.Add(new OrderItem { ID = OrderItemId, OrderID = o.ID, ProductID = ProductList[randB].ID, Price = price2, Amount = randNum.Next(1, 5) });
+            OrderItemList.Add(new OrderItem(OrderItemId, o?.ID, ProductList[randA]?.ID, price, randNum.Next(1, 5)));
+            OrderItemList.Add(new OrderItem { ID = OrderItemId, OrderID = o?.ID??0, ProductID = ProductList[randB]?.ID??0, Price = price2, Amount = randNum.Next(1, 5) });
 
         }
 

@@ -6,7 +6,7 @@ namespace BlApi;
 /// Interface to the order entity
 /// </summary>
 public interface IOrder
-{   
+{
     /// <summary>
     ///A function Defination that returns the list of the orders
     /// </summary>

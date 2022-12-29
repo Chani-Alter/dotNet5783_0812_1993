@@ -24,7 +24,7 @@ static class Tools
 
             if ((enumerable is IEnumerable) && !(enumerable is string))
             {
-                IEnumerable en = enumerable as IEnumerable;
+                IEnumerable? en = enumerable as IEnumerable;
                 foreach (var _item in en)
                 {
                     st += _item.ToStringProperty();

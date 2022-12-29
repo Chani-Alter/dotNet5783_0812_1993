@@ -9,7 +9,7 @@ namespace DO;
 public class DoesNotExistedDalException : Exception
 {
     public int EntityId;
-    public string EntityName;
+    public string? EntityName;
     public DoesNotExistedDalException(int _id, string _name) : base()
     { 
         EntityId = _id; EntityName = _name; 
@@ -43,7 +43,7 @@ public class DoesNotExistedDalException : Exception
 public class DuplicateDalException : Exception
 {
     public int EntityId;
-    public string EntityName;
+    public string? EntityName;
 
     public DuplicateDalException(int _id, string _name) : base()
     {

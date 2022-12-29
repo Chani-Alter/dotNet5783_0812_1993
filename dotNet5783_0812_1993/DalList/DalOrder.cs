@@ -21,36 +21,22 @@ internal class DalOrder:IOrder
         OrderList.Add(order);
         return order.ID;
     }
-
-    /// <summary>
-    /// get order by id
-    /// </summary>
-    /// <param name="id">the order id</param>
-    /// <returns>the order</returns>
-    /// <exception cref="Exception">if the order doesnt exist</exception>
-    public Order GetById(int id)
-    {
-        int index = search(id);
-        if (index != -1)
-            return OrderList[index];
-        else
-            throw new DoesNotExistedDalException("order is not exist");
-    }
-
     /// <summary>
     /// get all the orders
     /// </summary>
     /// <returns>an array of orders</returns>
-    public IEnumerable<Order> GetAll()
+    public IEnumerable<Order?> GetList(Func<Order?, bool>? predicate)
     {
-        List<Order> orders = new List<Order>();
-        for (int i = (OrderList.Count) - 1; i >= 0; i--)
-        {
-            orders.Add(OrderList[i]);
-        }
-        return orders;
+        if (predicate == null)
+            return OrderList.Select(order => order);
+        return  OrderList.Where(predicate);
     }
 
+    public Order GetByCondition(Func<Order?, bool> predicate)
+    {
+        return  OrderList.FirstOrDefault(predicate) ?? 
+            throw new DoesNotExistedDalException("There is no order that matches the condition");
+    }
 
     /// <summary>
     /// delete an order
@@ -90,7 +76,7 @@ internal class DalOrder:IOrder
     {
         for (int i = 0; i < OrderList.Count; i++)
         {
-            if (OrderList[i].ID == id)
+            if (OrderList[i]?.ID == id)
                 return i;
         }
         return -1;

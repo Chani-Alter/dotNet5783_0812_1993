@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Reflection;
+using System.Linq;
 
 namespace DO;
 
@@ -18,13 +19,13 @@ static class Tools
     {
 
         string st = "";
-        foreach (PropertyInfo item in entity.GetType().GetProperties())
+        foreach (var (item, enumerable) in from PropertyInfo item in entity.GetType().GetProperties()
+                                           let enumerable = item.GetValue(entity, null)
+                                           select (item, enumerable))
         {
-            var enumerable = item.GetValue(entity, null);
-
             if ((enumerable is IEnumerable) && !(enumerable is string))
             {
-                IEnumerable e = enumerable as IEnumerable;
+                IEnumerable? e = enumerable as IEnumerable;
                 foreach (var a in e)
                 {
                     st += a.ToStringProperty();
@@ -37,6 +38,7 @@ static class Tools
            "- " + item.GetValue(entity, null);
             }
         }
+
         return st;
     }
     public static void ToStringPropertyToIEnumerable(IEnumerable collection, string st)

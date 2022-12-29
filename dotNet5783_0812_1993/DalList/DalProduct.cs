@@ -1,5 +1,6 @@
 ﻿using DalApi;
 using DO;
+using System.Linq;
 using static Dal.DataSource;
 
 namespace Dal;
@@ -17,43 +18,28 @@ internal class DalProduct:IProduct
     /// <param name="product">the new product to add</param>
     /// <returns>the id of the new product</returns>
     public int Add(Product product)
-    {        foreach (Product p in ProductList)
+    {
+        foreach (Product? p in ProductList)
         {
-            if (p.ID == product.ID)
+            if (p?.ID == product.ID)
                 throw new DuplicateDalException("product id already exists");
         }
 
         ProductList.Add(product);
         return product.ID;
     }
-    
-    /// <summary>
-    /// get product by id
-    /// </summary>
-    /// <param name="id">the id of the requeses product</param>
-    /// <returns>the product</returns>
-    /// <exception cref="Exception">if the product didnt exist throw exeption</exception>
-    public Product GetById(int id)
+
+    public IEnumerable<Product?> GetList(Func<Product?, bool>? predicate)
     {
-        int index = search(id);
-        if (index != -1)
-            return ProductList[index];
-        else
-            throw new DoesNotExistedDalException("product is not exist");
+        if (predicate == null)
+            return ProductList.Select(product => product);
+        return ProductList.Where(predicate);
     }
 
-    /// <summary>
-    /// get all products
-    /// </summary>
-    /// <returns>an array of all the products</returns>
-    public IEnumerable <Product> GetAll()
+    public Product GetByCondition(Func<Product?, bool> predicate)
     {
-        List<Product> products = new List<Product>();
-        for (int i = (ProductList.Count) - 1; i >= 0; i--)
-        {
-            products.Add(ProductList[i]);
-        }
-        return products;
+        return ProductList.FirstOrDefault(predicate) ??
+            throw new DoesNotExistedDalException("There is no order item that matches the condition");
     }
 
     /// <summary>
@@ -89,7 +75,7 @@ internal class DalProduct:IProduct
     {
         for (int i = 0; i < ProductList.Count; i++)
         {
-            if (ProductList[i].ID == id)
+            if (ProductList[i]?.ID == id)
                 return i;
         }
         return -1;

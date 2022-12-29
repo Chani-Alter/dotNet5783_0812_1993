@@ -1,5 +1,4 @@
-﻿using Dal;
-using DO;
+﻿using DO;
 
 namespace DalTest
 {
@@ -34,12 +33,11 @@ namespace DalTest
         { 
             Console.WriteLine("order menu: \n 1-add \n 2-get all \n 3- get by id \n 4- update \n 5- delete");
             SecondaryMenu menuChoice;
-            string helpString = Console.ReadLine();
+            string? helpString = Console.ReadLine();
             SecondaryMenu.TryParse(helpString, out menuChoice);
             Product product = new Product();
             int helpInt;
             double helpDouble;
-            Category helpCategory;
             
             try
             {
@@ -59,15 +57,15 @@ namespace DalTest
                         product.Price = helpDouble;
                         helpString = Console.ReadLine();
                         int.TryParse(helpString, out helpInt);
-                        product.Amount = helpInt;
+                        product.InStock = helpInt;
                         int insertId = dalList.Product.Add(product);
                         Console.WriteLine("insert id: " + insertId);
                         break;
                     case SecondaryMenu.GET_ALL:
                         //Product[] products = dalProduct.GetAll();
-                        IEnumerable<Product> products = dalList.Product.GetAll();
+                        IEnumerable<Product?> products = dalList.Product.GetList();
                         Console.WriteLine("products: ");
-                        foreach (Product prod in products)
+                        foreach (Product? prod in products)
                             Console.WriteLine(prod);
                         break;
                     case SecondaryMenu.GET_BY_ID:
@@ -75,7 +73,7 @@ namespace DalTest
                         helpString = Console.ReadLine();
                         int.TryParse(helpString, out helpInt);
                         //product = dalProduct.GetById(helpInt);
-                        product = dalList.Product.GetById(helpInt);
+                        product = dalList.Product.GetByCondition(prod=>prod?.ID == helpInt);
                         Console.WriteLine(product);
                         break;
                     case SecondaryMenu.UPDATE:
@@ -104,7 +102,7 @@ namespace DalTest
                         if (helpString != "")
                         {
                             int.TryParse(helpString, out helpInt);
-                            product.Amount = helpInt;
+                            product.InStock = helpInt;
                         }
                         dalList.Product.Update(product);
                         //dalProduct.Update(product);
@@ -137,7 +135,7 @@ namespace DalTest
         {
             Console.WriteLine("order menu: \n 1-add \n 2-get all \n 3- get by id \n 4- update \n 5- delete \n 6- getitems by order id \n 7- get by order id and product id");
             SecondaryMenu menuChoice;
-            string helpString = Console.ReadLine();
+            string? helpString = Console.ReadLine();
             SecondaryMenu.TryParse(helpString, out menuChoice);
             OrderItem orderItem = new OrderItem();
             int helpInt;
@@ -165,16 +163,16 @@ namespace DalTest
                         Console.WriteLine("insert id: " + insertId);
                         break;
                     case SecondaryMenu.GET_ALL:
-                        IEnumerable<OrderItem> ordersItems = dalList.OrderItem.GetAll();
+                        IEnumerable<OrderItem?> ordersItems = dalList.OrderItem.GetList();
                         Console.WriteLine("orderItems: ");
-                        foreach (OrderItem ordItem in ordersItems)
+                        foreach (OrderItem? ordItem in ordersItems)
                             Console.WriteLine(ordItem);
                         break;
                     case SecondaryMenu.GET_BY_ID:
                         Console.WriteLine("enter order item id:");
                         helpString = Console.ReadLine();
                         int.TryParse(helpString, out helpInt);
-                        orderItem = dalList.OrderItem.GetById(helpInt); Console.WriteLine(orderItem);
+                        orderItem = dalList.OrderItem.GetByCondition(ord=>ord?.ID==helpInt); Console.WriteLine(orderItem);
                         break;
                     case SecondaryMenu.UPDATE:
                         Console.WriteLine("enter order item id:");
@@ -224,14 +222,15 @@ namespace DalTest
                         int prodId;
                         helpString = Console.ReadLine();
                         int.TryParse(helpString, out prodId);
-                        orderItem = dalList.OrderItem.GetByOrderIdAndProductId(orderId, prodId);
+                        orderItem = dalList.OrderItem.GetByCondition(ord=>ord?.OrderID==orderId&&ord?.ProductID== prodId);
                         Console.WriteLine(orderItem);
                         break;
                     case SecondaryMenu.GET_BY_ORDERID:
                         Console.WriteLine("enter order id:");
                         helpString = Console.ReadLine();
                         int.TryParse(helpString, out helpInt);
-                        IEnumerable<OrderItem> orderItems = dalList.OrderItem.GetAllItemsByOrderId(helpInt); foreach (OrderItem ordItem in orderItems)
+                        IEnumerable<OrderItem?> orderItems = dalList.OrderItem.GetList(ord=>ord?.OrderID==helpInt);
+                        foreach (OrderItem? ordItem in orderItems)
                             Console.WriteLine(ordItem);
                         break;
                     default:
@@ -255,7 +254,7 @@ namespace DalTest
            
                 Console.WriteLine("order menu: \n 1-add \n 2-get all \n 3- get by id \n 4- update \n 5- delete");
                 SecondaryMenu menuChoice;
-                string helpString = Console.ReadLine();
+                string? helpString = Console.ReadLine();
                 SecondaryMenu.TryParse(helpString, out menuChoice);
                 Order order = new Order();
                 int helpInt;
@@ -276,16 +275,16 @@ namespace DalTest
                         Console.WriteLine("insert id: " + insertId);
                         break;
                     case SecondaryMenu.GET_ALL:
-                        IEnumerable<Order> orders = dalList.Order.GetAll();
+                        IEnumerable<Order?> orders = dalList.Order.GetList();
                         Console.WriteLine("orders: ");
-                        foreach(Order ord in orders)
+                        foreach(Order? ord in orders)
                             Console.WriteLine(ord);
                         break;
                     case SecondaryMenu.GET_BY_ID:
                         Console.WriteLine("enter order id:");
                         helpString = Console.ReadLine();
                         int.TryParse(helpString, out helpInt);
-                        order = dalList.Order.GetById(helpInt);
+                        order = dalList.Order.GetByCondition(ord=>ord?.ID ==helpInt);
                         Console.WriteLine(order);
                         break;
                     case SecondaryMenu.UPDATE:
@@ -349,7 +348,7 @@ namespace DalTest
         {
             MainMenu menuChoice;
             Console.WriteLine("Shop menu: \n 0-exit \n 1-product \n 2-order item \n 3-order.");
-            string choice = Console.ReadLine();
+            string? choice = Console.ReadLine();
             MainMenu.TryParse(choice, out menuChoice);
             while (menuChoice != MainMenu.EXIT)
             {

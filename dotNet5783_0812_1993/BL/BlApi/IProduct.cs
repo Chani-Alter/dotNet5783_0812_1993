@@ -11,7 +11,7 @@ public interface IProduct
     /// A function Defination that returns a list of all products for the manager
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<ProductForList> GetProductListManager();
+    public IEnumerable<ProductForList?> GetProductListManager();
 
     /// <summary>
     ///A function Defination for return a product by id for manager
@@ -44,7 +44,7 @@ public interface IProduct
     /// A function Defination for return a list of all products for the customer
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<ProductItem> GetProductListForCustomer();
+    public IEnumerable<ProductItem?> GetProductListForCustomer();
 
     /// <summary>
     /// A function Defination for return a product by id for the customer

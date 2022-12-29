@@ -8,64 +8,64 @@ static class DataSource
     /// </summary>
     private static readonly Random randNum = new Random();
 
-    
-   
-        /// <summary>
-        /// the starting id of the orders
-        /// </summary>
-        private const int s_startOrderId = 1000;
 
-        /// <summary>
-        /// the starting id of the orderItems
-        /// </summary>
-        private const int s_startOrderItemId = 0;
 
-        ///// <summary>
-        ///// the index of the free place in the product array
-        ///// </summary>
-        //internal static int IndexProductArray { get; set; } = 0;
+    /// <summary>
+    /// the starting id of the orders
+    /// </summary>
+    private const int s_startOrderId = 1000;
 
-        ///// <summary>
-        ///// the index of the free place in the order array
-        ///// </summary>
-        //internal static int IndexOrderArray { get; set; } = 0;
+    /// <summary>
+    /// the starting id of the orderItems
+    /// </summary>
+    private const int s_startOrderItemId = 0;
 
-        ///// <summary>
-        ///// the index of the free place in the order item array
-        ///// </summary>
-        //internal static int IndexOrderItemArray { get; set; } = 0;
+    ///// <summary>
+    ///// the index of the free place in the product array
+    ///// </summary>
+    //internal static int IndexProductArray { get; set; } = 0;
 
-        /// <summary>
-        /// the next order id
-        /// </summary>
-        private static int orderId = s_startOrderId;
-        /// <summary>
-        /// the propety get of the order id
-        /// </summary>
-        internal static int OrderId { get => ++orderId; }
+    ///// <summary>
+    ///// the index of the free place in the order array
+    ///// </summary>
+    //internal static int IndexOrderArray { get; set; } = 0;
 
-        /// <summary>
-        /// the next order item id
-        /// </summary>
-        private static int orderItemId = s_startOrderItemId;
+    ///// <summary>
+    ///// the index of the free place in the order item array
+    ///// </summary>
+    //internal static int IndexOrderItemArray { get; set; } = 0;
 
-        /// <summary>
-        /// the get propety of the order item id
-        /// </summary>
-        internal static int OrderItemId { get => ++orderItemId; }
-  
+    /// <summary>
+    /// the next order id
+    /// </summary>
+    private static int orderId = s_startOrderId;
+    /// <summary>
+    /// the propety get of the order id
+    /// </summary>
+    internal static int OrderId { get => ++orderId; }
+
+    /// <summary>
+    /// the next order item id
+    /// </summary>
+    private static int orderItemId = s_startOrderItemId;
+
+    /// <summary>
+    /// the get propety of the order item id
+    /// </summary>
+    internal static int OrderItemId { get => ++orderItemId; }
+
     /// <summary>
     /// the product array
     /// </summary>
-    internal static List <Product> ProductList= new List <Product>();
+    internal static List<Product> ProductList = new List<Product>();
     /// <summary>
     /// the orders array
     /// </summary>
-    internal static List <Order> OrderList = new List<Order>() ;
+    internal static List<Order> OrderList = new List<Order>();
     /// <summary>
     /// the order items array
     /// </summary>
-    internal static List <OrderItem> OrderItemList = new List <OrderItem>() ;
+    internal static List<OrderItem> OrderItemList = new List<OrderItem>();
 
     /// <summary>
     /// the static constractor how caled the s_Initialize function
@@ -86,7 +86,7 @@ static class DataSource
     /// </summary>
     static private void initProductArray()
     {
-        
+
         int[] productId = new int[]
         {
             793154,885632,958742,125412,563258,745896,125458,458796,236974,012587
@@ -120,10 +120,10 @@ static class DataSource
     /// </summary>
     static private void initOrderArray()
     {
-        String [] CustomerName = new String[13] {"Motti Weiss","Moshe Feld","Itzik Orlev","Ruli Dikman",
+        String[] CustomerName = new String[13] {"Motti Weiss","Moshe Feld","Itzik Orlev","Ruli Dikman",
         "Ari Hill","Shuli Rand","Ishay Ribo","Beri Weber","Simcha Friedman","Avraam Fried","Mordechai Ben David",
         "Yaakov Shwekey","Naftali Kempeh"
-        };  
+        };
         string[] CustomerEmail = new string[]
         {
             "MottiWeiss@gmail.com","MosheFeld@gmail.com","ItzikOrlev@gmail.com","RuliDikman@gmail.com",
@@ -138,8 +138,8 @@ static class DataSource
             "hagefen 22 Kfar Chabad", "hanurit 7 Ashdod","Shamgar 20 Jerusalem","Pnei Menachem 1 Petach Tikwa",
             "Hadekel 16 Tel Aviv"
         };
-        
-       
+
+
         for (int i = 0; i < 20; i++)
         {
             //OrderList[IndexOrderArray].ID = OrderId;
@@ -171,9 +171,9 @@ static class DataSource
 
             }
             //IndexOrderArray++;
-            OrderList.Add(new Order { ID = OrderId, CustomerName = CustomerName[i % 13],CustomerEmail = CustomerEmail[i % 13],CustomerAdress = address[i % 13], CreateOrderDate = helpE, ShippingDate = ShippingDate, DeliveryDate = DeliveryDate1 });
+            OrderList.Add(new Order { ID = OrderId, CustomerName = CustomerName[i % 13], CustomerEmail = CustomerEmail[i % 13], CustomerAdress = address[i % 13], CreateOrderDate = helpE, ShippingDate = ShippingDate, DeliveryDate = DeliveryDate1 });
         }
-        
+
     }
 
     /// <summary>
@@ -207,60 +207,9 @@ static class DataSource
                     break;
                 }
             }
-            OrderItemList.Add(new OrderItem { ID = OrderItemId, OrderID = o.ID, ProductID = ProductList[randA].ID, Price = price , Amount = randNum.Next(1, 5) });
+            OrderItemList.Add(new OrderItem { ID = OrderItemId, OrderID = o.ID, ProductID = ProductList[randA].ID, Price = price, Amount = randNum.Next(1, 5) });
             OrderItemList.Add(new OrderItem { ID = OrderItemId, OrderID = o.ID, ProductID = ProductList[randB].ID, Price = price2, Amount = randNum.Next(1, 5) });
 
         }
-
-        //for (int i = 1; i <= 20; i++)
-        //{
-        //    foreach (Order o in OrderList)
-        //    {
-        //        int randA = randNum.Next(12);
-        //        double price = new double();
-        //        double price2 = new double();
-        //        foreach (Product p in ProductList)
-        //        {
-        //            if (p.ID == ProductList[randA].ID)
-        //            {
-        //                price = p.Price;
-        //                break;
-        //            }
-        //        }
-        //        int randB;
-        //        do
-        //            randB = randNum.Next(10);
-        //        while (randA == randB);
-        //        foreach (Product p in ProductList)
-        //        {
-        //            if (p.ID == ProductList[randB].ID)
-        //            {
-        //                price2 = p.Price;
-        //                break;
-        //            }
-        //        }
-        //        OrderItemList.Add(new OrderItem { ID = OrderItemId, OrderID = o.ID, ProductID = ProductList[randA].ID, Price = price, InStock = randNum.Next(1, 5) });
-        //        OrderItemList.Add(new OrderItem { ID = OrderItemId, OrderID = o.ID, ProductID = ProductList[randB].ID, Price = price2, InStock = randNum.Next(1, 5) });
-
-        //    }
-        //int helpA = randNum.Next(10);
-        //OrderItemArray[IndexOrderItemArray].ID = OrderItemId;
-        //OrderItemArray[IndexOrderItemArray].OrderID = OrderArray[i].ID;
-        //OrderItemArray[IndexOrderItemArray].ProductID = ProductArray[helpA].ID;
-        //OrderItemArray[IndexOrderItemArray].Price = ProductArray[helpA].Price;
-        //OrderItemArray[IndexOrderItemArray].InStock = randNum.Next(4);
-        //IndexOrderItemArray++;
-        //int helpB;
-        //do
-        //    helpB = randNum.Next(10);
-        //while (helpA == helpB);
-        //OrderItemArray[IndexOrderItemArray].ID = OrderItemId;
-        //OrderItemArray[IndexOrderItemArray].OrderID = OrderArray[i].ID;
-        //OrderItemArray[IndexOrderItemArray].ProductID = ProductArray[helpB].ID;
-        //OrderItemArray[IndexOrderItemArray].Price = ProductArray[helpB].Price;
-        //OrderItemArray[IndexOrderItemArray].InStock = randNum.Next(4);
-        //IndexOrderItemArray++;
-
     }
 }
-//}

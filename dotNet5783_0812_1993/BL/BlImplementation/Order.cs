@@ -19,39 +19,22 @@ internal class Order : BlApi.IOrder
     {
         try
         {
-            List<OrderForList> ordersForList = new List<OrderForList>();
-            IEnumerable<DO.Order> orders = dal.Order.GetAll();
-            double totalPrice = 0;
-            int amount = 0;
-            foreach (DO.Order order in orders)
-            {
-                OrderForList orderForList = new OrderForList();
-                IEnumerable<DO.OrderItem> orderitems = dal.OrderItem.GetAllItemsByOrderId(order.ID);
+            IEnumerable<DO.Order?> orders = dal.Order.GetList();
+            return from ord in orders
+                   let order = (DO.Order)ord
+                   let orderItems = dal.OrderItem.GetList(item => item?.OrderID == order.ID)
+                   let amount = orderItems.Sum(item => ((DO.OrderItem)item!).Amount)
+                   let totalPrice = orderItems.Sum(item => ((DO.OrderItem)item!).Price * ((DO.OrderItem)item!).Amount)
+                   select new OrderForList
+                   {
+                       ID = order.ID,
+                       CustomerName = order.CustomerName,
+                       AmountOfItems = amount,
+                       TotalPrice = totalPrice,
+                       Status = order.DeliveryDate != null && order.DeliveryDate < DateTime.Now ? OrderStatus.ProvidedOrder :
+                       order.ShippingDate != null && order.ShippingDate < DateTime.Now ? OrderStatus.SendOrder : OrderStatus.ConfirmedOrder
 
-                foreach (DO.OrderItem item in orderitems)
-                {
-                    totalPrice += item.Amount * item.Price;
-                    amount += item.Amount;
-                }
-
-                orderForList.ID = order.ID;
-                orderForList.CustomerName = order.CustomerName;
-                orderForList.AmountOfItems = amount;
-                orderForList.TotalPrice = totalPrice;
-
-                if (order.DeliveryDate < DateTime.Now && order.DeliveryDate != DateTime.MinValue)
-                    orderForList.Status = OrderStatus.PROVIDED_ORDER;
-                else
-                {
-                    if (order.ShippingDate < DateTime.Now && order.ShippingDate != DateTime.MinValue)
-                        orderForList.Status = OrderStatus.SEND_ORDER;
-                    else
-                        orderForList.Status = OrderStatus.CONFIRMED_ORDER;
-                }
-
-                ordersForList.Add(orderForList);
-            }
-            return ordersForList;
+                   };
         }
         catch (DO.DoesNotExistedDalException ex)
         {
@@ -67,74 +50,45 @@ internal class Order : BlApi.IOrder
     /// <exception cref="BO.DoesNotExistedBlException"></exception>
     public BO.Order GetOrderById(int id)
     {
-        BO.Order order = new BO.Order();
-        DO.Product product = new DO.Product();
-        DO.Order orderDal = new DO.Order();
-
-        List<OrderItem> orderitems = new List<OrderItem>();
-        IEnumerable<DO.OrderItem> orderitemsDal;
 
         try
         {
-            orderDal = dal.Order.GetById(id);
+            DO.Order orderDal = dal.Order.GetByCondition(ord => ord?.ID == id);
+
+            IEnumerable<DO.OrderItem?> orderItemsDal = dal.OrderItem.GetList(ord => ord?.OrderID == orderDal.ID);
+            var orderItems = from item in orderItemsDal
+                             let orderItem = (DO.OrderItem)item
+                             let product = dal.Product.GetByCondition(prod => prod?.ID == orderItem.ProductID)
+                             select new BO.OrderItem
+                             {
+                                 ID = orderItem.ID,
+                                 ProductID = orderItem.ProductID,
+                                 Price = orderItem.Price,
+                                 Amount = orderItem.Amount,
+                                 TotalPrice = orderItem.Amount * orderItem.Price,
+                                 Name = product.Name
+                             };
+            return new BO.Order
+            {
+                ID = orderDal.ID,
+                CustomerName = orderDal.CustomerName,
+                CustomerAdress = orderDal.CustomerAdress,
+                CustomerEmail = orderDal.CustomerEmail,
+                CreateOrderDate = orderDal.CreateOrderDate,
+                ShippingDate = orderDal.ShippingDate,
+                DeliveryDate = orderDal.DeliveryDate,
+                TotalPrice = orderItems.Sum(item => item.TotalPrice),
+                Items = (List<BO.OrderItem?>)orderItems,
+                Status = orderDal.DeliveryDate != null && orderDal.DeliveryDate < DateTime.Now ? OrderStatus.ProvidedOrder :
+                       orderDal.ShippingDate != null && orderDal.ShippingDate < DateTime.Now ? OrderStatus.SendOrder : OrderStatus.ConfirmedOrder
+
+            };
         }
         catch (DO.DoesNotExistedDalException ex)
         {
             throw new DoesNotExistedBlException("order doesnot exist", ex);
         }
-        try
-        {
-            orderitemsDal = dal.OrderItem.GetAllItemsByOrderId(id);
-        }
-        catch (DO.DoesNotExistedDalException ex)
-        {
-            throw new DoesNotExistedBlException("order doesnot exist", ex);
-        }
 
-        double totalPrice = 0;
-
-        foreach (DO.OrderItem item in orderitemsDal)
-        {
-            BO.OrderItem orderitem = new OrderItem();
-            orderitem.ID = item.ID;
-            orderitem.ProductID = item.ProductID;
-            orderitem.Price = item.Price;
-            orderitem.Amount = item.Amount;
-            orderitem.TotalPrice = item.Amount * item.Price;
-
-            try
-            {
-                product = dal.Product.GetById(orderitem.ProductID);
-            }
-            catch (DO.DoesNotExistedDalException ex)
-            {
-                throw new DoesNotExistedBlException("order does not exist", ex);
-            }
-            orderitem.Name = product.Name;
-            orderitems.Add(orderitem);
-            totalPrice += orderitem.TotalPrice;
-        }
-
-        order.ID = orderDal.ID;
-        order.CustomerName = orderDal.CustomerName;
-        order.CustomerAdress = orderDal.CustomerAdress;
-        order.CustomerEmail = orderDal.CustomerEmail;
-        order.CreateOrderDate = orderDal.CreateOrderDate;
-        order.ShippingDate = orderDal.ShippingDate;
-        order.DeliveryDate = orderDal.DeliveryDate;
-        order.TotalPrice = totalPrice;
-        order.Items = orderitems;
-
-        if (orderDal.DeliveryDate < DateTime.Now && orderDal.DeliveryDate != DateTime.MinValue)
-            order.Status = OrderStatus.PROVIDED_ORDER;
-        else
-        {
-            if (order.ShippingDate < DateTime.Now && orderDal.ShippingDate != DateTime.MinValue)
-                order.Status = OrderStatus.SEND_ORDER;
-            else
-                order.Status = OrderStatus.CONFIRMED_ORDER;
-        }
-        return order;
     }
 
     /// <summary>
@@ -147,80 +101,46 @@ internal class Order : BlApi.IOrder
     /// <exception cref="BO.UpdateErrorBlException"></exception>
     public BO.Order UpdateSendOrderByManager(int id)
     {
-        BO.Order order = new BO.Order();
-        DO.Product product = new DO.Product();
-        DO.Order orderDal = new DO.Order();
-        List<OrderItem> orderitems = new List<OrderItem>();
-        IEnumerable<DO.OrderItem> orderitemsDal = new List<DO.OrderItem>();
-        
         try
         {
-            orderDal = dal.Order.GetById(id);
+            DO.Order orderDal = dal.Order.GetByCondition(ord => ord?.ID == id);
+            if (orderDal.ShippingDate != null && orderDal.ShippingDate < DateTime.Now)
+                throw new ImpossibleActionBlException("order send");
+            orderDal.ShippingDate = DateTime.Now;
+            dal.Order.Update(orderDal);
+
+            IEnumerable<DO.OrderItem?> orderItemsDal = dal.OrderItem.GetList(ord => ord?.OrderID == orderDal.ID);
+            var orderItems = from item in orderItemsDal
+                             let orderItem = (DO.OrderItem)item
+                             let product = dal.Product.GetByCondition(prod => prod?.ID == orderItem.ProductID)
+                             select new BO.OrderItem
+                             {
+                                 ID = orderItem.ID,
+                                 ProductID = orderItem.ProductID,
+                                 Price = orderItem.Price,
+                                 Amount = orderItem.Amount,
+                                 TotalPrice = orderItem.Amount * orderItem.Price,
+                                 Name = product.Name
+                             };
+            return new BO.Order
+            {
+                ID = orderDal.ID,
+                CustomerName = orderDal.CustomerName,
+                CustomerAdress = orderDal.CustomerAdress,
+                CustomerEmail = orderDal.CustomerEmail,
+                CreateOrderDate = orderDal.CreateOrderDate,
+                ShippingDate = orderDal.ShippingDate,
+                DeliveryDate = orderDal.DeliveryDate,
+                TotalPrice = orderItems.Sum(item => item.TotalPrice),
+                Items = (List<BO.OrderItem?>)orderItems,
+                Status = OrderStatus.SendOrder
+            };
         }
         catch (DO.DoesNotExistedDalException ex)
         {
             throw new DoesNotExistedBlException("order does not exist", ex);
         }
-        if (orderDal.ShippingDate < DateTime.Now && orderDal.ShippingDate != DateTime.MinValue)
-            throw new ImpossibleActionBlException("order send");
-        else
-        {
-            if (orderDal.ShippingDate == DateTime.MinValue)
-                throw new UpdateErrorBlException("No shipping date");
-            orderDal.ShippingDate = DateTime.Now;
-            try
-            {
-                dal.Order.Update(orderDal);
-            }
-            catch (DO.DoesNotExistedDalException ex)
-            {
-                throw new DoesNotExistedBlException("order does not exist", ex);
-            }
-        }
-        try
-        {
-            orderitemsDal = dal.OrderItem.GetAllItemsByOrderId(id);
-        }
-        catch (DO.DoesNotExistedDalException ex)
-        {
-            throw new DoesNotExistedBlException("order doesnot exist", ex);
-        }
-        double totalPrice = 0;
 
-        foreach (DO.OrderItem item in orderitemsDal)
-        {
-            BO.OrderItem orderitem = new BO.OrderItem();
-            orderitem.ID = item.ID;
-            orderitem.ProductID = item.ProductID;
-            orderitem.Price = item.Price;
-            orderitem.Amount = item.Amount;
-            orderitem.TotalPrice = item.Amount * item.Price;
-            try
-            {
-                product = dal.Product.GetById(orderitem.ProductID);
-            }
-            catch (DO.DoesNotExistedDalException ex)
-            {
-                throw new BO.DoesNotExistedBlException("product doesnot exist", ex);
-            }
-
-            orderitem.Name = product.Name;
-            orderitems.Add(orderitem);
-            totalPrice += orderitem.TotalPrice;
-
-        }
-        order.ID = orderDal.ID;
-        order.CustomerName = orderDal.CustomerName;
-        order.CustomerAdress = orderDal.CustomerAdress;
-        order.CustomerEmail = orderDal.CustomerEmail;
-        order.CreateOrderDate = orderDal.CreateOrderDate;
-        order.ShippingDate = orderDal.ShippingDate;
-        order.DeliveryDate = orderDal.DeliveryDate;
-        order.TotalPrice = totalPrice;
-        order.Items = orderitems;
-        order.Status = OrderStatus.SEND_ORDER;
-
-        return order;
     }
 
     /// <summary>
@@ -232,84 +152,48 @@ internal class Order : BlApi.IOrder
     /// <exception cref="ImpossibleActionBlException"></exception>
     public BO.Order UpdateSupplyOrderByManager(int id)
     {
-        BO.Order order = new BO.Order();
-        DO.Product product = new DO.Product();
-        List<OrderItem> orderitems = new List<OrderItem>();
-        DO.Order orderDal = new DO.Order();
-        IEnumerable<DO.OrderItem> orderitemsDal = new List<DO.OrderItem>();
-
         try
         {
-            orderDal = dal.Order.GetById(id);
-        }
-        catch (DO.DoesNotExistedDalException ex)
-        {
-            throw new DoesNotExistedBlException("order doesnot exist", ex);
-        }
-        if (orderDal.DeliveryDate < DateTime.Now && orderDal.DeliveryDate != DateTime.MinValue)
-            throw new ImpossibleActionBlException("order Delivery");
-        else
-        {
-
-            if (orderDal.ShippingDate > DateTime.Now)
-                throw new ImpossibleActionBlException("It is not possible to update a delivery date before a shipping date");
-            else
-            {
-                if (orderDal.DeliveryDate == DateTime.MinValue)
-                    throw new ImpossibleActionBlException(" No delivery date");
-            }
+            DO.Order orderDal = dal.Order.GetByCondition(ord => ord?.ID == id);
+            if (orderDal.DeliveryDate != null && orderDal.DeliveryDate < DateTime.Now)
+                throw new BO.ImpossibleActionBlException("order Delivery");
+            if (orderDal.ShippingDate == null || orderDal.ShippingDate > DateTime.Now)
+                throw new BO.ImpossibleActionBlException("It is not possible to update a delivery date before a shipping date");
             orderDal.DeliveryDate = DateTime.Now;
-            try
+            dal.Order.Update(orderDal);
+
+            IEnumerable<DO.OrderItem?> orderItemsDal = dal.OrderItem.GetList(ord => ord?.OrderID == orderDal.ID);
+            var orderItems = from item in orderItemsDal
+                             let orderItem = (DO.OrderItem)item
+                             let product = dal.Product.GetByCondition(prod => prod?.ID == orderItem.ProductID)
+                             select new BO.OrderItem
+                             {
+                                 ID = orderItem.ID,
+                                 ProductID = orderItem.ProductID,
+                                 Price = orderItem.Price,
+                                 Amount = orderItem.Amount,
+                                 TotalPrice = orderItem.Amount * orderItem.Price,
+                                 Name = product.Name
+                             };
+            return new BO.Order
             {
-                dal.Order.Update(orderDal);
-            }
-            catch (DO.DoesNotExistedDalException ex)
-            {
-                throw new DoesNotExistedBlException("order dosent exsit", ex);
-            }
-        }
-        try
-        {
-            orderitemsDal = dal.OrderItem.GetAllItemsByOrderId(id);
+                ID = orderDal.ID,
+                CustomerName = orderDal.CustomerName,
+                CustomerAdress = orderDal.CustomerAdress,
+                CustomerEmail = orderDal.CustomerEmail,
+                CreateOrderDate = orderDal.CreateOrderDate,
+                ShippingDate = orderDal.ShippingDate,
+                DeliveryDate = orderDal.DeliveryDate,
+                TotalPrice = orderItems.Sum(item => item.TotalPrice),
+                Items = (List<BO.OrderItem?>)orderItems,
+                Status = OrderStatus.ProvidedOrder
+            };
         }
         catch (DO.DoesNotExistedDalException ex)
         {
-            throw new DoesNotExistedBlException("order doesnot exist", ex);
+            throw new DoesNotExistedBlException("order does not exist", ex);
         }
-        double totalPrice = 0;
-        foreach (DO.OrderItem item in orderitemsDal)
-        {
-            BO.OrderItem orderitem = new OrderItem();
-            orderitem.ID = item.ID;
-            orderitem.ProductID = item.ProductID;
-            orderitem.Price = item.Price;
-            orderitem.Amount = item.Amount;
-            orderitem.TotalPrice = item.Amount * item.Price;
-            try
-            {
-                product = dal.Product.GetById(orderitem.ProductID);
-            }
-            catch (DO.DoesNotExistedDalException ex)
-            {
-                throw new DoesNotExistedBlException("product does not exsit", ex);
-            }
-            orderitem.Name = product.Name;
-            orderitems.Add(orderitem);
-            totalPrice += orderitem.TotalPrice;
 
-        }
-        order.ID = orderDal.ID;
-        order.CustomerName = orderDal.CustomerName;
-        order.CustomerAdress = orderDal.CustomerAdress;
-        order.CustomerEmail = orderDal.CustomerEmail;
-        order.CreateOrderDate = orderDal.CreateOrderDate;
-        order.ShippingDate = orderDal.ShippingDate;
-        order.DeliveryDate = orderDal.DeliveryDate;
-        order.TotalPrice = totalPrice;
-        order.Items = orderitems;
-        order.Status = OrderStatus.PROVIDED_ORDER;
-
-        return order;
     }
 
     /// <summary>
@@ -320,44 +204,30 @@ internal class Order : BlApi.IOrder
     /// <exception cref="BO.DoesNotExistedBlException"></exception>
     public OrderTracking TrackingOrder(int id)
     {
-        DO.Order order = new DO.Order();
-        OrderTracking orderTracking = new OrderTracking();
-
         try
         {
-            order = dal.Order.GetById(id);
+            DO.Order order = dal.Order.GetByCondition(ord => ord?.ID == id);
+            List<Tuple<DateTime?, string?>?>? listTuples = new List<Tuple<DateTime?, string?>?>
+            {
+               new Tuple<DateTime?, string?>(order.CreateOrderDate, "the order has been created"),
+               order.ShippingDate != null ? new Tuple<DateTime?, string?>(order.ShippingDate, "the order has been sent"): null,
+               order.DeliveryDate != null?new Tuple<DateTime?, string?>(order.DeliveryDate, "the order provided"):null
+            };
+
+            return new OrderTracking
+            {
+                ID = order.ID,
+                Status = order.DeliveryDate != null && order.DeliveryDate < DateTime.Now ? OrderStatus.ProvidedOrder :
+                order.ShippingDate != null && order.ShippingDate < DateTime.Now ? OrderStatus.SendOrder :
+                OrderStatus.ConfirmedOrder,
+                Tuples = listTuples
+
+            };
         }
         catch (DO.DoesNotExistedDalException ex)
         {
             throw new DoesNotExistedBlException("order doesnot exist", ex);
         }
-        orderTracking.ID = order.ID;
-        if (order.DeliveryDate < DateTime.Now && order.DeliveryDate != DateTime.MinValue)
-            orderTracking.Status = OrderStatus.PROVIDED_ORDER;
-        else
-        {
-            if (order.ShippingDate < DateTime.Now && order.ShippingDate != DateTime.MinValue)
-                orderTracking.Status = OrderStatus.SEND_ORDER;
-            else
-                orderTracking.Status = OrderStatus.CONFIRMED_ORDER;
-        }
-
-        List<Tuple<DateTime, string>> listTuples = new List<Tuple<DateTime, string>>
-
-            {
-                new Tuple<DateTime, string>(order.CreateOrderDate, "the order has been created")
-             };
-        if (order.ShippingDate != DateTime.MinValue)
-        {
-            listTuples.Add(new Tuple<DateTime, string>(order.ShippingDate, "the order has been sent"));
-        }
-        if (order.DeliveryDate != DateTime.MinValue)
-        {
-            listTuples.Add(new Tuple<DateTime, string>(order.DeliveryDate, "the order provided"));
-        }
-        orderTracking.Tuples = listTuples;
-
-        return orderTracking;
     }
 
     /// <summary>
@@ -373,78 +243,40 @@ internal class Order : BlApi.IOrder
     /// <exception cref="Exception"></exception>
     public BO.OrderItem UpdateAmountOfOProductInOrder(int orderId, int productId, int amount)
     {
-        DO.OrderItem item = new DO.OrderItem();
+
         try
         {
-            item = dal.OrderItem.GetByOrderIdAndProductId(orderId, productId);
-        }
-        catch (DO.DoesNotExistedDalException ex)
-        {
-            throw new DoesNotExistedBlException($"{ex.EntityName}  are does not exist", ex);
-        }
-        DO.Order order = new DO.Order();
-        try
-        {
-            order = dal.Order.GetById(orderId);
+            DO.OrderItem ordItem = dal.OrderItem.GetByCondition(item => ((DO.OrderItem)item!).OrderID == orderId && ((DO.OrderItem)item!).ProductID == productId);
+            DO.Order orderDal = dal.Order.GetByCondition(ord => ord?.ID == orderId);
+            DO.Product product = dal.Product.GetByCondition(prod => prod?.ID == productId);
+
+            if (orderDal.ShippingDate != null && orderDal.ShippingDate < DateTime.Now)
+                throw new ImpossibleActionBlException("It is not possible to update an order after it has been sent");
+            if (amount < 0)
+                throw new InvalidInputBlException("invalid amount");
+            product.InStock -= amount - ordItem.Amount;
+            ordItem.Amount = amount;
+            dal.OrderItem.Update(ordItem);
+            dal.Product.Update(product);
+            if (amount == 0)
+            {
+                dal.OrderItem.Delete(ordItem.ID);
+                throw new Exception("The product remove from the order");
+            }
+            return new BO.OrderItem
+            {
+                ID = ordItem.ID,
+                Amount = amount,
+                Price = ordItem.Price,
+                TotalPrice = amount * ordItem.Price,
+                ProductID = productId,
+                Name = product.Name
+            };
         }
         catch (DO.DoesNotExistedDalException ex)
         {
             throw new DoesNotExistedBlException("order does not exist", ex);
         }
-        DO.Product product = new DO.Product();
-        BO.OrderItem orderItem = new OrderItem();
-        if (order.ShippingDate != DateTime.MinValue && order.ShippingDate < DateTime.Now)
-        {
-            throw new ImpossibleActionBlException("It is not possible to update an order after it has been sent");
-        }
-        if (amount < 0)
-            throw new InvalidInputBlException("invalid amount");
-        try
-        {
-            product = dal.Product.GetById(item.ProductID);
-        }
-        catch (DO.DoesNotExistedDalException ex)
-        {
-            throw new BO.DoesNotExistedBlException("product does not exist", ex);
-        }
-        product.InStock += item.Amount;
-        item.Amount = amount;
-        try
-        {
-            dal.OrderItem.Update(item);
-        }
-        catch (DO.DoesNotExistedDalException ex)
-        {
-            throw new DoesNotExistedBlException($"{ex.EntityName} does not exist", ex);
-        }
-        product.InStock -= amount;
-        try
-        {
-            dal.Product.Update(product);
-        }
-        catch (DO.DoesNotExistedDalException ex)
-        {
-            throw new DoesNotExistedBlException(" product does not exist", ex);
-        }
-        if (amount == 0)
-        {
-            try
-            {
-                dal.OrderItem.Delete(item.ID);
-            }
-            catch (DO.DoesNotExistedDalException ex)
-            {
-                throw new DoesNotExistedBlException("id does not exist", ex);
-            }
-            throw new Exception("The product remove from the order");
-        }
-        orderItem.ID = item.ID;
-        orderItem.Amount = amount;
-        orderItem.Price = item.Price;
-        orderItem.TotalPrice = amount * item.Price;
-        orderItem.ProductID = productId;
-        orderItem.Name = product.Name;
-
-        return orderItem;
     }
+
 }
