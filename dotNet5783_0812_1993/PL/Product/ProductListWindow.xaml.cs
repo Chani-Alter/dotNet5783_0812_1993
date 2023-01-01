@@ -61,4 +61,8 @@ public partial class ProductListWindow : Window
 
     }
 
+    private void productListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+
+    }
 }
