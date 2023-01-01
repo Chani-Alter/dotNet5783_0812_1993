@@ -1,6 +1,5 @@
 ﻿using DalApi;
 using DO;
-using System.Linq;
 using static Dal.DataSource;
 
 namespace Dal;
@@ -19,13 +18,11 @@ internal class DalProduct:IProduct
     /// <returns>the id of the new product</returns>
     public int Add(Product product)
     {
-        foreach (Product? p in ProductList)
-        {
-            if (p?.ID == product.ID)
+        var result = ProductList.FirstOrDefault(p => p?.ID == product.ID);
+        if(result!= null)    
                 throw new DuplicateDalException("product id already exists");
-        }
-
         ProductList.Add(product);
+
         return product.ID;
     }
 

@@ -16,10 +16,31 @@ internal class Product : IProduct
     /// function that returns a product by id for the manager
     /// </summary>
     /// <returns>list of product</returns>
-    public IEnumerable<ProductForList> GetProductListManager()
+    private IEnumerable<ProductForList> GetProductListManager(Filter filter = Filter.None, object? filterValue = null)
     {
-        IEnumerable<DO.Product?> products = dal.Product.GetList();
+        IEnumerable<DO.Product?> products;
+
+        switch (filter)
+        {
+            case Filter.FilterByCategory:
+                products = dal.Product.GetList(product => product?.Category == (filterValue != null ? (DO.Category)filterValue : product?.Category));
+                break;
+            case Filter.FilterByBiggerThanPrice:
+                products = dal.Product.GetList(product => ((DO.Product)product!).Price > (double)filterValue!);
+                break;
+            case Filter.FilterBySmallerThanPrice:
+                products = dal.Product.GetList(product => ((DO.Product)product!).Price < (double)filterValue!);
+                break;
+            case Filter.None:
+                products = dal.Product.GetList();
+                break;
+            default:
+                products = dal.Product.GetList();
+                break;
+        }
+
         return from item in products
+               where item != null
                let product = (DO.Product)item
                select new ProductForList
                {
@@ -29,6 +50,26 @@ internal class Product : IProduct
                    Category = (Category)product.Category,
 
                };
+    }
+
+    /// <summary>
+    /// Definition of a function that returns a list of product by category for the manager
+    /// </summary>
+    /// <param name="category"></param>
+    /// <returns></returns>
+    public IEnumerable<ProductForList> GetProductListForManagerByCategory(Category? category)
+    {
+        return GetProductListManager(Filter.FilterByCategory, category);
+    }
+
+
+    /// <summary>
+    /// Definition of a function that returns the list of product for manager
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerable<ProductForList> GetAllProductListForManager()
+    {
+        return GetProductListManager();
     }
 
     /// <summary>
@@ -126,15 +167,18 @@ internal class Product : IProduct
         {
             if (product.ID < 1 || product.Name == "" || product.Price < 1 || product.InStock < 0 || (int)product.Category > 5 || (int)product.Category < 0)
                 throw new InvalidInputBlException(" Invalid input");
+
+            DO.Product product1 = new DO.Product
             {
-                DO.Product product1 = new DO.Product();
-                product1.ID = product.ID;
-                product1.Name = product.Name;
-                product1.Price = product.Price;
-                product1.InStock = product.InStock;
-                product1.Category = (DO.Category)product.Category;
-                dal.Product.Update(product1);
-            }
+                ID = product.ID,
+                Name = product.Name,
+                Price = product.Price,
+                InStock = product.InStock,
+                Category = (DO.Category)product.Category
+            };
+
+            dal.Product.Update(product1);
+            
             return product;
         }
         catch (DO.DoesNotExistedDalException ex)
@@ -150,7 +194,9 @@ internal class Product : IProduct
     public IEnumerable<ProductItem> GetProductListForCustomer()
     {
         IEnumerable<DO.Product?> products = dal.Product.GetList();
+
         return from item in products
+               where item != null
                let product = (DO.Product)item
                select new ProductItem
                {

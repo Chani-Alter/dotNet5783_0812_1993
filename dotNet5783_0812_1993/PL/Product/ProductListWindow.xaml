@@ -17,10 +17,11 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
-            <ComboBox Name="categorySelector" HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="1" SelectionChanged="categorySelector_SelectionChanged" />
+            <ComboBox Name="categorySelector" HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="1" SelectionChanged="categorySelector_SelectionChanged" ></ComboBox>
             <Label Name="categoryLabel" Grid.Column="0" Content="category" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         </Grid>
-        <ListView x:Name="productListView" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}">
+
+        <ListView x:Name="productListView" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}"   MouseDoubleClick="productListView_MouseDoubleClick">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
@@ -28,5 +29,6 @@
             </ListView.View>
         </ListView>
 
+        <Button Name="AddProductBtn" Grid.Row="2" Content="Add Product" Click="AddProductBtn_Click"></Button>
     </Grid>
 </Window>

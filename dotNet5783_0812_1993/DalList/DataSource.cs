@@ -201,7 +201,7 @@ static class DataSource
                     break;
                 }
             }
-            OrderItemList.Add(new OrderItem(OrderItemId, o?.ID, ProductList[randA]?.ID, price, randNum.Next(1, 5)));
+            OrderItemList.Add(new OrderItem { ID = OrderItemId, OrderID = o?.ID ?? 0, ProductID = ProductList[randA]?.ID ?? 0, Price = price, Amount = randNum.Next(1, 5) });
             OrderItemList.Add(new OrderItem { ID = OrderItemId, OrderID = o?.ID??0, ProductID = ProductList[randB]?.ID??0, Price = price2, Amount = randNum.Next(1, 5) });
 
         }

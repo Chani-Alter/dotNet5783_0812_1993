@@ -12,22 +12,27 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using BlApi;
+using BlImplementation;
+using PL.Product;
 
-namespace PL
+namespace PL;
+
+/// <summary>
+/// Interaction logic for MainWindow.xaml
+/// </summary>
+public partial class MainWindow : Window
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
+    private IBl bl = new Bl();
+
+    public MainWindow()
     {
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+    }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+    private void showProductBtn_Click(object sender, RoutedEventArgs e)
+    {
+        new ProductListWindow().Show();
+        Close();
     }
 }

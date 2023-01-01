@@ -1,7 +1,6 @@
 ﻿using BlApi;
 using DalApi;
 using BO;
-using DO;
 
 namespace BlImplementation;
 
@@ -124,86 +123,53 @@ internal class Cart : ICart
     /// <exception cref="BO.DoesNotExistedBlException"></exception>
     /// <exception cref="BO.ImpossibleActionBlException"></exception>
     public void MakeOrder(BO.Cart cart)
+    {
+        try
         {
-            try
-            {
-                if (cart.CustomerName == "" || cart.CustomerEmail == "" || cart.CustomerAdress == "")
-                    throw new InvalidInputBlException("Invalid details");
-                if (cart.Items == null)
-                    throw new ImpossibleActionBlException("There are no items in the cart.");
-                int id = dal.Order.Add(
-                    new DO.Order
-                    {
-                        CreateOrderDate = DateTime.Now,
-                        ShippingDate = null,
-                        DeliveryDate = null
-                    });
+            if (cart.CustomerName == "" || cart.CustomerEmail == "" || cart.CustomerAdress == "")
+                throw new InvalidInputBlException("Invalid details");
+            if (cart.Items == null)
+                throw new ImpossibleActionBlException("There are no items in the cart.");
+            int id = dal.Order.Add(
+                new DO.Order
+                {
+                    CreateOrderDate = DateTime.Now,
+                    ShippingDate = null,
+                    DeliveryDate = null
+                });
             IEnumerable<DO.Product?> products = dal.Product.GetList();
 
             var result = from item in cart.Items
-                         join product in products on item.ProductID equals product?.ID
-                         let productDo = (DO.Product)product
+                         join product in products on item.ProductID equals product?.ID into empdept
+                         from ed in empdept.DefaultIfEmpty()
                          select new
                          {
-                             orderItem = dal.OrderItem.Add(
-                             new DO.OrderItem
+                             orderItem = new DO.OrderItem
                              {
                                  OrderID = id,
                                  ProductID = item?.ProductID ?? 0,
                                  Amount = item?.Amount > 0 ? item?.Amount ?? 0 : throw new ImpossibleActionBlException("invalid amount"),
                                  Price = item?.Price ?? 0
-                             }),
-                             prod = new DO.Product {
-                                 ID = productDo.ID,
-                                 Price = productDo.Price,
-                                 Category = productDo.Category,
-                                 InStock = productDo.InStock > item?.Amount? productDo.InStock - item?.Amount??0 : throw new ImpossibleActionBlException("amount not in stock "),
-                                 Name =  productDo.Name
-                             
+                             },
+                             prod = new DO.Product
+                             {
+                                 ID = ed == null ? throw new ImpossibleActionBlException("product does not exist") : item?.ProductID ?? 0,
+                                 Price = ed?.Price ?? 0,
+                                 Category = ed?.Category ?? 0,
+                                 InStock = ed?.InStock > item?.Amount ? ed?.InStock - item?.Amount ?? 0 : throw new ImpossibleActionBlException("amount not in stock "),
+                                 Name = ed?.Name
                              }
                          };
-            var result2 = result.(res => { dal.Product.Update(res.prod)});
-                foreach (BO.OrderItem? orderItem in cart.Items)
-                {
-                    try
-                    {
-                        product = dal.Product.GetByCondition(prod => prod?.ID == orderItem?.ProductID);
-                    }
-                    catch (DO.DoesNotExistedDalException ex)
-                    {
-                        throw new BO.DoesNotExistedBlException("product dosent exsit", ex);
-                    }
-                    if (orderItem?.Amount <= 0)
-                        throw new ImpossibleActionBlException("invalid amount");
-                    if (product.InStock < orderItem?.Amount)
-                        throw new ImpossibleActionBlException("amount not in stock ");
-                    DO.OrderItem orderItem1 = new DO.OrderItem();
-                    orderItem1.OrderID = id;
-                    orderItem1.ProductID = orderItem?.ProductID ?? 0;
-                    orderItem1.Amount = orderItem?.Amount ?? 0;
-                    orderItem1.Price = orderItem?.Price ?? 0;
-                    product.InStock -= orderItem?.Amount ?? 0;
-                    try
-                    {
-                        dal.Product.Update(product);
-                    }
-                    catch (DO.DoesNotExistedDalException ex)
-                    {
-                        throw new DoesNotExistedBlException("product dosent exsit", ex);
-                    }
-                    try
-                    {
-                        dal.OrderItem.Add(orderItem1);
-                    }
-                    catch (DO.DoesNotExistedDalException ex)
-                    {
-                        throw new DoesNotExistedBlException($"{ex.EntityName} dosent exsit", ex);
-                    }
-                }
-            }
-            catch (DO.DoesNotExistedDalException ex)
+
+            result.ToList().ForEach(res =>
             {
-                throw new DoesNotExistedBlException("product dosent exsit", ex);
-            }
+                dal.Product.Update(res.prod);
+                dal.OrderItem.Add(res.orderItem);
+            });
         }
-    } 
+        catch (DO.DoesNotExistedDalException ex)
+        {
+            throw new DoesNotExistedBlException($"{ex.EntityName} dosent exsit", ex);
+        }
+    }
+}

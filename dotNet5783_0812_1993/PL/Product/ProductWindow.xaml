@@ -7,6 +7,30 @@
         mc:Ignorable="d"
         Title="ProductWindow" Height="450" Width="800">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions >
+
+        <Label Grid.Row="0" Grid.Column="0" Name="idLabel" Content="ID"  ></Label>
+        <TextBox Grid.Row="0" Grid.Column="1" Name="idTextBox" TextChanged="idTextBox_TextChanged" PreviewKeyDown="idTextBox_PreviewKeyDown" ></TextBox>
+        <Label Grid.Row="1" Grid.Column="0" Name="nameLabel" Content="name"  ></Label>
+        <TextBox Grid.Row="1" Grid.Column="1" Name="nameTextBox" TextChanged="nameTextBox_TextChanged" ></TextBox>
+        <Label Grid.Row="2" Grid.Column="0" Name="priceLabel" Content="price"  ></Label>
+        <TextBox Grid.Row="2" Grid.Column="1" Name="priceTextBox" TextChanged="priceTextBox_TextChanged" PreviewKeyDown="priceTextBox_PreviewKeyDown"></TextBox>
+        <Label Grid.Row="3" Grid.Column="0" Name="categoryLabel" Content="category"  ></Label>
+        <ComboBox Grid.Row="2" Grid.Column="1" Name="categoryComboBox" Height="72" Margin="0,72,0,0" Grid.RowSpan="2" VerticalAlignment="Top" SelectionChanged="categoryComboBox_SelectionChanged" ></ComboBox>
+        <Label Grid.Row="4" Grid.Column="0" Name="inStockLabel" Content="in stock"  ></Label>
+        <TextBox Grid.Row="4" Grid.Column="1" Name="inStockTextBox" TextChanged="inStockTextBox_TextChanged" PreviewKeyDown="inStockTextBox_PreviewKeyDown"></TextBox>
+        <Button Name="confirmBtn" Content=""  Grid.Row="5" Grid.Column="1" Click="confirmBtn_Click"></Button>
+        <Button Name="delete" Content="delete" Grid.Row="5" Grid.Column="0" Visibility="Hidden" Click="delete_Click" ></Button>
     </Grid>
 </Window>

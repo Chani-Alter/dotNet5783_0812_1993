@@ -8,10 +8,18 @@ namespace BlApi;
 public interface IProduct
 {
     /// <summary>
-    /// A function Defination that returns a list of all products for the manager
+    /// Definition of a function that returns the list of product for manager
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<ProductForList?> GetProductListManager();
+    public IEnumerable<ProductForList?> GetAllProductListForManager();
+
+    /// <summary>
+    /// Definition of a function that returns a list of product by category for the manager
+    /// </summary>
+    /// <param name="category"></param>
+    /// <returns></returns>
+    public IEnumerable<ProductForList?> GetProductListForManagerByCategory(BO.Category? category);
+
 
     /// <summary>
     ///A function Defination for return a product by id for manager

@@ -96,7 +96,7 @@ public class Program
                     break;
 
                 case ProductOptions.GetListForManager:
-                    productsForList = iBl.Product.GetProductListManager();
+                    productsForList = iBl.Product.GetAllProductListForManager();
                     
                     foreach (ProductForList? productForList in productsForList)
                         Console.WriteLine(productForList);
