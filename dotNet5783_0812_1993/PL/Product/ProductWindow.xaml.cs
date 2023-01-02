@@ -1,6 +1,4 @@
-﻿using BlApi;
-using BlImplementation;
-using System;
+﻿using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,7 +15,7 @@ public partial class ProductWindow : Window
     /// <summary>
     /// instance of the bl who contains access to all the bl implementation
     /// </summary>
-    private IBl bl = new Bl();
+    private BlApi.IBl? bl = BlApi.Factory.Get();
 
     /// <summary>
     /// the empty ctor who opens the window for adding aproduct

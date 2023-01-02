@@ -1,6 +1,4 @@
 ﻿// See https://aka.ms/new-console-template for more information
-using BlApi;
-using BlImplementation;
 using BO;
 
 namespace BLTest;
@@ -31,14 +29,13 @@ enum CartOptions { Add = 1, Update, MakeOrder }
 /// </summary>
 public class Program
 {
-    static private DalList.DalList dalList = new DalList.DalList();
     static string? readString;
     static int readInt;
     static int orderId;
     static int productId;
     static int readInt1;
     static double readDouble;
-    static private IBl iBl = new Bl();
+    static private BlApi.IBl? bl = BlApi.Factory.Get();
     static private Cart currentCart = new Cart();
 
 
@@ -75,7 +72,7 @@ public class Program
                     readString = Console.ReadLine();
                     int.TryParse(readString, out readInt);
                     product.InStock = readInt;
-                    product = iBl.Product.AddProduct(product);
+                    product = bl.Product.AddProduct(product);
                     Console.WriteLine(product);
                     break;
 
@@ -83,7 +80,7 @@ public class Program
                     Console.WriteLine("Enter id product:");
                     readString = Console.ReadLine();
                     int.TryParse(readString, out productId);
-                    product = iBl.Product.GetProductByIdManager(productId);
+                    product = bl.Product.GetProductByIdManager(productId);
                     Console.WriteLine(product);
                     break;
 
@@ -91,19 +88,19 @@ public class Program
                     Console.WriteLine("Enter id product:");
                     readString = Console.ReadLine();
                     int.TryParse(readString, out productId);
-                    productItem = iBl.Product.GetProductByIdCustomer(productId);
+                    productItem = bl.Product.GetProductByIdCustomer(productId);
                     Console.WriteLine(productItem);
                     break;
 
                 case ProductOptions.GetListForManager:
-                    productsForList = iBl.Product.GetAllProductListForManager();
+                    productsForList = bl.Product.GetAllProductListForManager();
                     
                     foreach (ProductForList? productForList in productsForList)
                         Console.WriteLine(productForList);
                     break;
 
                 case ProductOptions.GetListForCustomer:
-                    productsItem = iBl.Product.GetProductListForCustomer();
+                    productsItem = bl.Product.GetProductListForCustomer();
                    
                     foreach (ProductItem? item in productsItem)
                         Console.WriteLine(item);
@@ -124,7 +121,7 @@ public class Program
                     readString = Console.ReadLine();
                     int.TryParse(readString, out readInt);
                     product.InStock = readInt;
-                    product = iBl.Product.UpdateProduct(product);
+                    product = bl.Product.UpdateProduct(product);
                     Console.WriteLine(product);
                     break;
 
@@ -132,7 +129,7 @@ public class Program
                     Console.WriteLine("Enter id product:");
                     readString = Console.ReadLine();
                     int.TryParse(readString, out productId);
-                    iBl.Product.DeleteProduct(productId);
+                    bl.Product.DeleteProduct(productId);
                     break;
 
                 default:
@@ -190,13 +187,13 @@ public class Program
                     Console.WriteLine("Enter id oreder:");
                     readString = Console.ReadLine();
                     int.TryParse(readString, out orderId);
-                    order = iBl.Order.GetOrderById(orderId);
+                    order = bl.Order.GetOrderById(orderId);
                     Console.WriteLine(order);
                     break;
 
                 case OrderOptions.GetAll:
                     IEnumerable<OrderForList> orders = new List<OrderForList>();
-                    orders = iBl.Order.GetOrderList();
+                    orders = bl.Order.GetOrderList();
 
                     foreach (OrderForList o in orders)
                     {
@@ -207,7 +204,7 @@ public class Program
                     Console.WriteLine("Enter id order:");
                     readString = Console.ReadLine();
                     int.TryParse(readString, out orderId);
-                    order = iBl.Order.UpdateSendOrderByManager(orderId);
+                    order = bl.Order.UpdateSendOrderByManager(orderId);
                     Console.WriteLine(order);
                     break;
 
@@ -215,7 +212,7 @@ public class Program
                     Console.WriteLine("Enter id order:");
                     readString = Console.ReadLine();
                     int.TryParse(readString, out orderId);
-                    order = iBl.Order.UpdateSupplyOrderByManager(orderId);
+                    order = bl.Order.UpdateSupplyOrderByManager(orderId);
                     Console.WriteLine(order);
                     break;
 
@@ -223,7 +220,7 @@ public class Program
                     Console.WriteLine("Enter id order:");
                     readString = Console.ReadLine();
                     int.TryParse(readString, out orderId);
-                    orderTracking = iBl.Order.TrackingOrder(orderId);
+                    orderTracking = bl.Order.TrackingOrder(orderId);
                     Console.WriteLine(orderTracking);
                     break;
 
@@ -237,7 +234,7 @@ public class Program
                     Console.WriteLine("Enter amount of product: ");
                     readString = Console.ReadLine();
                     int.TryParse(readString, out readInt);
-                    orderItem = iBl.Order.UpdateAmountOfOProductInOrder(orderId, productId, readInt);
+                    orderItem = bl.Order.UpdateAmountOfOProductInOrder(orderId, productId, readInt);
                     break;
 
                 default:
@@ -297,7 +294,7 @@ public class Program
                     Console.WriteLine("Enter product id:");
                     readString = Console.ReadLine();
                     int.TryParse(readString, out readInt);
-                    currentCart = iBl.cart.AddProductToCart(currentCart, readInt);
+                    currentCart = bl.cart.AddProductToCart(currentCart, readInt);
                     Console.WriteLine(currentCart);
                     break;
                 case CartOptions.Update:
@@ -307,11 +304,11 @@ public class Program
                     Console.WriteLine("Enter a new amount: ");
                     readString = Console.ReadLine();
                     int.TryParse(readString, out readInt1);
-                    currentCart = iBl.cart.UpdateProductAmountInCart(currentCart, readInt, readInt1);
+                    currentCart = bl.cart.UpdateProductAmountInCart(currentCart, readInt, readInt1);
                     Console.WriteLine(currentCart);
                     break;
                 case CartOptions.MakeOrder:
-                    iBl.cart.MakeOrder(currentCart);
+                    bl.cart.MakeOrder(currentCart);
                     currentCart = new Cart();
                     break;
                 default:
