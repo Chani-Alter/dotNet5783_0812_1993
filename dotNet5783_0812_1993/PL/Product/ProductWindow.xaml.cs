@@ -195,7 +195,9 @@ public partial class ProductWindow : Window
 
     private void priceTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
     {
-
+        char c = (char)KeyInterop.VirtualKeyFromKey(e.Key);
+        if (c == 190)
+            return;
         onlyNumber(sender, e);
     }
 
