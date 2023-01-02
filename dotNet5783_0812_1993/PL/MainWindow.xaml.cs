@@ -1,6 +1,4 @@
 ﻿using System.Windows;
-using BlApi;
-using BlImplementation;
 using PL.Product;
 
 namespace PL;
