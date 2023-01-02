@@ -70,7 +70,8 @@ public partial class ProductWindow : Window
         product.Name = nameTextBox.Text;
         double.TryParse(priceTextBox.Text, out helpDouble);
         product.Price = helpDouble;
-        product.Category = ((BO.Category)categoryComboBox.SelectedItem);
+        Enum.TryParse((string)categoryComboBox.SelectedItem, out BO.Category category);
+        product.Category = category;
         int.TryParse(inStockTextBox.Text, out helpInt);
         product.InStock = helpInt;
 
