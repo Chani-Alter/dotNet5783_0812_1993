@@ -1,6 +1,5 @@
 ﻿using DalApi;
 using DO;
-using System.Linq;
 using static Dal.DataSource;
 
 namespace Dal;
@@ -11,17 +10,19 @@ namespace Dal;
 /// </summary>
 internal class DalOrderItem : IOrderItem
 {
+
     /// <summary>
     /// add a orderitem to the array
     /// </summary>
     /// <param name="orderItem">the new order item </param>
     /// <returns>the id of the new order item</returns>
-    /// <exception cref="Exception">if the order id or the product id doesnt exist</exception>
+    /// <exception cref="Exception">if the order  or the product  doesnt exist</exception>
     public int Add(OrderItem orderItem)
     {
         var resultOrder = OrderList.FirstOrDefault(ord => ord?.ID == orderItem.OrderID);
         if (resultOrder == null)
             throw new DoesNotExistedDalException("order id is not exist");
+
         var resultProduct = ProductList.FirstOrDefault(prod => prod?.ID == orderItem.ProductID);
         if (resultProduct == null)
             throw new DoesNotExistedDalException("product id is not exist");
@@ -32,9 +33,9 @@ internal class DalOrderItem : IOrderItem
     }
 
     /// <summary>
-    /// get all the order items
+    /// get list of order items
     /// </summary>
-    /// <returns>an array of all the order items</returns>
+    /// <returns>a list of order items</returns>
     public IEnumerable<OrderItem?> GetList(Func<OrderItem?, bool>? predicate)
     {
         if (predicate == null)
@@ -42,6 +43,12 @@ internal class DalOrderItem : IOrderItem
         return OrderItemList.Where(predicate);
     }
 
+    /// <summary>
+    /// get a spesific order item by condition
+    /// </summary>
+    /// <param name="predicate">the condition</param>
+    /// <returns>the order item</returns>
+    /// <exception cref="DoesNotExistedDalException"></exception>
     public OrderItem GetByCondition(Func<OrderItem?, bool> predicate)
     {
         return OrderItemList.FirstOrDefault(predicate) ??
@@ -56,14 +63,15 @@ internal class DalOrderItem : IOrderItem
     /// <exception cref="Exception">if the order item didnt exist</exception>
     public void Delete(int id)
     {
-        int index = search(id);
-        if (index != -1)
-        {
-            OrderItemList.RemoveAt(index);
-        }
-        else
-            throw new DoesNotExistedDalException(" OrderItem is not exist");
+        var result = OrderItemList.FirstOrDefault(ord => ord?.ID == id);
+
+        if (result == null)
+            throw new DoesNotExistedDalException("order item is not exist");
+
+        OrderItemList.Remove(result);
+
     }
+
 
     /// <summary>
     /// update an order item
@@ -72,28 +80,13 @@ internal class DalOrderItem : IOrderItem
     /// <exception cref="Exception">if the order cdoesnt exist</exception>
     public void Update(OrderItem orderItem)
     {
-        int index = search(orderItem.ID);
-        if (index != -1)
-            OrderItemList[index] = orderItem;
-        else
+        int index = OrderItemList.FindIndex(item => item?.ID == orderItem.ID);
+
+        if (index == -1)
             throw new DoesNotExistedDalException(" OrderItem is not exist");
 
-    }
+        OrderItemList[index] = orderItem;
 
-
-    /// <summary>
-    ///search function
-    /// </summary>
-    /// <returns>returns the index of the member found</returns>
-
-    private int search(int id)
-    {
-        for (int i = 0; i < OrderItemList.Count; i++)
-        {
-            if (OrderItemList[i]?.ID == id)
-                return i;
-        }
-        return -1;
     }
 
 }

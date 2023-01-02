@@ -10,67 +10,33 @@ namespace BlImplementation;
 /// </summary>
 internal class Product : IProduct
 {
-    private IDal dal = new DalList.DalList();
 
     /// <summary>
-    /// function that returns a product by id for the manager
+    /// An attribute that contains access to all the dallist data
     /// </summary>
-    /// <returns>list of product</returns>
-    private IEnumerable<ProductForList> GetProductListManager(Filter filter = Filter.None, object? filterValue = null)
-    {
-        IEnumerable<DO.Product?> products;
+    private IDal dal = new DalList.DalList();
 
-        switch (filter)
-        {
-            case Filter.FilterByCategory:
-                products = dal.Product.GetList(product => product?.Category == (filterValue != null ? (DO.Category)filterValue : product?.Category));
-                break;
-            case Filter.FilterByBiggerThanPrice:
-                products = dal.Product.GetList(product => ((DO.Product)product!).Price > (double)filterValue!);
-                break;
-            case Filter.FilterBySmallerThanPrice:
-                products = dal.Product.GetList(product => ((DO.Product)product!).Price < (double)filterValue!);
-                break;
-            case Filter.None:
-                products = dal.Product.GetList();
-                break;
-            default:
-                products = dal.Product.GetList();
-                break;
-        }
-
-        return from item in products
-               where item != null
-               let product = (DO.Product)item
-               select new ProductForList
-               {
-                   ID = product.ID,
-                   Name = product.Name,
-                   Price = product.Price,
-                   Category = (Category)product.Category,
-
-               };
-    }
 
     /// <summary>
     /// Definition of a function that returns a list of product by category for the manager
     /// </summary>
-    /// <param name="category"></param>
-    /// <returns></returns>
+    /// <param name="category">the category value</param>
+    /// <returns>the product filtered list</returns>
     public IEnumerable<ProductForList> GetProductListForManagerByCategory(Category? category)
     {
-        return GetProductListManager(Filter.FilterByCategory, category);
+        return getProductListManager(Filter.FilterByCategory, category);
     }
 
 
     /// <summary>
-    /// Definition of a function that returns the list of product for manager
+    /// Definition of a function that returns All list of product for manager
     /// </summary>
     /// <returns></returns>
     public IEnumerable<ProductForList> GetAllProductListForManager()
     {
-        return GetProductListManager();
+        return getProductListManager();
     }
+
 
     /// <summary>
     /// function that returns a product by id for the manager
@@ -183,7 +149,7 @@ internal class Product : IProduct
         }
         catch (DO.DoesNotExistedDalException ex)
         {
-            throw new DoesNotExistedBlException("product does not exist", ex);
+            throw new UpdateErrorBlException("product update fails" , ex);
         }
     }
 
@@ -238,4 +204,47 @@ internal class Product : IProduct
         }
 
     }
+
+    /// <summary>
+    /// A private function that return a list of product by a spesific filter
+    /// </summary>
+    /// <param name="filter">the kind  of the filter</param>
+    /// <param name="filterValue">the filter value</param>
+    /// <returns>the list after filter</returns>
+    private IEnumerable<ProductForList> getProductListManager(Filter filter = Filter.None, object? filterValue = null)
+    {
+        IEnumerable<DO.Product?> products;
+
+        switch (filter)
+        {
+            case Filter.FilterByCategory:
+                products = dal.Product.GetList(product => product?.Category == (filterValue != null ? (DO.Category)filterValue : product?.Category));
+                break;
+            case Filter.FilterByBiggerThanPrice:
+                products = dal.Product.GetList(product => ((DO.Product)product!).Price > (double)filterValue!);
+                break;
+            case Filter.FilterBySmallerThanPrice:
+                products = dal.Product.GetList(product => ((DO.Product)product!).Price < (double)filterValue!);
+                break;
+            case Filter.None:
+                products = dal.Product.GetList();
+                break;
+            default:
+                products = dal.Product.GetList();
+                break;
+        }
+
+        return from item in products
+               where item != null
+               let product = (DO.Product)item
+               select new ProductForList
+               {
+                   ID = product.ID,
+                   Name = product.Name,
+                   Price = product.Price,
+                   Category = (Category)product.Category,
+
+               };
+    }
+
 }

@@ -8,7 +8,7 @@ namespace Dal;
 /// A department that performs operations: 
 /// adding, updating, repeating and deleting on the order array
 /// </summary>
-internal class DalOrder:IOrder
+internal class DalOrder : IOrder
 {
     /// <summary>
     /// add a order to the order array
@@ -21,20 +21,28 @@ internal class DalOrder:IOrder
         OrderList.Add(order);
         return order.ID;
     }
+
+
     /// <summary>
-    /// get all the orders
+    /// get list of orders by condition
     /// </summary>
     /// <returns>an array of orders</returns>
     public IEnumerable<Order?> GetList(Func<Order?, bool>? predicate)
     {
         if (predicate == null)
             return OrderList.Select(order => order);
-        return  OrderList.Where(predicate);
+        return OrderList.Where(predicate);
     }
 
+    /// <summary>
+    /// get a spesific order by condition
+    /// </summary>
+    /// <param name="predicate">a condition</param>
+    /// <returns>the order</returns>
+    /// <exception cref="DoesNotExistedDalException">if the order does not exist</exception>
     public Order GetByCondition(Func<Order?, bool> predicate)
     {
-        return  OrderList.FirstOrDefault(predicate) ?? 
+        return OrderList.FirstOrDefault(predicate) ??
             throw new DoesNotExistedDalException("There is no order that matches the condition");
     }
 
@@ -42,17 +50,17 @@ internal class DalOrder:IOrder
     /// delete an order
     /// </summary>
     /// <param name="id">the id of the order</param>
-    /// <exception cref="Exception">if the order didnt exist</exception>
+    /// <exception cref="Exception">if the order didoes notdnt exist</exception>
     public void Delete(int id)
     {
-        int index = search(id);
-        if (index != -1)
-        {
-            OrderList.RemoveAt(index);
-        }
-        else
+        var result = OrderList.FirstOrDefault(ord => ord?.ID == id);
+
+        if (result == null)
             throw new DoesNotExistedDalException("order is not exist");
+
+        OrderList.Remove(result);
     }
+
 
     /// <summary>
     /// update an order
@@ -61,25 +69,12 @@ internal class DalOrder:IOrder
     /// <exception cref="Exception">if the order doesnt exist</exception>
     public void Update(Order order)
     {
-        int index = search(order.ID);
-        if (index != -1)
-            OrderList[index] = order;
-        else
+        int index = OrderList.FindIndex(ord => ord?.ID == order.ID);
+        if (index == -1)
             throw new DoesNotExistedDalException("order is not exist");
-    }
 
-    /// <summary>
-    ///search function
-    /// </summary>
-    /// <returns>returns the index of the member found</returns>
-    private int search(int id)
-    {
-        for (int i = 0; i < OrderList.Count; i++)
-        {
-            if (OrderList[i]?.ID == id)
-                return i;
-        }
-        return -1;
+        OrderList[index] = order;
+
     }
 
 }

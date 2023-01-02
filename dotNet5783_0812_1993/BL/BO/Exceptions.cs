@@ -20,7 +20,7 @@ public class DoesNotExistedBlException : Exception
 [Serializable]
 public class BLAlreadyExistException : Exception
 {
-    public BLAlreadyExistException(string message, Exception innerException) : base(message, innerException)
+    public BLAlreadyExistException(string _message, Exception innerException) : base(_message, innerException)
     { }
     public override string ToString() => base.ToString() + $"Entity is already exist";
 }
@@ -32,9 +32,10 @@ public class BLAlreadyExistException : Exception
 
 public class UpdateErrorBlException : Exception
 {
-    public UpdateErrorBlException(string? _message) : base(_message) { }
+    public UpdateErrorBlException(string? _message , Exception innerException) : base(_message, innerException)
+    { }
+    public override string ToString() => base.ToString() + $"fails by updating Entity";
 }
-
 /// <summary>
 /// A class for errors thrown for a invalid input
 /// </summary>

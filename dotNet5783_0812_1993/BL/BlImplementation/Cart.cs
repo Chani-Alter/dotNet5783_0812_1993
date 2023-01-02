@@ -39,6 +39,7 @@ internal class Cart : ICart
             }
 
             DO.Product product = dal.Product.GetByCondition(prod => prod?.ID == productId);
+
             if (product.InStock <= 0)
                 throw new ImpossibleActionBlException("product not exist in stock");
 
@@ -79,15 +80,19 @@ internal class Cart : ICart
         {
             if (cart.Items == null)
                 throw new BO.ImpossibleActionBlException("There are no items in the cart");
+
             var result = cart.Items.FirstOrDefault(item => item?.ProductID == productId);
 
             if (result == null)
                 throw new ImpossibleActionBlException("This item is not in the cart");
+
             DO.Product product = dal.Product.GetByCondition(prod => prod?.ID == productId);
 
             if (product.InStock < amount)
                 throw new ImpossibleActionBlException("product not exist in stock");
+
             cart.TotalPrice -= (amount - result.Amount) * result.Price;
+
             if (amount == 0)
             {
                 cart.Items.Remove(result);
@@ -107,6 +112,7 @@ internal class Cart : ICart
                                 };
                 cart.Items = (List<BO.OrderItem?>)cartItems;
             }
+
             return cart;
         }
         catch (DO.DoesNotExistedDalException ex)
@@ -114,6 +120,8 @@ internal class Cart : ICart
             throw new DoesNotExistedBlException("product dosent exsit", ex);
         }
     }
+
+
     /// <summary>
     /// function that confirms an order
     /// </summary>
@@ -128,8 +136,10 @@ internal class Cart : ICart
         {
             if (cart.CustomerName == "" || cart.CustomerEmail == "" || cart.CustomerAdress == "")
                 throw new InvalidInputBlException("Invalid details");
+
             if (cart.Items == null)
                 throw new ImpossibleActionBlException("There are no items in the cart.");
+
             int id = dal.Order.Add(
                 new DO.Order
                 {
@@ -137,8 +147,10 @@ internal class Cart : ICart
                     ShippingDate = null,
                     DeliveryDate = null
                 });
+
             IEnumerable<DO.Product?> products = dal.Product.GetList();
 
+            //return a list of tuples that everyone ave a orderItem to add and a updated product
             var result = from item in cart.Items
                          join product in products on item.ProductID equals product?.ID into empdept
                          from ed in empdept.DefaultIfEmpty()
@@ -161,10 +173,25 @@ internal class Cart : ICart
                              }
                          };
 
+            //for each tuple we update the product list and add a orderItem to the order Item list
             result.ToList().ForEach(res =>
             {
-                dal.Product.Update(res.prod);
-                dal.OrderItem.Add(res.orderItem);
+                try
+                {
+                    dal.Product.Update(res.prod);
+                }
+                catch (DO.DoesNotExistedDalException ex)
+                {
+                    throw new UpdateErrorBlException("product update failes" , ex);
+                }
+                try
+                {
+                    dal.OrderItem.Add(res.orderItem);
+                }
+                catch (DO.DuplicateDalException ex)
+                {
+                    throw new BLAlreadyExistException("order Item alredy exist ", ex);
+                }
             });
         }
         catch (DO.DoesNotExistedDalException ex)
@@ -172,4 +199,5 @@ internal class Cart : ICart
             throw new DoesNotExistedBlException($"{ex.EntityName} dosent exsit", ex);
         }
     }
+
 }

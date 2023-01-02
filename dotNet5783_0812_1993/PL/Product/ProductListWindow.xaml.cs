@@ -27,6 +27,11 @@ public partial class ProductListWindow : Window
         categorySelector.SelectedValue = BO.Category.All;
     }
 
+    /// <summary>
+    /// A function for the SelectionChanged event for the categorySelector whoe shoes all the product whoe mach to the category
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void categorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         BO.Category? category = categorySelector.SelectedItem as BO.Category?;
@@ -45,12 +50,22 @@ public partial class ProductListWindow : Window
         }
     }
 
+    /// <summary>
+    /// A function for the click event for the Add product btn whoe open the product window for adding
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void AddProductBtn_Click(object sender, RoutedEventArgs e)
     {
         new ProductWindow().Show();
         Close();
     }
-     
+
+    /// <summary>
+    /// A function for the MouseDoubleClick event for the productListView whoe open the product window for update
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void productListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
         BO.ProductForList product = (BO.ProductForList)productListView.SelectedItem;
