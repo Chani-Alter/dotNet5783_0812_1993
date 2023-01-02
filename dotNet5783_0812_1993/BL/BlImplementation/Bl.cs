@@ -5,7 +5,7 @@ namespace BlImplementation;
 ///A class that implements the interface - Ibl and contains all the data entities
 /// </summary>
 
-sealed public class Bl : IBl
+sealed internal class Bl : IBl
 {
     /// <summary>
     ///Returns the product entity

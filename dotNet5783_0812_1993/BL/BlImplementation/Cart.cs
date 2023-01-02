@@ -12,7 +12,7 @@ internal class Cart : ICart
     /// <summary>
     /// An attribute that contains access to all the dallist data
     /// </summary>
-    private IDal dal = new DalList.DalList();
+    DalApi.IDal? dal = DalApi.Factory.Get();
 
 
     /// <summary>
