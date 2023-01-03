@@ -1,6 +1,5 @@
 ﻿using DalApi;
-using Dal;
-namespace DalList;
+namespace Dal;
 
 /// <summary>
 /// a class how containes all the dal classes
