@@ -1,6 +1,7 @@
 ﻿using BO;
 using IProduct = BlApi.IProduct;
 
+using AutoMapper;
 
 namespace BlImplementation;
 
@@ -14,7 +15,7 @@ internal class Product : IProduct
     /// An attribute that contains access to all the dallist data
     /// </summary>
     DalApi.IDal? dal = DalApi.Factory.Get();
-
+    Mapper mapper = initializeAutomapper();
 
     /// <summary>
     /// Definition of a function that returns a list of product by category for the manager
@@ -48,14 +49,8 @@ internal class Product : IProduct
         try
         {
             DO.Product product = dal.Product.GetByCondition(prod => prod?.ID == id);
-            return new BO.Product
-            {
-                ID = product.ID,
-                Name = product.Name,
-                Price = product.Price,
-                Category = (Category)product.Category,
-                InStock = product.InStock
-            };
+
+            return mapper.Map<BO.Product>(product);
 
         }
         catch (DO.DoesNotExistedDalException ex)
@@ -78,14 +73,7 @@ internal class Product : IProduct
             if (product.ID < 1 || product.Name == "" || product.Price < 1 || product.InStock < 0 || (int)product.Category > 5 || (int)product.Category < 0)
                 throw new InvalidInputBlException("Invalid input");
 
-            dal.Product.Add(new DO.Product
-            {
-                ID = product.ID,
-                Name = product.Name,
-                Price = product.Price,
-                Category = (DO.Category)product.Category,
-                InStock = product.InStock
-            });
+            dal.Product.Add(mapper.Map<DO.Product>(product));
 
             return product;
         }
@@ -133,22 +121,15 @@ internal class Product : IProduct
             if (product.ID < 1 || product.Name == "" || product.Price < 1 || product.InStock < 0 || (int)product.Category > 5 || (int)product.Category < 0)
                 throw new InvalidInputBlException(" Invalid input");
 
-            DO.Product product1 = new DO.Product
-            {
-                ID = product.ID,
-                Name = product.Name,
-                Price = product.Price,
-                InStock = product.InStock,
-                Category = (DO.Category)product.Category
-            };
+            DO.Product product1 = mapper.Map<DO.Product>(product);
 
             dal.Product.Update(product1);
-            
+
             return product;
         }
         catch (DO.DoesNotExistedDalException ex)
         {
-            throw new UpdateErrorBlException("product update fails" , ex);
+            throw new UpdateErrorBlException("product update fails", ex);
         }
     }
 
@@ -163,16 +144,7 @@ internal class Product : IProduct
         return from item in products
                where item != null
                let product = (DO.Product)item
-               select new ProductItem
-               {
-                   ID = product.ID,
-                   Name = product.Name,
-                   Price = product.Price,
-                   Category = (Category)product.Category,
-                   Amount = product.InStock,
-                   Instock = product.InStock > 0
-
-               };
+               select mapper.Map<ProductItem>(product);
     }
 
     /// <summary>
@@ -186,15 +158,7 @@ internal class Product : IProduct
         try
         {
             DO.Product product = dal.Product.GetByCondition(prod => prod?.ID == id);
-            return new ProductItem
-            {
-                ID = product.ID,
-                Name = product.Name,
-                Price = product.Price,
-                Category = (Category)product.Category,
-                Amount = product.InStock,
-                Instock = product.InStock > 0
-            };
+            return mapper.Map<ProductItem>(product);
 
         }
         catch (DO.DoesNotExistedDalException ex)
@@ -236,14 +200,28 @@ internal class Product : IProduct
         return from item in products
                where item != null
                let product = (DO.Product)item
-               select new ProductForList
-               {
-                   ID = product.ID,
-                   Name = product.Name,
-                   Price = product.Price,
-                   Category = (Category)product.Category,
+               select mapper.Map<ProductForList>(products);
+    }
 
-               };
+    static private Mapper initializeAutomapper()
+    {
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.CreateMap<DO.Product, BO.Product>()
+            .ForMember(dest => dest.Category, act => act.MapFrom(src => (Category)src.Category));
+            cfg.CreateMap<BO.Product, DO.Product>()
+            .ForMember(dest => dest.Category, act => act.MapFrom(src => (DO.Category)src.Category));
+            cfg.CreateMap<DO.Product, ProductItem>()
+            .ForMember(dest => dest.Category, act => act.MapFrom(src => (Category)src.Category))
+            .ForMember(dest => dest.Amount, act => act.MapFrom(src => src.InStock))
+            .ForMember(dest => dest.Instock, act => act.MapFrom(src => src.InStock > 0));
+            cfg.CreateMap<DO.Product, ProductForList>()
+            .ForMember(dest => dest.Category, act => act.MapFrom(src => (Category)src.Category));
+        });
+
+
+        var mapper = new Mapper(config);
+        return mapper;
     }
 
 }
