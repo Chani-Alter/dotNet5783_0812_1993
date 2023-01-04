@@ -151,24 +151,26 @@ internal class Cart : ICart
 
             //return a list of tuples that everyone ave a orderItem to add and a updated product
             var result = from item in cart.Items
-                         join product in products on item.ProductID equals product?.ID into empdept
+                         join prod in products on item.ProductID equals prod?.ID into empdept
                          from ed in empdept.DefaultIfEmpty()
+                         let product = ed?? throw new ImpossibleActionBlException("product does not exist")
+                         let orderItem = item! 
                          select new
                          {
                              orderItem = new DO.OrderItem
                              {
                                  OrderID = id,
-                                 ProductID = item?.ProductID ?? 0,
-                                 Amount = item?.Amount > 0 ? item?.Amount ?? 0 : throw new ImpossibleActionBlException("invalid amount"),
-                                 Price = item?.Price ?? 0
+                                 ProductID = item.ProductID ,
+                                 Amount = item.Amount > 0 ? item.Amount  : throw new ImpossibleActionBlException("invalid amount"),
+                                 Price = item.Price
                              },
                              prod = new DO.Product
                              {
-                                 ID = ed == null ? throw new ImpossibleActionBlException("product does not exist") : item?.ProductID ?? 0,
-                                 Price = ed?.Price ?? 0,
-                                 Category = ed?.Category ?? 0,
-                                 InStock = ed?.InStock > item?.Amount ? ed?.InStock - item?.Amount ?? 0 : throw new ImpossibleActionBlException("amount not in stock "),
-                                 Name = ed?.Name
+                                 ID = product.ID,
+                                 Price = product.Price,
+                                 Category = product.Category ,
+                                 InStock = product.InStock > item?.Amount ? product.InStock - item?.Amount ?? 0 : throw new ImpossibleActionBlException("amount not in stock "),
+                                 Name = product.Name
                              }
                          };
 
