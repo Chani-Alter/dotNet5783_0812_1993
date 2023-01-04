@@ -1,5 +1,4 @@
-﻿using DalApi;
-using BO;
+﻿using BO;
 using IProduct = BlApi.IProduct;
 
 
