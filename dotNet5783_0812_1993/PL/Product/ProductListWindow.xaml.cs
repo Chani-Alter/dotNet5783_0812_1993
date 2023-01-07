@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -14,15 +15,24 @@ public partial class ProductListWindow : Window
 
     private BlApi.IBl? bl = BlApi.Factory.Get();
 
+    public ObservableCollection<BO.ProductForList?> ProductsList
+    {
+        get { return (ObservableCollection<BO.ProductForList?>)GetValue(ProductsProperty); }
+        set { SetValue(ProductsProperty, value); }
+    }
+
+    public static readonly DependencyProperty ProductsProperty =
+    DependencyProperty.Register("ProductsList", typeof(ObservableCollection<BO.ProductForList?>), typeof(Window), new PropertyMetadata(null));
+
+
     public ProductListWindow()
     {
         InitializeComponent();
 
-        productListView.ItemsSource = bl.Product.GetAllProductListForManager();
-
-        categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
-
-        categorySelector.SelectedValue = BO.Category.All;
+        var temp = bl.Product.GetAllProductListForManager();
+        ProductsList = (temp == null) ? new() : new(temp);
+        //categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
+        //categorySelector.SelectedValue = BO.Category.All;
     }
 
     /// <summary>
@@ -30,23 +40,23 @@ public partial class ProductListWindow : Window
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void categorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-        BO.Category? category = categorySelector.SelectedItem as BO.Category?;
+    //private void categorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    //{
+    //    BO.Category? category = categorySelector.SelectedItem as BO.Category?;
 
-        productListView.ItemsSource = null;
+    //    productListView.ItemsSource = null;
 
-        if (category == BO.Category.All)
-        {
-            productListView.ItemsSource = bl.Product.GetAllProductListForManager();
+    //    if (category == BO.Category.All)
+    //    {
+    //        productListView.ItemsSource = bl.Product.GetAllProductListForManager();
 
-        }
-        else
-        {
-            productListView.ItemsSource = bl.Product.GetProductListForManagerByCategory(category);
+    //    }
+    //    else
+    //    {
+    //        productListView.ItemsSource = bl.Product.GetProductListForManagerByCategory(category);
 
-        }
-    }
+    //    }
+    //}
 
     /// <summary>
     /// A function for the click event for the Add product btn whoe open the product window for adding

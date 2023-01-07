@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Product"
         mc:Ignorable="d"
-        
+        DataContext="{Binding ProductsList, RelativeSource={RelativeSource Mode=Self} , Mode=TwoWay}"        
         Title="ProductListWindow" Height="640" Width="800">
     <Grid Name="MainGrid" >
         <Grid.RowDefinitions>
@@ -20,11 +20,11 @@
                 <ColumnDefinition Width="391*"/>
                 <ColumnDefinition Width="9*"/>
             </Grid.ColumnDefinitions >
-            <ComboBox Name="categorySelector" SelectionChanged="categorySelector_SelectionChanged" FontSize="17" Background="#FF17CEB9" Grid.Column="1" Grid.ColumnSpan="2"/>
-            <Label Name="categoryLabel" Grid.Column="0" Content="category" Background="#FF17CEB9" FontSize="25" />
+            <!--<ComboBox Name="categorySelector" SelectionChanged="categorySelector_SelectionChanged" FontSize="17" Background="#FF17CEB9" Grid.Column="1" Grid.ColumnSpan="2"/>-->
+            <!--<Label Name="categoryLabel" Grid.Column="0" Content="category" Background="#FF17CEB9" FontSize="25" />-->
         </Grid>
 
-        <ListView x:Name="productListView" d:ItemsSource="{d:SampleData ItemCount=5}"   MouseDoubleClick="productListView_MouseDoubleClick" 
+        <ListView x:Name="productListView" ItemsSource="{Binding}"   MouseDoubleClick="productListView_MouseDoubleClick" 
                   Background="#FF9AF7D3" FontSize="15" Margin="0,46,0,86" Grid.RowSpan="2" SelectionChanged="productListView_SelectionChanged" Foreground="#FF101115">
             <ListView.View>
                 <GridView>
