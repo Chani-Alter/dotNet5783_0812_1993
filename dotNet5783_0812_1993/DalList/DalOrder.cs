@@ -56,7 +56,7 @@ internal class DalOrder : IOrder
         var result = OrderList.FirstOrDefault(ord => ord?.ID == id);
 
         if (result == null)
-            throw new DoesNotExistedDalException("order is not exist");
+            throw new DoesNotExistedDalException(id , "order" , "order is not exist");
 
         OrderList.Remove(result);
     }
@@ -71,7 +71,7 @@ internal class DalOrder : IOrder
     {
         int index = OrderList.FindIndex(ord => ord?.ID == order.ID);
         if (index == -1)
-            throw new DoesNotExistedDalException("order is not exist");
+            throw new DoesNotExistedDalException(order.ID , "order" , "order is not exist");
 
         OrderList[index] = order;
 

@@ -21,7 +21,7 @@ internal class DalProduct : IProduct
     {
         var result = ProductList.FirstOrDefault(p => p?.ID == product.ID);
         if (result != null)
-            throw new DuplicateDalException("product id already exists");
+            throw new DuplicateDalException(product.ID , "product", "product id already exists");
         ProductList.Add(product);
 
         return product.ID;
@@ -62,7 +62,7 @@ internal class DalProduct : IProduct
         var result = ProductList.FirstOrDefault(ord => ord?.ID == id);
 
         if (result == null)
-            throw new DoesNotExistedDalException("product is not exist");
+            throw new DoesNotExistedDalException(id, "product" , "product is not exist");
 
         ProductList.Remove(result);
 
@@ -77,7 +77,7 @@ internal class DalProduct : IProduct
     {
         int index = ProductList.FindIndex(prod => prod?.ID == product.ID);
         if (index == -1)
-            throw new DoesNotExistedDalException("order is not exist");
+            throw new DoesNotExistedDalException(product.ID, "product" , "product is not exist");
 
         ProductList[index] = product;
 

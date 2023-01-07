@@ -21,11 +21,11 @@ internal class DalOrderItem : IOrderItem
     {
         var resultOrder = OrderList.FirstOrDefault(ord => ord?.ID == orderItem.OrderID);
         if (resultOrder == null)
-            throw new DoesNotExistedDalException("order id is not exist");
+            throw new DoesNotExistedDalException(orderItem.OrderID , "order" , "order id is not exist");
 
         var resultProduct = ProductList.FirstOrDefault(prod => prod?.ID == orderItem.ProductID);
         if (resultProduct == null)
-            throw new DoesNotExistedDalException("product id is not exist");
+            throw new DoesNotExistedDalException(orderItem.ProductID , "product" , "product id is not exist");
 
         orderItem.ID = OrderItemId;
         OrderItemList.Add(orderItem);
@@ -66,7 +66,7 @@ internal class DalOrderItem : IOrderItem
         var result = OrderItemList.FirstOrDefault(ord => ord?.ID == id);
 
         if (result == null)
-            throw new DoesNotExistedDalException("order item is not exist");
+            throw new DoesNotExistedDalException(id , "order-item" , "order item is not exist");
 
         OrderItemList.Remove(result);
 
@@ -83,7 +83,7 @@ internal class DalOrderItem : IOrderItem
         int index = OrderItemList.FindIndex(item => item?.ID == orderItem.ID);
 
         if (index == -1)
-            throw new DoesNotExistedDalException(" OrderItem is not exist");
+            throw new DoesNotExistedDalException(orderItem.ID , "order item" , "Order Item is not exist");
 
         OrderItemList[index] = orderItem;
 
