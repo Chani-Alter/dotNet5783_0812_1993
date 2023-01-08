@@ -4,22 +4,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PL.Product"
+        xmlns:local="clr-namespace:PL"   
         mc:Ignorable="d"
         DataContext="{Binding ProductsList, RelativeSource={RelativeSource Mode=Self} , Mode=TwoWay}"        
         Title="ProductListWindow" Height="640" Width="800">
     <Window.Resources>
-        <ObjectDataProvider x:Key="dataFromEnum" MethodName="GetValues"
-                                ObjectType="{x:Type System:Enum}">
-            <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="StyleAlias:BO.Category"/>
-            </ObjectDataProvider.MethodParameters>
-        </ObjectDataProvider>
+        <local:EnumToStringConverter  x:Key="EnumToStringConverter"/>
     </Window.Resources>
-    <!--<Grid>
-        <ComboBox ItemsSource="{Binding Source={StaticResource dataFromEnum}}"
-                  SelectedItem="{Binding Path=CurrentEffectStyle}" />
-    </Grid>-->
     <Grid Name="MainGrid" >
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
@@ -32,7 +23,7 @@
                 <ColumnDefinition Width="391*"/>
                 <ColumnDefinition Width="9*"/>
             </Grid.ColumnDefinitions >
-            <ComboBox Name="categorySelector" SelectionChanged="categorySelector_SelectionChanged" FontSize="17" Background="#FF17CEB9" Grid.Column="1" Grid.ColumnSpan="2"/>
+            <ComboBox ItemsSource="{Binding Category, Converter={StaticResource EnumToStringConverter}}" Name="categorySelector" SelectionChanged="categorySelector_SelectionChanged" FontSize="17" Background="#FF17CEB9" Grid.Column="1" Grid.ColumnSpan="2"/>
             <Label Name="categoryLabel" Grid.Column="0" Content="category" Background="#FF17CEB9" FontSize="25" />
         </Grid>
 

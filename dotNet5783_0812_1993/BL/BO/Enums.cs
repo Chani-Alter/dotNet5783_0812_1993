@@ -5,7 +5,7 @@
 /// </summary>
 public enum Category
 {
-    Laptop = 1, DesktopComputer, Screens, PeripheralEquipment , All
+    Laptop = 1, Desktop_Computer, Screens, Peripheral_Equipment , All
 }
 /// <summary>
 /// The order statuses enum
