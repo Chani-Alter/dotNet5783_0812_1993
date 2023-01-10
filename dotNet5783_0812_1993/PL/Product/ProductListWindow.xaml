@@ -4,13 +4,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PL"   
+        xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        DataContext="{Binding ProductsList, RelativeSource={RelativeSource Mode=Self} , Mode=TwoWay}"        
+        DataContext="{Binding ProductListData, RelativeSource={RelativeSource Mode=Self} , Mode=TwoWay}"        
         Title="ProductListWindow" Height="640" Width="800">
-    <Window.Resources>
-        <local:EnumToStringConverter  x:Key="EnumToStringConverter"/>
-    </Window.Resources>
     <Grid Name="MainGrid" >
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
@@ -23,11 +20,22 @@
                 <ColumnDefinition Width="391*"/>
                 <ColumnDefinition Width="9*"/>
             </Grid.ColumnDefinitions >
-            <ComboBox ItemsSource="{Binding Category, Converter={StaticResource EnumToStringConverter}}" Name="categorySelector" SelectionChanged="categorySelector_SelectionChanged" FontSize="17" Background="#FF17CEB9" Grid.Column="1" Grid.ColumnSpan="2"/>
+            <ComboBox Name="categorySelector" SelectionChanged="CategorySelector_SelectionChanged" FontSize="17" Background="#FF17CEB9" Grid.Column="1" Grid.ColumnSpan="2"
+
+    ItemsSource="{Binding Path=Category}">
+                <ComboBox.Resources>
+                    <local:EnumToStringConverter x:Key="EnumToStringConverter" />
+                </ComboBox.Resources>
+                <!--<ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>-->
+            </ComboBox>
             <Label Name="categoryLabel" Grid.Column="0" Content="category" Background="#FF17CEB9" FontSize="25" />
         </Grid>
 
-        <ListView x:Name="productListView" ItemsSource="{Binding}"   MouseDoubleClick="productListView_MouseDoubleClick" 
+        <ListView x:Name="productListView" ItemsSource="{Binding Path=ProductsList }"   MouseDoubleClick="productListView_MouseDoubleClick" 
                   Background="#FF9AF7D3" FontSize="15" Margin="0,46,0,86" Grid.RowSpan="2" SelectionChanged="productListView_SelectionChanged" Foreground="#FF101115">
             <ListView.View>
                 <GridView>
