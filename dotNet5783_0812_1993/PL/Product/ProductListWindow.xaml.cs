@@ -20,22 +20,31 @@ public partial class ProductListWindow : Window
     //public   DependencyProperty ProductsListData =
     //DependencyProperty.Register("ProductsListData", typeof(ProductListData), typeof(Window), new PropertyMetadata(null));
     //public ProductListData ProductListData = new ProductListData();
-    public ProductListData ProductListData
-    {
-        get { return (ProductListData)GetValue(ProductDataProperty); }
-        set { SetValue(ProductDataProperty, value); }
-    }
+    //public ProductListData ProductListData
+    //{
+    //    get { return (ProductListData)GetValue(ProductDataProperty); }
+    //    set { SetValue(ProductDataProperty, value); }
+    //}
 
     // Using a DependencyProperty as the backing store for ProductData.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty ProductDataProperty =
-    DependencyProperty.Register("ProductListData", typeof(ProductListData), typeof(Window), new PropertyMetadata(null));
+    //public static readonly DependencyProperty ProductDataProperty =
+    //DependencyProperty.Register("ProductListData", typeof(ProductListData), typeof(Window), new PropertyMetadata(null));
+
+    public ObservableCollection<BO.ProductForList?> ProductsList
+    {
+        get { return (ObservableCollection<BO.ProductForList?>)GetValue(ProductsProperty); }
+        set { SetValue(ProductsProperty, value); }
+    }
+    public Array Category { get; } = Enum.GetValues(typeof(BO.Category));
+    public static readonly DependencyProperty ProductsProperty =
+    DependencyProperty.Register("ProductsList", typeof(ObservableCollection<BO.ProductForList?>), typeof(Window), new PropertyMetadata(null));
 
     public ProductListWindow()
     {
         InitializeComponent();
 
         var temp = bl.Product.GetAllProductListForManager();
-        ProductListData.ProductsList= (temp == null) ? new() : new(temp);
+        ProductsList= (temp == null) ? new() : new(temp);
         //categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
         //categorySelector.SelectedValue = BO.Category.All;
     }
@@ -53,12 +62,12 @@ public partial class ProductListWindow : Window
         if (category == BO.Category.All)
         {
             var temp = bl.Product.GetAllProductListForManager();
-            ProductListData.ProductsList = (temp == null) ? new() : new(temp);
+            ProductsList = (temp == null) ? new() : new(temp);
         }
         else
         {
             var temp = bl.Product.GetProductListForManagerByCategory(category);
-            ProductListData.ProductsList = (temp == null) ? new() : new(temp);
+            ProductsList = (temp == null) ? new() : new(temp);
 
 
         }
@@ -95,15 +104,15 @@ public partial class ProductListWindow : Window
 
     }
 }
-public class ProductListData :DependencyObject
-{
-    public ObservableCollection<BO.ProductForList?> ProductsList
-    {
-        get { return (ObservableCollection<BO.ProductForList?>)GetValue(ProductsProperty); }
-        set { SetValue(ProductsProperty, value); }
-    }
-    public Array Category { get; } = Enum.GetValues(typeof(BO.Category));
-    public static readonly DependencyProperty ProductsProperty =
-    DependencyProperty.Register("ProductsList", typeof(ObservableCollection<BO.ProductForList?>), typeof(Window), new PropertyMetadata(null));
+//public class ProductListData :DependencyObject
+//{
+//    public ObservableCollection<BO.ProductForList?> ProductsList
+//    {
+//        get { return (ObservableCollection<BO.ProductForList?>)GetValue(ProductsProperty); }
+//        set { SetValue(ProductsProperty, value); }
+//    }
+//    public Array Category { get; } = Enum.GetValues(typeof(BO.Category));
+//    public static readonly DependencyProperty ProductsProperty =
+//    DependencyProperty.Register("ProductsList", typeof(ObservableCollection<BO.ProductForList?>), typeof(Window), new PropertyMetadata(null));
 
-}
+//}

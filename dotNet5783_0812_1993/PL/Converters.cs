@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BO;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -12,10 +13,9 @@ public class EnumToStringConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        string str = ((BO.Category)value!).ToString();
-        str.ToLower();
-        str.Replace('_', ' ');
-        return str;
+      BO.Category category = (BO.Category)value;
+        return category.ToString().Replace('_', ' ');
+
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
