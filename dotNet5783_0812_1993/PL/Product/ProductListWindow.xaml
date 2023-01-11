@@ -8,9 +8,6 @@
         mc:Ignorable="d"
         DataContext="{Binding  RelativeSource={RelativeSource Mode=Self} }"        
         Title="ProductListWindow" Height="640" Width="800">
-    <Window.Resources>
-        <local:EnumToStringConverter x:Key="EnumToStringConverter" />
-    </Window.Resources>
 
     <Grid Name="MainGrid" >
         <Grid.RowDefinitions>
@@ -25,10 +22,7 @@
                 <ColumnDefinition Width="9*"/>
             </Grid.ColumnDefinitions >
             <ComboBox Name="categorySelector" SelectionChanged="CategorySelector_SelectionChanged" FontSize="17" Background="#FF17CEB9" Grid.Column="1" Grid.ColumnSpan="2"
-             ItemsSource="{Binding Path = Category}">
-                <ComboBox.Resources>
-                    <local:EnumToStringConverter x:Key="EnumToStringConverter" />
-                </ComboBox.Resources>
+             ItemsSource="{Binding Source= {StaticResource Categorys}}" Text="{Binding Category , Mode=TwoWay , NotifyOnValidationError=True}">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Converter={StaticResource EnumToStringConverter}}" />

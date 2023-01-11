@@ -1,9 +1,12 @@
 ﻿<Application x:Class="PL.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:PL"
+             xmlns:loc="clr-namespace:PL"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <loc:Categorys x:Key="Categorys"/>
+        <loc:EnumToStringConverter x:Key ="EnumToStringConverter"/>
+        <loc:ZeroToHidden x:Key="ZeroToHidden"/>
+        <loc:ZeroToVisible x:Key="ZeroToVisible"/>
     </Application.Resources>
 </Application>
