@@ -1,0 +1,14 @@
+﻿<Window x:Class="PL.Manager.ManagerMenue"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL.Manager"
+        mc:Ignorable="d"
+        Title="ManagerMenue" Height="450" Width="800">
+    <Grid Background="#FF9AF7D3">
+        <Button Name="showProductBtn" FontSize="16" Cursor="Hand" FontWeight="Bold" Content="show products" Background="#FF17CEB9" Margin="0,166,0,0"   Height="69" Width="152" Click="showProductBtn_Click"/>
+        <Button Name="showOrdersBtn" FontSize="16" Cursor="Hand" FontWeight="Bold" Content="show orders" Background="#FF17CEB9"  Margin="0,166,0,0" VerticalAlignment="Top"  Height="69" Width="152" Click="showOrdersBtn_Click"/>
+
+    </Grid>
+</Window>

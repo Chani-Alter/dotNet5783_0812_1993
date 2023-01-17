@@ -11,6 +11,7 @@ namespace Dal;
 /// </summary>
 internal class DalProduct : IProduct
 {
+    #region PUBLIC MEMBERS
 
     /// <summary>
     /// Add a product to the productArray
@@ -38,7 +39,6 @@ internal class DalProduct : IProduct
             return ProductList.Select(product => product);
         return ProductList.Where(predicate);
     }
-
 
     /// <summary>
     /// get a spesific product by condition
@@ -82,4 +82,6 @@ internal class DalProduct : IProduct
         ProductList[index] = product;
 
     }
+
+    #endregion
 }

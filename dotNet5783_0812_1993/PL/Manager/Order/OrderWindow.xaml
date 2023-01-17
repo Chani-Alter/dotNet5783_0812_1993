@@ -1,0 +1,68 @@
+﻿<Window x:Class="PL.Manager.Order.OrderWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL.Manager.Order"
+        mc:Ignorable="d"
+        DataContext="{Binding OrderData, RelativeSource={RelativeSource Mode=Self} }" 
+        Title="OrderWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions >
+
+        <Label Grid.Row="0" Grid.Column="0" Name="idLabel" Content="Order ID"  ></Label>
+        <TextBox Text="{Binding ID }" Grid.Row="0" Grid.Column="1" Name="idTextBox"></TextBox>
+
+        <Label Grid.Row="1" Grid.Column="0" Name="nameLabel" Content="customer name"  ></Label>
+        <TextBox Text="{Binding CustomerName}" Grid.Row="1" Grid.Column="1" Name="nameTextBox"></TextBox>
+
+        <Label Grid.Row="2" Grid.Column="0" Name="emailLabel" Content="customer email"  ></Label>
+        <TextBox Text="{Binding CustomerEmail}" Grid.Row="2" Grid.Column="1" Name="emailTextBox"></TextBox>
+
+        <Label Grid.Row="3" Grid.Column="0" Name="adressLabel" Content="customer adress"  ></Label>
+        <TextBox Text="{Binding CustomerAdress}" Grid.Row="3" Grid.Column="1" Name="adressTextBox"></TextBox>
+
+        <Label Grid.Row="4" Grid.Column="0" Name="orderItemsLabel" Content="order items"  ></Label>
+        <ListView x:Name="orderItemListView" ItemsSource="{Binding Path=Items}"  
+                   Grid.Row="4" Grid.Column="1">
+        </ListView>
+
+        <Label Grid.Row="5" Grid.Column="0" Name="totalPriceLabel" Content="total price"  ></Label>
+        <TextBox Text="{Binding TotalPrice}" Grid.Row="5" Grid.Column="1" Name="totalPriceTextBox"></TextBox>
+
+        <Label Grid.Row="6" Grid.Column="0" Name="statusLabel" Content="order status"  ></Label>
+        <TextBox Text="{Binding Status}" Grid.Row="6" Grid.Column="1" Name="statusTextBox"></TextBox>
+
+
+        <Label Grid.Row="7" Grid.Column="0" Name="createDateLabel" Content="create order date"  ></Label>
+        <TextBox Text="{Binding CreateOrderDate}" Grid.Row="7" Grid.Column="1" Name="createDateTextBox"></TextBox>
+
+        <Label Grid.Row="8" Grid.Column="0" Visibility="{Binding ShippingDate , Converter={StaticResource NullToHidden}}" Name="shipingDateLabel" Content="shipping order date"  ></Label>
+        <TextBox Text="{Binding ShippingDate}" Visibility="{Binding ShippingDate , Converter={StaticResource NullToHidden}}"  Grid.Row="8" Grid.Column="1" Name="shipingDateTextBox"></TextBox>
+
+        <Label Grid.Row="9" Grid.Column="0" Visibility="{Binding DeliveryDate , Converter={StaticResource NullToHidden}}" Name="deliveryDateLabel" Content="delivery order date"  ></Label>
+        <TextBox Text="{Binding DeliveryDate}" Visibility="{Binding DeliveryDate , Converter={StaticResource NullToHidden}}" Grid.Row="9" Grid.Column="1" Name="deliveryDateTextBox"></TextBox>
+
+        <Label Grid.Row="8" Grid.Column="0" Visibility="{Binding ShippingDate , Converter={StaticResource NullToVisible}}"  Content="shipping order"  ></Label>
+        <Button Content="Shipping confirmation" Visibility="{Binding ShippingDate , Converter={StaticResource NullToVisible}}"  Grid.Row="8" Grid.Column="1" Name="shippingUpdate" Click="shippingUpdate_Click" ></Button>
+
+        <Label Grid.Row="9" Grid.Column="0" Visibility="{Binding DeliveryDate , Converter={StaticResource NullToVisible}}"  Content="delivery order"  ></Label>
+        <Button Content="delivery confirmation" Visibility="{Binding DeliveryDate , Converter={StaticResource NullToVisible}}" IsEnabled="{Binding ShippingDate , Converter={StaticResource NullToFalse}}"  Grid.Row="9" Grid.Column="1" Name="deliveryUpdate" Click="deliveryUpdate_Click" ></Button>
+
+    </Grid>
+</Window>

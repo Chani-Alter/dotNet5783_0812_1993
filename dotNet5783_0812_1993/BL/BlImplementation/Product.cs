@@ -9,11 +9,7 @@ namespace BlImplementation;
 /// </summary>
 internal class Product : IProduct
 {
-
-    /// <summary>
-    /// An attribute that contains access to all the dallist data
-    /// </summary>
-    DalApi.IDal? dal = DalApi.Factory.Get();
+    #region PUBLIC MEMBER
 
     /// <summary>
     /// Definition of a function that returns a list of product by category for the manager
@@ -204,6 +200,15 @@ internal class Product : IProduct
 
     }
 
+    #endregion
+
+    #region PRIVATE MEMBERS
+
+    /// <summary>
+    /// An attribute that contains access to all the dallist data
+    /// </summary>
+    DalApi.IDal? dal = DalApi.Factory.Get();
+
     /// <summary>
     /// A private function that return a list of product by a spesific filter
     /// </summary>
@@ -246,5 +251,6 @@ internal class Product : IProduct
                };
     }
 
+    #endregion
 
 }

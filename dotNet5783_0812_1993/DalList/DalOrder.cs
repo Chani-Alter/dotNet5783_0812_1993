@@ -10,6 +10,8 @@ namespace Dal;
 /// </summary>
 internal class DalOrder : IOrder
 {
+    #region PUBLIC MEMBERS
+
     /// <summary>
     /// add a order to the order array
     /// </summary>
@@ -77,4 +79,5 @@ internal class DalOrder : IOrder
 
     }
 
+    #endregion
 }

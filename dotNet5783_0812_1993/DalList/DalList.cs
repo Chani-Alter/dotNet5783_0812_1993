@@ -6,9 +6,7 @@ namespace Dal;
 /// </summary>
 sealed internal class DalList : IDal
 {
-    private static readonly object key = new();
-
-    private static IDal? instance;
+    #region PUBLIC MEMBERS
     public static IDal? Instance
     {
         get{
@@ -24,11 +22,20 @@ sealed internal class DalList : IDal
         }
     }
 
-    private DalList() { }
-
     public IOrder Order { get; } = new DalOrder();
     public IProduct Product { get; } = new DalProduct();
     public IOrderItem OrderItem { get; } = new DalOrderItem();
 
+    #endregion
+
+    #region PRIVATE MEMBERS
+
+    private static readonly object key = new();
+
+    private static IDal? instance;
+
+    private DalList() { }
+
+    #endregion
 }
 

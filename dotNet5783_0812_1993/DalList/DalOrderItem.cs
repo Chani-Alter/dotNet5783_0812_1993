@@ -10,6 +10,7 @@ namespace Dal;
 /// </summary>
 internal class DalOrderItem : IOrderItem
 {
+    #region PUBLIC MEMBERS
 
     /// <summary>
     /// add a orderitem to the array
@@ -55,7 +56,6 @@ internal class DalOrderItem : IOrderItem
             throw new DoesNotExistedDalException("There is no order item that matches the condition");
     }
 
-
     /// <summary>
     /// delete a order item
     /// </summary>
@@ -89,4 +89,5 @@ internal class DalOrderItem : IOrderItem
 
     }
 
+    #endregion
 }

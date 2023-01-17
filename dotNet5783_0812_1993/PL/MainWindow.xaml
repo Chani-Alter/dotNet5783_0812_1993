@@ -7,7 +7,8 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid Background="#FF9AF7D3">
-        <Button Name="showProductBtn" FontSize="16" Cursor="Hand" FontWeight="Bold" Content="show products" Background="#FF17CEB9" HorizontalAlignment="Center" Margin="0,166,0,0" VerticalAlignment="Top" Click="showProductBtn_Click" Height="69" Width="152"/>
-
+        <Button Name="manager" FontSize="16" Cursor="Hand" FontWeight="Bold" Content="Manager" Background="#FF17CEB9" Margin="324,0,324,0" VerticalAlignment="Center"   Height="69" Width="152" Click="manager_Click"/>
+        <Button Name="orderTracking" FontSize="16" Cursor="Hand" FontWeight="Bold" Content="Order tracking" Background="#FF17CEB9"  Margin="324,96,324,0" VerticalAlignment="Top"  Height="68" Width="152" Click="orderTracking_Click"/>
+        <Button Name="newOrder" FontSize="16" Cursor="Hand" FontWeight="Bold" Content="New order" Background="#FF17CEB9"  Margin="0,166,0,100" VerticalAlignment="Bottom"  Height="69" Width="152" Click="newOrder_Click"/>
     </Grid>
 </Window>

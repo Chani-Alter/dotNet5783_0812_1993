@@ -6,6 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
+        Activated="Window_Activated" 
         DataContext="{Binding  RelativeSource={RelativeSource Mode=Self} }"        
         Title="ProductListWindow" Height="640" Width="800">
 
@@ -22,18 +23,18 @@
                 <ColumnDefinition Width="9*"/>
             </Grid.ColumnDefinitions >
             <ComboBox Name="categorySelector" SelectionChanged="CategorySelector_SelectionChanged" FontSize="17" Background="#FF17CEB9" Grid.Column="1" Grid.ColumnSpan="2"
-             ItemsSource="{Binding Source= {StaticResource Categorys}}" Text="{Binding Category , Mode=TwoWay , NotifyOnValidationError=True}">
+             ItemsSource="{Binding Source= {StaticResource Categorys}}" SelectedItem="{Binding Category }">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
                     </DataTemplate>
-                </ComboBox.ItemTemplate>
+                </ComboBox.ItemTemplate> 
             </ComboBox>
             <Label Name="categoryLabel" Grid.Column="0" Content="category" Background="#FF17CEB9" FontSize="25" />
         </Grid>
 
         <ListView x:Name="productListView" ItemsSource="{Binding Path=ProductsList }"   MouseDoubleClick="productListView_MouseDoubleClick" 
-                  Background="#FF9AF7D3" FontSize="15" Margin="0,46,0,86" Grid.RowSpan="2" SelectionChanged="productListView_SelectionChanged" Foreground="#FF101115">
+                  Background="#FF9AF7D3" FontSize="15" Margin="0,46,0,86" Grid.RowSpan="2"  Foreground="#FF101115">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>

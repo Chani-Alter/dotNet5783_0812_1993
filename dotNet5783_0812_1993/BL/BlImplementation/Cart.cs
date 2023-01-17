@@ -8,12 +8,7 @@ namespace BlImplementation;
 /// </summary>
 internal class Cart : ICart
 {
-    /// <summary>
-    /// An attribute that contains access to all the dallist data
-    /// </summary>
-    DalApi.IDal? dal = DalApi.Factory.Get();
-
-
+    #region PUBLIC MEMBERS
     /// <summary>
     ///Adding product to the cart
     /// </summary>
@@ -201,4 +196,14 @@ internal class Cart : ICart
         }
     }
 
+    #endregion
+
+    #region PRIVATE MEMBER
+
+    /// <summary>
+    /// An attribute that contains access to all the dallist data
+    /// </summary>
+    DalApi.IDal? dal = DalApi.Factory.Get();
+
+    #endregion
 }

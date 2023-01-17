@@ -7,12 +7,7 @@ namespace BlImplementation;
 /// </summary>
 internal class Order : BlApi.IOrder
 {
-
-    /// <summary>
-    /// An attribute that contains access to all the dallist data
-    /// </summary>
-    DalApi.IDal? dal = DalApi.Factory.Get();
-
+    #region PUBLIC MEMBERS
     /// <summary>
     /// function that returns the orders
     /// </summary>
@@ -100,6 +95,7 @@ internal class Order : BlApi.IOrder
         }
 
     }
+
 
     /// <summary>
     ///  function that update the supply order
@@ -238,6 +234,14 @@ internal class Order : BlApi.IOrder
             throw new DoesNotExistedBlException($"{ex.EntityName} does not exist", ex);
         }
     }
+    #endregion
+
+    #region PRIVATE MEMMBER
+
+    /// <summary>
+    /// An attribute that contains access to all the dallist data
+    /// </summary>
+    DalApi.IDal? dal = DalApi.Factory.Get();
 
     /// <summary>
     /// convert a DO.Order to a BO.Order 
@@ -274,8 +278,10 @@ internal class Order : BlApi.IOrder
                 ShippingDate = orderDal.ShippingDate,
                 DeliveryDate = orderDal.DeliveryDate,
                 TotalPrice = orderItems.Sum(item => item.TotalPrice),
-                Items = (List<BO.OrderItem?>)orderItems,
-                Status = OrderStatus.ProvidedOrder
+                Items = orderItems.ToList(),
+                Status = orderDal.DeliveryDate != null && orderDal.DeliveryDate < DateTime.Now ? OrderStatus.ProvidedOrder :
+                orderDal.ShippingDate != null && orderDal.ShippingDate < DateTime.Now ? OrderStatus.SendOrder : OrderStatus.ConfirmedOrder
+
             };
         }
         catch (DO.DoesNotExistedDalException ex)
@@ -286,4 +292,5 @@ internal class Order : BlApi.IOrder
 
     }
 
+    #endregion
 }
