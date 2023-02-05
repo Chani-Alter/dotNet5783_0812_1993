@@ -152,11 +152,11 @@ public partial class ProductWindow : Window
     private void idTextBox_PreviewKeyDown(object sender, KeyEventArgs e) => onlyNumber(sender, e);
 
     /// <summary>
-    /// A function for the PreviewKeyDown event for the inStockTextBox whoe cales the onlyNumbers Check
+    /// A function for the PreviewKeyDown event for the InStockTextBox whoe cales the onlyNumbers Check
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void inStockTextBox_PreviewKeyDown(object sender, KeyEventArgs e) => onlyNumber(sender, e);
+    private void InStockTextBox_PreviewKeyDown(object sender, KeyEventArgs e) => onlyNumber(sender, e);
 
     /// <summary>
     /// A function for the PreviewKeyDown event for the priceTextBox whoe cales the onlyNumbers Check and allowed the dot be also

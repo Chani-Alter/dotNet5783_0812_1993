@@ -11,7 +11,7 @@
         <ListView x:Name="orderListView" ItemsSource="{Binding }"   MouseDoubleClick="orderListView_MouseDoubleClick" 
                   Background="#FF9AF7D3" FontSize="15"   Foreground="#FF101115">
             <ListView.View>
-                <GridView>
+                <GridView >
                     <GridViewColumn/>
                 </GridView>
             </ListView.View>

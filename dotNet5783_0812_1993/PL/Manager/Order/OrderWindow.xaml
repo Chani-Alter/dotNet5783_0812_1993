@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PL.Manager.Order"
         mc:Ignorable="d"
         DataContext="{Binding OrderData, RelativeSource={RelativeSource Mode=Self} }" 
         Title="OrderWindow" Height="450" Width="800">
@@ -38,8 +37,17 @@
         <TextBox Text="{Binding CustomerAdress}" Grid.Row="3" Grid.Column="1" Name="adressTextBox"></TextBox>
 
         <Label Grid.Row="4" Grid.Column="0" Name="orderItemsLabel" Content="order items"  ></Label>
-        <ListView x:Name="orderItemListView" ItemsSource="{Binding Path=Items}"  
-                   Grid.Row="4" Grid.Column="1">
+        <ListView x:Name="orderItemListView" ItemsSource="{Binding Items}" Grid.Row="4" Grid.Column="1">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=ProductID}" Width="auto" Header="ID"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Width="auto" Header="Name"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Price}" Width="auto" Header="Price"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Amount}" Width="auto" Header="Amount">
+                    </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=TotalPrice}" Width="auto" Header="Total Price"/>
+                </GridView>
+            </ListView.View>
         </ListView>
 
         <Label Grid.Row="5" Grid.Column="0" Name="totalPriceLabel" Content="total price"  ></Label>
@@ -65,4 +73,5 @@
         <Button Content="delivery confirmation" Visibility="{Binding DeliveryDate , Converter={StaticResource NullToVisible}}" IsEnabled="{Binding ShippingDate , Converter={StaticResource NullToFalse}}"  Grid.Row="9" Grid.Column="1" Name="deliveryUpdate" Click="deliveryUpdate_Click" ></Button>
 
     </Grid>
+    
 </Window>

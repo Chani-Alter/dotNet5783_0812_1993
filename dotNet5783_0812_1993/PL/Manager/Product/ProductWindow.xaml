@@ -22,7 +22,7 @@
         </Grid.ColumnDefinitions >
 
         <Label Grid.Row="0" Grid.Column="0" Name="idLabel" Content="ID"  ></Label>
-        <TextBox Text="{Binding ID ,Converter={StaticResource ZeroIntToEmptyString}}" Grid.Row="0" Grid.Column="1" Name="idTextBox"  PreviewKeyDown="idTextBox_PreviewKeyDown" ></TextBox>
+        <TextBox Text="{Binding ID ,Converter={StaticResource ZeroIntToEmptyString}}" MaxLength="6"  Grid.Row="0" Grid.Column="1" Name="idTextBox"  PreviewKeyDown="idTextBox_PreviewKeyDown" ></TextBox>
         
         <Label Grid.Row="1" Grid.Column="0" Name="nameLabel" Content="name"  ></Label>
         <TextBox Text="{Binding Name}" Grid.Row="1" Grid.Column="1" Name="nameTextBox"  ></TextBox>
@@ -39,8 +39,8 @@
             </ComboBox.ItemTemplate>
         </ComboBox>
         
-        <Label Grid.Row="4" Grid.Column="0" Name="inStockLabel" Content="in stock"  ></Label>
-        <TextBox  Text="{Binding InStock }" Grid.Row="4" Grid.Column="1" Name="inStockTextBox" PreviewKeyDown="inStockTextBox_PreviewKeyDown"></TextBox>
+        <Label Grid.Row="4" Grid.Column="0" Name="InStockLabel" Content="in stock"  ></Label>
+        <TextBox  Text="{Binding InStock }" Grid.Row="4" Grid.Column="1" Name="InStockTextBox" PreviewKeyDown="InStockTextBox_PreviewKeyDown"></TextBox>
 
         <Button  Name="addBtn" Content="Add"  Visibility="{Binding ID , Mode=OneTime , Converter={StaticResource ZeroToVisible}}" Grid.Row="5" Grid.Column="1" Click="addBtn_Click">
             <Button.IsEnabled>
@@ -48,7 +48,7 @@
                     <Binding ElementName="idTextBox" Path="Text" />
                     <Binding ElementName="nameTextBox" Path="Text" />
                     <Binding ElementName="priceTextBox" Path="Text" />
-                    <Binding ElementName="inStockTextBox" Path="Text" />
+                    <Binding ElementName="InStockTextBox" Path="Text" />
                     <Binding ElementName="categoryComboBox" Path="SelectedItem" />
                 </MultiBinding>
             </Button.IsEnabled>
@@ -59,7 +59,7 @@
                     <Binding ElementName="idTextBox" Path="Text" />
                     <Binding ElementName="nameTextBox" Path="Text" />
                     <Binding ElementName="priceTextBox" Path="Text" />
-                    <Binding ElementName="inStockTextBox" Path="Text" />
+                    <Binding ElementName="InStockTextBox" Path="Text" />
                     <Binding ElementName="categoryComboBox" Path="SelectedItem" />
                 </MultiBinding>
             </Button.IsEnabled>

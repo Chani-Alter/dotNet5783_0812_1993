@@ -1,4 +1,5 @@
 ﻿using BO;
+using System.Data.SqlTypes;
 using IProduct = BlApi.IProduct;
 
 
@@ -42,17 +43,7 @@ internal class Product : IProduct
     {
         try
         {
-            DO.Product product = dal.Product.GetByCondition(prod => prod?.ID == id);
-
-            return new BO.Product
-            {
-                ID = product.ID,
-                Name = product.Name,
-                Price = product.Price,
-                Category = (Category)product.Category,
-                InStock = product.InStock
-            };
-
+            return castProduct<BO.Product, DO.Product>(dal.Product.GetByCondition(prod => prod?.ID == id));
         }
         catch (DO.DoesNotExistedDalException ex)
         {
@@ -74,15 +65,7 @@ internal class Product : IProduct
             if (product.ID < 1 || product.Name == "" || product.Price < 1 || product.InStock < 0 || (int)product.Category > 5 || (int)product.Category < 0)
                 throw new InvalidInputBlException("Invalid input");
 
-            dal.Product.Add(new DO.Product
-            {
-                ID = product.ID,
-                Name = product.Name,
-                Price = product.Price,
-                Category = (DO.Category)product.Category,
-                InStock = product.InStock
-            });
-
+            dal.Product.Add(castBOToDO(product));
             return product;
         }
         catch (DO.DuplicateDalException ex)
@@ -129,15 +112,7 @@ internal class Product : IProduct
             if (product.ID < 1 || product.Name == "" || product.Price < 1 || product.InStock < 0 || (int)product.Category > 5 || (int)product.Category < 0)
                 throw new InvalidInputBlException(" Invalid input");
 
-            DO.Product product1 = new DO.Product
-            {
-                ID = product.ID,
-                Name = product.Name,
-                Price = product.Price,
-                InStock = product.InStock,
-                Category = (DO.Category)product.Category
-            };
-            dal.Product.Update(product1);
+            dal.Product.Update(castBOToDO(product));
 
             return product;
         }
@@ -158,16 +133,7 @@ internal class Product : IProduct
         return from item in products
                where item != null
                let product = (DO.Product)item
-               select new ProductItem
-               {
-                   ID = product.ID,
-                   Name = product.Name,
-                   Price = product.Price,
-                   Category = (Category)product.Category,
-                   Amount = product.InStock,
-                   Instock = product.InStock > 0
-
-               };
+               select castProduct<ProductItem, DO.Product>(product);
     }
 
     /// <summary>
@@ -181,15 +147,7 @@ internal class Product : IProduct
         try
         {
             DO.Product product = dal.Product.GetByCondition(prod => prod?.ID == id);
-            return new ProductItem
-            {
-                ID = product.ID,
-                Name = product.Name,
-                Price = product.Price,
-                Category = (Category)product.Category,
-                Amount = product.InStock,
-                Instock = product.InStock > 0
-            };
+            return castProduct<ProductItem, DO.Product>(product);
 
 
         }
@@ -208,6 +166,42 @@ internal class Product : IProduct
     /// An attribute that contains access to all the dallist data
     /// </summary>
     DalApi.IDal? dal = DalApi.Factory.Get();
+
+    /// <summary>
+    /// cast from BO prodact to a DO product
+    /// </summary>
+    /// <param name="pBO"></param>
+    /// <returns></returns>
+    private DO.Product castBOToDO(BO.Product pBO)
+    {
+
+        DO.Product pDO = Utils.cast<DO.Product, BO.Product>(pBO);
+        pDO.Category =(DO.Category) pBO.Category;
+        return pDO;
+    }
+
+    /// <summary>
+    /// cast from DO prodact to all kinds af bo products
+    /// </summary>
+    /// <typeparam name="S"></typeparam>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="t"></param>
+    /// <returns></returns>
+    /// <exception cref="BlNullValueException"></exception>
+    private S castProduct<S, T>(T t) where S : new()
+    {
+        S s = Utils.cast<S, T>(t);
+        var value = t?.GetType().GetProperty("Category")?.GetValue(t, null) ?? throw new BlNullValueException();
+        s?.GetType().GetProperty("Category")?.SetValue(s, (Category?)(int)value);
+
+       if (s?.GetType().Name== "ProductItem")
+        {
+                var val1 = t?.GetType()?.GetProperty("InStock")?.GetValue(t, null) ?? throw new BlNullValueException();
+                s?.GetType().GetProperty("Amount")?.SetValue(s, val1);
+                s?.GetType().GetProperty("InStock")?.SetValue(s, ((int)val1 > 0) ? true : false);
+        }
+        return s;
+    }
 
     /// <summary>
     /// A private function that return a list of product by a spesific filter
@@ -241,14 +235,7 @@ internal class Product : IProduct
         return from item in products
                where item != null
                let product = (DO.Product)item
-               select new ProductForList
-               {
-                   ID = product.ID,
-                   Name = product.Name,
-                   Price = product.Price,
-                   Category = (Category)product.Category,
-
-               };
+               select castProduct<ProductForList,DO.Product>(product);
     }
 
     #endregion

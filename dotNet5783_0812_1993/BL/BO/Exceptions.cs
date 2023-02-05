@@ -53,3 +53,16 @@ public class ImpossibleActionBlException : Exception
 {
     public ImpossibleActionBlException(string? _message) : base(_message) { }
 }
+
+public class NoBlPropertiesInObject : Exception
+{
+    public override string Message =>
+                    "No properties found in object";
+
+}
+
+public class BlNullValueException : Exception
+{
+    public override string Message =>
+                    "null value exception";
+}
