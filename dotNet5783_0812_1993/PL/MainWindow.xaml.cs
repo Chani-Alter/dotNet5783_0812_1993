@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using PL.Customer;
 using PL.Manager;
 using PL.Product;
 
@@ -25,10 +26,8 @@ public partial class MainWindow : Window
 
     }
 
-    private void newOrder_Click(object sender, RoutedEventArgs e)
-    {
-
-    }
+    private void newOrder_Click(object sender, RoutedEventArgs e) => new Catalog().Show();
+  
 
     private void manager_Click(object sender, RoutedEventArgs e)=> new ManagerMenue().Show();
 }

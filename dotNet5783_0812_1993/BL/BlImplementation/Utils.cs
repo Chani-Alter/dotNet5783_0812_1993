@@ -11,7 +11,7 @@ internal class Utils
         foreach (PropertyInfo prop in t?.GetType().GetProperties() ?? throw new NoBlPropertiesInObject())
         {
             PropertyInfo? type = s?.GetType().GetProperty(prop.Name);
-            if (type == null || type.Name == "Category")
+            if (type == null || type.Name == "Category"||type.Name=="InStock")
                 continue;
             var value = t?.GetType()?.GetProperty(prop.Name)?.GetValue(t, null);
             type.SetValue(s, value);

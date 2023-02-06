@@ -8,6 +8,7 @@
         <localy:EnumToStringConverter x:Key ="EnumToStringConverter"/>
         <localy:ZeroToHidden x:Key="ZeroToHidden"/>
         <localy:ZeroToVisible x:Key="ZeroToVisible"/>
+        <localy:ZeroToFalse x:Key="ZeroToFalse"/>
         <localy:ZeroIntToEmptyString x:Key="ZeroIntToEmptyString"/>
         <localy:ZeroDoubleToEmptyString x:Key="ZeroDoubleToEmptyString"/>
         <localy:AllToHidden x:Key="AllToHidden"/>

@@ -126,12 +126,12 @@ internal class Product : IProduct
     /// function that returns a list of all products for the customer
     /// </summary>
     /// <returns>list of product</returns>
-    public IEnumerable<ProductItem> GetProductListForCustomer()
+    public IEnumerable<ProductItem> GetProductListForCustomer(Category category)
     {
-        IEnumerable<DO.Product?> products = dal.Product.GetList();
+        IEnumerable<DO.Product?> products = dal.Product.GetList(product => product?.Category == (category != Category.All ? (DO.Category)category : product?.Category));
 
         return from item in products
-               where item != null
+               where item != null 
                let product = (DO.Product)item
                select castProduct<ProductItem, DO.Product>(product);
     }

@@ -100,7 +100,7 @@ public class Program
                     break;
 
                 case ProductOptions.GetListForCustomer:
-                    productsItem = bl.Product.GetProductListForCustomer();
+                    productsItem = bl.Product.GetProductListForCustomer(Category.All);
                    
                     foreach (ProductItem? item in productsItem)
                         Console.WriteLine(item);

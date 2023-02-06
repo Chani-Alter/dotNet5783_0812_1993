@@ -52,7 +52,7 @@ public interface IProduct
     /// A function Defination for return a list of all products for the customer
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<ProductItem?> GetProductListForCustomer();
+    public IEnumerable<ProductItem?> GetProductListForCustomer(Category category);
 
     /// <summary>
     /// A function Defination for return a product by id for the customer

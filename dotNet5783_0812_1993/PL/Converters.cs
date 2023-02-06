@@ -102,6 +102,19 @@ public class ZeroIntToEmptyString : IValueConverter
     }
 }
 
+public class ZeroToFalse : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        return (int)value == 0 ? false : true;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        return value;
+    }
+}
+
 public class ZeroDoubleToEmptyString : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
