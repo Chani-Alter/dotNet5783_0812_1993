@@ -19,9 +19,11 @@ namespace PL.Customer
     /// </summary>
     public partial class Cart : Window
     {
-        public Cart( BO.Cart cart)
+        BO.Cart? cart;
+        public Cart( BO.Cart? cart)
         {
             InitializeComponent();
+            this.cart = cart;
         }
     }
 }

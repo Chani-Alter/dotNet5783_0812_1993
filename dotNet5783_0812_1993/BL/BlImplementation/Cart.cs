@@ -94,7 +94,7 @@ internal class Cart : ICart
             else
             {
                 var cartItems = from item in cart.Items
-                                let orderItem = (BO.OrderItem)item
+                                let orderItem = item
                                 select new BO.OrderItem
                                 {
                                     ID = orderItem.ID,
@@ -104,7 +104,7 @@ internal class Cart : ICart
                                     Amount = orderItem?.ProductID == productId ? amount : orderItem.Amount,
                                     TotalPrice = orderItem?.ProductID == productId ? amount * orderItem.Price : orderItem.TotalPrice
                                 };
-                cart.Items = (List<BO.OrderItem?>)cartItems;
+                cart.Items = cartItems.ToList();
             }
 
             return cart;

@@ -16,6 +16,7 @@
         <localy:NullToHidden x:Key="NullToHidden"/>
         <localy:NullToVisible x:Key="NullToVisible"/>
         <localy:NullToFalse x:Key="NullToFalse"/>
-
+        <localy:MaxAmountToTrue x:Key="MaxAmountToTrue"/>
+        <localy:MinAmountToTrue x:Key="MinAmountToTrue"/>
     </Application.Resources>
 </Application>

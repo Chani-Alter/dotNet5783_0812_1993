@@ -32,14 +32,14 @@ namespace PL.Customer
         public static readonly DependencyProperty ProductsProperty =
             DependencyProperty.Register("ProductsList", typeof(ObservableCollection<ProductItem?>), typeof(Window), new PropertyMetadata(null));
 
-        public BO.Cart Cart
-        {
-            get { return (BO.Cart)GetValue(CartProperty); }
-            set { SetValue(CartProperty, value); }
-        }
+        public BO.Cart? Cart = new BO.Cart() { Items = new() };
+        //{
+        //    get { return (BO.Cart)GetValue(CartProperty); }
+        //    set { SetValue(CartProperty, value); }
+        //}
 
-        public static readonly DependencyProperty CartProperty =
-            DependencyProperty.Register("Cart", typeof(BO.Cart), typeof(Window), new PropertyMetadata(null));
+        //public static readonly DependencyProperty CartProperty =
+        //    DependencyProperty.Register("Cart", typeof(BO.Cart), typeof(Window), new PropertyMetadata(null));
 
         /// <summary>
         /// A property who contains the selected category

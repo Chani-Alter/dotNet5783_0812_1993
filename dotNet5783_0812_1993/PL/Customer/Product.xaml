@@ -36,11 +36,31 @@
         <TextBlock Text="{Binding ProductData.Category}"></TextBlock>
         
         <Label Grid.Row="4" Grid.Column="0" Name="InStockLabel" Content="in stock"  ></Label>
-        <TextBlock  Text="{Binding ProductData.Instock }" Grid.Row="4" Grid.Column="1" Name="InStockTextBox"></TextBlock>
+        <TextBlock  Text="{Binding ProductData.InStock }" Grid.Row="4" Grid.Column="1" Name="InStockTextBox"></TextBlock>
 
+        <Grid Grid.Row="5" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Button x:Name="pluse" Grid.Column="2" Content="Pluse" Click="pluse_Click" >
+                <Button.IsEnabled>
+                    <MultiBinding  Converter="{StaticResource MaxAmountToTrue}">
+                        <Binding  Path="AmountCart" />
+                        <Binding Path="ProductData.Amount" />
+                    </MultiBinding>
+                </Button.IsEnabled>
+            </Button>
+            <TextBlock  Text="{Binding AmountCart }"  Grid.Column="1" Name="amountInCartTextBox"></TextBlock>
+            <Button  x:Name="minuse" Content="Minuse" Grid.Column="0" IsEnabled="{Binding AmountCart, Converter={StaticResource MinAmountToTrue}}" Click="minuse_Click" ></Button>
+
+        </Grid>
         <Label Grid.Row="5" Grid.Column="0" Name="amountInCartLabel" Content="Amount in Cart"  ></Label>
-        <TextBox  Text="{Binding AmountCart }" Grid.Row="5" Grid.Column="1" Name="amountInCartTextBox"></TextBox>
 
-        <Button Grid.Row="6" x:Name="addCart" Content="Add to cart" IsEnabled="{Binding AmountCart, Converter={StaticResource ZeroToFalse}}" Click="addCart_Click"/>
+        <Button Grid.Row="6" x:Name="addCart" Content="Add to cart" IsEnabled="{Binding AmountCart, Converter={StaticResource ZeroToFalse}}" Visibility="{Binding AmountCart, Converter={StaticResource ZeroToVisible} , Mode=OneTime}" Click="addCart_Click"/>
+        <Button Grid.Row="6" x:Name="updateCart" Content="update" Visibility="{Binding AmountCart, Converter={StaticResource ZeroToHidden} , Mode=OneTime}" Click="updateCart_Click" />
+        <Button Grid.Row="6" Grid.Column="1" x:Name="deleteCart" Content="delete" Visibility="{Binding AmountCart, Converter={StaticResource ZeroToHidden} , Mode=OneTime}" Click="deleteCart_Click" />
     </Grid>
 </Window>

@@ -20,7 +20,7 @@ namespace PL.Customer;
 public partial class Product : Window
 {
     
-    public BO.Cart Cart;
+    BO.Cart? cart;
     public BO.ProductItem ProductData
     {
         get { return (BO.ProductItem)GetValue(ProductDataProperty); }
@@ -39,10 +39,10 @@ public partial class Product : Window
     public static readonly DependencyProperty AmountCartProperty =
         DependencyProperty.Register("AmountCart", typeof(int), typeof(Window), new PropertyMetadata(0));
 
-    public Product(BO.ProductItem product , BO.Cart cart)
+    public Product(BO.ProductItem product , BO.Cart? cart)
     {
         ProductData = (product == null) ? new() : product;
-        Cart = (cart == null) ? new() : cart;
+        this.cart= cart;    
         amountInCart();
         InitializeComponent();
     }
@@ -51,13 +51,35 @@ public partial class Product : Window
 
     private void amountInCart()
     {
-        var result = Cart.Items?.FirstOrDefault(item=>item.ProductID == ProductData.ID);
+        var result = cart.Items?.FirstOrDefault(item=>item.ProductID == ProductData.ID);
         AmountCart = (result == null) ? 0 : result.Amount;            
 
     }
 
     private void addCart_Click(object sender, RoutedEventArgs e)
     {
-        bl.cart.AddProductToCart(Cart, ProductData.ID);
+            bl.cart.AddProductToCart(cart!, ProductData.ID);
+        if (AmountCart != 0)
+           updateAmount();
     }
+
+    private void pluse_Click(object sender, RoutedEventArgs e)
+    {
+        AmountCart = AmountCart + 1;
+    }
+
+    private void minuse_Click(object sender, RoutedEventArgs e)
+    {
+        AmountCart = AmountCart -1;
+    }
+
+    private void deleteCart_Click(object sender, RoutedEventArgs e)
+    {
+        AmountCart= 0;
+        updateAmount();
+    }
+
+    private void updateCart_Click(object sender, RoutedEventArgs e) => updateAmount();
+
+    private void updateAmount() => bl.cart.UpdateProductAmountInCart(cart!, ProductData.ID, AmountCart);
 }
