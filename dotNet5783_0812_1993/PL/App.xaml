@@ -9,6 +9,7 @@
         <localy:ZeroToHidden x:Key="ZeroToHidden"/>
         <localy:ZeroToVisible x:Key="ZeroToVisible"/>
         <localy:ZeroToFalse x:Key="ZeroToFalse"/>
+        <localy:OneToFalse x:Key="OneToFalse"/>
         <localy:ZeroIntToEmptyString x:Key="ZeroIntToEmptyString"/>
         <localy:ZeroDoubleToEmptyString x:Key="ZeroDoubleToEmptyString"/>
         <localy:AllToHidden x:Key="AllToHidden"/>

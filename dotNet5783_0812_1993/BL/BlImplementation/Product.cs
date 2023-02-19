@@ -45,6 +45,10 @@ internal class Product : IProduct
         {
             return castProduct<BO.Product, DO.Product>(dal.Product.GetByCondition(prod => prod?.ID == id));
         }
+        catch(BlNullValueException ex)
+        {
+            throw new DoesNotExistedBlException("product does not exist", ex);
+        }
         catch (DO.DoesNotExistedDalException ex)
         {
             throw new DoesNotExistedBlException("product does not exist", ex);
