@@ -197,8 +197,12 @@ internal class Product : IProduct
         S s = Utils.cast<S, T>(t);
         var value = t?.GetType().GetProperty("Category")?.GetValue(t, null) ?? throw new BlNullValueException();
         s?.GetType().GetProperty("Category")?.SetValue(s, (Category?)(int)value);
-
-       if (s?.GetType().Name== "ProductItem")
+        if(s?.GetType().Name == "Product")
+        {
+            var val = t?.GetType()?.GetProperty("InStock")?.GetValue(t, null) ?? throw new BlNullValueException();
+            s?.GetType().GetProperty("InStock")?.SetValue(s, val);
+        }
+        if (s?.GetType().Name== "ProductItem")
         {
                 var val1 = t?.GetType()?.GetProperty("InStock")?.GetValue(t, null) ?? throw new BlNullValueException();
                 s?.GetType().GetProperty("Amount")?.SetValue(s, val1);

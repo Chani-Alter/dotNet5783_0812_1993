@@ -8,6 +8,12 @@
         DataContext="{Binding  RelativeSource={RelativeSource Mode=Self} }"        
         Title="Cart" Height="450" Width="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
         <ListView  x:Name="productListView" ItemsSource="{Binding Path=CartItems}" 
                   FontSize="15"   Foreground="#FF101115">
             <ListView.View>
@@ -44,6 +50,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        
+        <Label Grid.Row="1"  Content="total price"/>
+        <Button Content="confirm order" Grid.Row="3"/>
     </Grid>
 </Window>

@@ -85,7 +85,7 @@ internal class Cart : ICart
             if (product.InStock < amount)
                 throw new ImpossibleActionBlException("product not exist in stock");
 
-            cart.TotalPrice -= (amount - result.Amount) * result.Price;
+            cart.TotalPrice += (amount - result.Amount) * result.Price;
 
             if (amount == 0)
             {

@@ -15,6 +15,17 @@ public partial class Cart : Window
 {
     BO.Cart myCart;
     private BlApi.IBl? bl = BlApi.Factory.Get();
+    public int TotalPrice
+    {
+        get { return (int)GetValue(TotalPriceProperty); }
+        set { SetValue(TotalPriceProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for ProductData.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty TotalPriceProperty =
+        DependencyProperty.Register("TotalPrice", typeof(int, typeof(Window), new PropertyMetadata(0));
+
+
 
     public ObservableCollection<OrderItem?> CartItems
     {
@@ -31,6 +42,7 @@ public partial class Cart : Window
         myCart = cart;
         IEnumerable<OrderItem?>? temp = myCart.Items;
         CartItems = (temp == null) ? new() : new(temp!);
+
     }
 
     private void pluse_Click(object sender, RoutedEventArgs e)
@@ -38,7 +50,8 @@ public partial class Cart : Window
         try
         {
             OrderItem item = (OrderItem)((Button)sender).DataContext;
-            int amountInstock = bl.Product.GetProductByIdManager(item.ProductID).InStock;
+            BO.Product bbl = bl.Product.GetProductByIdManager(item.ProductID);
+            int amountInstock = bbl.InStock;
             if (amountInstock > item.Amount)
             {
                 var temp = CartItems;
