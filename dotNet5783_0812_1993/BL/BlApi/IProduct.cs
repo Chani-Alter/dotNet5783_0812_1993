@@ -55,6 +55,18 @@ public interface IProduct
     public IEnumerable<ProductItem?> GetProductListForCustomer(Category category);
 
     /// <summary>
+    /// A function Defination for return a list of all products for the customer
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerable<ProductItem?> GetPopularProductListForCustomer();
+
+    /// <summary>
+    /// A function Defination for return a list of all products for the customer
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerable<ProductItem?> GetcheapestProductListForCustomer();
+
+    /// <summary>
     /// A function Defination for return a product by id for the customer
     /// </summary>
     /// <param name="id"></param>

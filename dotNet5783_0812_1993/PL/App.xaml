@@ -16,8 +16,10 @@
         <localy:TextLengthToTrue x:Key="TextLengthToTrue"/>
         <localy:NullToHidden x:Key="NullToHidden"/>
         <localy:NullToVisible x:Key="NullToVisible"/>
+        <localy:arrayLengthToVisibility x:Key="arrayLengthToVisibility"/>
         <localy:NullToFalse x:Key="NullToFalse"/>
         <localy:MaxAmountToTrue x:Key="MaxAmountToTrue"/>
         <localy:MinAmountToTrue x:Key="MinAmountToTrue"/>
+        <localy:textBoxFullToTrue x:Key="textBoxFullToTrue"/>
     </Application.Resources>
 </Application>

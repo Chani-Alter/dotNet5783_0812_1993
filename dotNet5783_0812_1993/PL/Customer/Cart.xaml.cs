@@ -1,6 +1,5 @@
 ﻿using BO;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -13,20 +12,16 @@ namespace PL.Customer;
 /// </summary>
 public partial class Cart : Window
 {
-    BO.Cart myCart;
-    private BlApi.IBl? bl = BlApi.Factory.Get();
-    public int TotalPrice
-    {
-        get { return (int)GetValue(TotalPriceProperty); }
-        set { SetValue(TotalPriceProperty, value); }
-    }
+    #region PUBLIC MEMBERS
 
-    // Using a DependencyProperty as the backing store for ProductData.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty TotalPriceProperty =
-        DependencyProperty.Register("TotalPrice", typeof(int, typeof(Window), new PropertyMetadata(0));
+    /// <summary>
+    /// A variable that contains the logical cart
+    /// </summary>
+    public BO.Cart? MyCart;
 
-
-
+    /// <summary>
+    /// observer collection for the cart items
+    /// </summary>
     public ObservableCollection<OrderItem?> CartItems
     {
         get { return (ObservableCollection<OrderItem?>)GetValue(CartItemsProperty); }
@@ -36,36 +31,108 @@ public partial class Cart : Window
     public static readonly DependencyProperty CartItemsProperty =
         DependencyProperty.Register("CartItems", typeof(ObservableCollection<OrderItem?>), typeof(Window), new PropertyMetadata(null));
 
-    public Cart(BO.Cart cart)
+    /// <summary>
+    /// a dependency property to the total price
+    /// </summary>
+    public double MyTotalPrice
+    {
+        get { return (double)GetValue(MyTotalPriceProperty); }
+        set { SetValue(MyTotalPriceProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for MyTotalPrice.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty MyTotalPriceProperty =
+        DependencyProperty.Register("MyTotalPrice", typeof(double), typeof(Window), new PropertyMetadata((double)0));
+
+    /// <summary>
+    /// the Cart window ctor
+    /// </summary>
+    /// <param name="catalog"></param>
+    public Cart(Catalog catalog)
     {
         InitializeComponent();
-        myCart = cart;
-        IEnumerable<OrderItem?>? temp = myCart.Items;
-        CartItems = (temp == null) ? new() : new(temp!);
+        myCatalog = catalog;
+        MyCart = catalog.Cart;
+        MyTotalPrice=catalog.Cart.TotalPrice;
+        CartItems = (MyCart.Items == null) ? new() : new(MyCart.Items!);
+    }
+
+    /// <summary>
+    /// The function is called from the customer details control and creates the order
+    /// </summary>
+    /// <param name="name">customer name</param>
+    /// <param name="email">customer email</param>
+    /// <param name="adress">customer adress</param>
+    internal void confirm_order(string name, string email, string adress)
+    {
+        try
+        {
+            MyCart.Items = CartItems.ToList();
+            MyCart.CustomerName = name;
+            MyCart.CustomerAdress = adress;
+            MyCart.CustomerEmail = email;
+            bl.cart.MakeOrder(MyCart);
+            myCatalog.Close();
+            Close();
+        }
+        catch (InvalidInputBlException ex)
+        {
+            MessageBox.Show("in valid input", ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+        catch (ImpossibleActionBlException ex)
+        {
+            MessageBox.Show("The system cannot perform this operation", ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+        catch (UpdateErrorBlException ex)
+        {
+            MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+        catch (BLAlreadyExistException ex)
+        {
+            MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            Close();
+        }
+
 
     }
 
-    private void pluse_Click(object sender, RoutedEventArgs e)
+    #endregion
+
+    #region PRIVATE MEMBERS
+
+    /// <summary>
+    /// Holds the catalog window
+    /// </summary>
+    Catalog myCatalog;
+
+    /// <summary>
+    /// instance of the bl who contains access to all the bl implementation
+    /// </summary>
+    BlApi.IBl? bl = BlApi.Factory.Get();
+
+    /// <summary>
+    /// Increases the amount of product in the cart
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    void pluse_Click(object sender, RoutedEventArgs e)
     {
         try
         {
             OrderItem item = (OrderItem)((Button)sender).DataContext;
-            BO.Product bbl = bl.Product.GetProductByIdManager(item.ProductID);
-            int amountInstock = bbl.InStock;
-            if (amountInstock > item.Amount)
-            {
-                var temp = CartItems;
-                var index = temp.IndexOf(item);
-                item.Amount += 1;
-                if (index != -1)
-                    temp[index] = item;
-                CartItems = (temp == null) ? new() : new(temp!);
-            }
-            else
-            {
-                MessageBox.Show("Quantity not in stock", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-
+            int amount = item.Amount;
+            amount += 1;
+            bl.cart.UpdateProductAmountInCart(MyCart!, item.ProductID, amount);
+            CartItems = (MyCart.Items == null) ? new() : new(MyCart.Items!);
+            MyTotalPrice = MyCart.TotalPrice;
+        }
+        catch (ImpossibleActionBlException ex)
+        {
+            MessageBox.Show("Quantity not in stock", ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
         }
         catch (DoesNotExistedBlException ex)
         {
@@ -76,28 +143,83 @@ public partial class Cart : Window
             MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             Close();
         }
-
     }
 
+    /// <summary>
+    /// Reduces the amount of product in the cart
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void minuse_Click(object sender, RoutedEventArgs e)
     {
-        var temp = CartItems;
-        OrderItem item = (OrderItem)((Button)sender).DataContext;
-        var index = temp.IndexOf(item);
-        if (item.Amount > 1)
-            item.Amount -= 1;
-        if (index != -1)
-            temp[index] = item;
-        CartItems = (temp == null) ? new() : new(temp!);
-    }
+        try {
+            OrderItem item = (OrderItem)((Button)sender).DataContext;
+            int amount = item.Amount;
+            amount -= 1;
+            bl.cart.UpdateProductAmountInCart(MyCart!, item.ProductID, amount);
+            CartItems = (MyCart.Items == null) ? new() : new(MyCart.Items!);
+            MyTotalPrice = MyCart.TotalPrice;
+        }
+        catch (ImpossibleActionBlException ex)
+        {
+            MessageBox.Show("imposible Quantity", ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+        catch (DoesNotExistedBlException ex)
+        {
+            MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            Close();
+        }
+}
 
+    /// <summary>
+    /// removes a product from the user cart
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void removeFromCart_Click(object sender, RoutedEventArgs e)
     {
-       
+        try
+        {
             int id = ((OrderItem)((Button)sender).DataContext).ProductID;
-            var temp = CartItems.Where(item => item.ProductID != id);
-            CartItems = (temp == null) ? new() : new(temp!);
-
+            bl.cart.UpdateProductAmountInCart(MyCart!, id, 0);
+        }
+        catch (ImpossibleActionBlException ex)
+        {
+            MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+        catch (DoesNotExistedBlException ex)
+        {
+            MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            Close();
+        }
     }
 
+    /// <summary>
+    /// A user details window opens to confirm the order
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void confirm_Click(object sender, RoutedEventArgs e) => userDetails.Visibility = Visibility.Visible;
+
+    /// <summary>
+    /// Closes the order window and makes the catalog window active
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void back_to_catalog_Click(object sender, RoutedEventArgs e)
+    {
+        myCatalog.Activate();
+        Close();
+    }
+
+
+    #endregion
 }

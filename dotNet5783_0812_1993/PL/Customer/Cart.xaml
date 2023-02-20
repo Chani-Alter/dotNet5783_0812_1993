@@ -3,54 +3,70 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        
         xmlns:local="clr-namespace:PL.Customer"
         mc:Ignorable="d"
         DataContext="{Binding  RelativeSource={RelativeSource Mode=Self} }"        
-        Title="Cart" Height="450" Width="800">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="100"/>
-        </Grid.RowDefinitions>
-        <ListView  x:Name="productListView" ItemsSource="{Binding Path=CartItems}" 
-                  FontSize="15"   Foreground="#FF101115">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=ProductID, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"   Header="ID" Width="100"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"   Header="name" Width="100"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Price, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"   Header="Price" Width="100"/>
-                    <GridViewColumn Header="Amount" Width="100" >
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <Grid >
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition   Width="*"/>
-                                        <ColumnDefinition   Width="*"/>
-                                        <ColumnDefinition   Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Button Grid.Column="0"  Content="-" Height="20" Width="15" Margin="10,3,0,0" IsEnabled="{Binding Amount, Converter={StaticResource OneToFalse}}" Click="minuse_Click"/>
-                                    <TextBox Grid.Column="1" Height="23"   Width="22" Margin="5,3,0,0" Text="{Binding Path=Amount, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
-                                    <Button Grid.Column="2"  Content="+" Width="15" Margin="5,3,0,0" VerticalAlignment="Top" Click="pluse_Click" />
-                                </Grid>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=TotalPrice, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"   Header="Total price" Width="100"/>
-                    <GridViewColumn Header="delete" Width="100" >
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <Grid >
-                                    <Button Grid.Column="0" x:Name="removeFromCart"  Content="🗑️" Height="25" Width="30" Margin="35,3,0,0" Click="removeFromCart_Click" />
-                                </Grid>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <Label Grid.Row="1"  Content="total price"/>
-        <Button Content="confirm order" Grid.Row="3"/>
-    </Grid>
+    Title="Cart" Height="450" Width="800">
+    <ScrollViewer>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <ListView Grid.Row="0"  x:Name="productListView" ItemsSource="{Binding Path=CartItems}" Visibility="{Binding CartItems , Converter={StaticResource arrayLengthToVisibility}}"
+                      FontSize="15"   Foreground="#FF101115">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=ProductID, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"   Header="ID" Width="100"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"   Header="name" Width="100"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Price, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"   Header="Price" Width="100"/>
+                        <GridViewColumn Header="Amount" Width="100" >
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Grid >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition   Width="*"/>
+                                            <ColumnDefinition   Width="*"/>
+                                            <ColumnDefinition   Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Button Grid.Column="0"  Content="-" Height="20" Width="15" Margin="10,3,0,0" IsEnabled="{Binding Amount, Converter={StaticResource OneToFalse}}" Click="minuse_Click"/>
+                                        <TextBox Grid.Column="1" Height="23"   Width="22" Margin="5,3,0,0" Text="{Binding Path=Amount, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
+                                        <Button Grid.Column="2"  Content="+" Width="15" Margin="5,3,0,0" VerticalAlignment="Top" Click="pluse_Click" />
+                                    </Grid>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=TotalPrice, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"   Header="Total price" Width="100"/>
+                        <GridViewColumn Header="delete" Width="100" >
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Grid >
+                                        <Button Grid.Column="0" x:Name="removeFromCart"  Content="🗑️" Height="25" Width="30" Margin="35,3,0,0" Click="removeFromCart_Click" />
+                                    </Grid>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <Label Visibility="{Binding CartItems , Converter={StaticResource arrayLengthToVisibility}}" Grid.Row="1"  Content="total price"/>
+            <TextBlock  Text="{Binding MyTotalPrice}" Grid.Row="2"  Visibility="{Binding CartItems , Converter={StaticResource arrayLengthToVisibility}}"/>
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Visibility="{Binding CartItems , Converter={StaticResource arrayLengthToVisibility}}" Content="confirm order" Grid.Column="1" Click="confirm_Click"/>
+                <Button Grid.Column="2" Name="back_to_catalog" Content=" ➜ " Click="back_to_catalog_Click" ></Button>
+
+            </Grid>
+            <local:UserDetails x:Name="userDetails" Visibility="Hidden" ></local:UserDetails>
+            <TextBlock  Visibility="{Binding CartItems.Count , Converter={StaticResource ZeroToVisible}}"  Text="העגלה שלכם עדיין ריקה" Margin="170,70,170,150" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="35" />
+            <TextBlock Visibility="{Binding CartItems.Count , Converter={StaticResource ZeroToVisible}}"  Text="🛒" Foreground="#FF9AF7D3" FontSize="100" Margin="180,200,180,80" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+    </ScrollViewer>
 </Window>

@@ -19,7 +19,7 @@ namespace PL.Customer;
 /// </summary>
 public partial class Product : Window
 {
-    
+    Catalog myCatalog;
     BO.Cart? cart;
     public BO.ProductItem ProductData
     {
@@ -30,7 +30,7 @@ public partial class Product : Window
     public static readonly DependencyProperty ProductDataProperty =
         DependencyProperty.Register("ProductData", typeof(BO.ProductItem), typeof(Window), new PropertyMetadata(null));
 
-    public int AmountCart 
+    public int AmountCart
     {
         get { return (int)GetValue(AmountCartProperty); }
         set { SetValue(AmountCartProperty, value); }
@@ -39,10 +39,11 @@ public partial class Product : Window
     public static readonly DependencyProperty AmountCartProperty =
         DependencyProperty.Register("AmountCart", typeof(int), typeof(Window), new PropertyMetadata(0));
 
-    public Product(BO.ProductItem product , BO.Cart? cart)
+    public Product(BO.ProductItem product, Catalog catalog)
     {
         ProductData = (product == null) ? new() : product;
-        this.cart= cart;    
+        cart = catalog.Cart;
+        myCatalog = catalog;
         amountInCart();
         InitializeComponent();
     }
@@ -51,16 +52,16 @@ public partial class Product : Window
 
     private void amountInCart()
     {
-        var result = cart.Items?.FirstOrDefault(item=>item.ProductID == ProductData.ID);
-        AmountCart = (result == null) ? 0 : result.Amount;            
+        var result = cart.Items?.FirstOrDefault(item => item.ProductID == ProductData.ID);
+        AmountCart = (result == null) ? 0 : result.Amount;
 
     }
 
     private void addCart_Click(object sender, RoutedEventArgs e)
     {
-            bl.cart.AddProductToCart(cart!, ProductData.ID);
-        if (AmountCart != 0)
-           updateAmount();
+        bl.cart.AddProductToCart(cart!, ProductData.ID, AmountCart);
+        myCatalog.Activate();
+        Close();
     }
 
     private void pluse_Click(object sender, RoutedEventArgs e)
@@ -70,16 +71,29 @@ public partial class Product : Window
 
     private void minuse_Click(object sender, RoutedEventArgs e)
     {
-        AmountCart = AmountCart -1;
+        AmountCart = AmountCart - 1;
     }
 
     private void deleteCart_Click(object sender, RoutedEventArgs e)
     {
-        AmountCart= 0;
+        AmountCart = 0;
         updateAmount();
+        myCatalog.Activate();
+        Close();
     }
 
     private void updateCart_Click(object sender, RoutedEventArgs e) => updateAmount();
 
-    private void updateAmount() => bl.cart.UpdateProductAmountInCart(cart!, ProductData.ID, AmountCart);
+    private void updateAmount()
+    {
+        bl.cart.UpdateProductAmountInCart(cart!, ProductData.ID, AmountCart);
+        myCatalog.Activate();
+        Close();
+    }
+
+    private void Button_Click(object sender, RoutedEventArgs e)
+    {
+        myCatalog.Activate();
+        Close();
+    }
 }

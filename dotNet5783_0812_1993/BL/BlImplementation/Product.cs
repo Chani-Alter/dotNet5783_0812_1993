@@ -161,6 +161,51 @@ internal class Product : IProduct
         }
 
     }
+    public IEnumerable<ProductItem?> GetPopularProductListForCustomer()
+    {
+        IEnumerable<DO.Product?> products = dal.Product.GetList();
+        IEnumerable<DO.OrderItem?> orderItems = dal.OrderItem.GetList();
+        var result =
+            from oi in orderItems
+            let orderItem = (DO.OrderItem)oi
+            join p in products on orderItem.ProductID equals ((DO.Product)p).ID
+            where p != null
+            group new { OrderItem = oi, Product = p } by p?.Category into g
+            select new
+            {
+                Product = (from op in g
+                           group op by op.Product into pg
+                           orderby pg.Count() descending
+                           select pg.Key).FirstOrDefault()
+            };
+            return  result.Select(x => new BO.ProductItem
+            {
+                ID=((DO.Product)x.Product!).ID,
+                Name = ((DO.Product)x.Product!).Name,
+                Price = ((DO.Product)x.Product!).Price,
+                Category =(BO.Category) ((DO.Product)x.Product!).Category,
+                Amount = ((DO.Product)x.Product!).InStock,
+                InStock = ((DO.Product)x.Product!).InStock>0?true:false
+            });
+    }
+
+    public IEnumerable<ProductItem?> GetcheapestProductListForCustomer()
+    {
+        IEnumerable<DO.Product?> products = dal.Product.GetList();
+
+       var cheapestProducts = from p in products
+                              group p by p?.Category into g
+                              select g.OrderBy(p => p?.Price).FirstOrDefault();
+        return cheapestProducts.Select(x => new BO.ProductItem
+        {
+            ID = ((DO.Product)x!).ID,
+            Name = ((DO.Product)x!).Name,
+            Price = ((DO.Product)x!).Price,
+            Category = (BO.Category)((DO.Product)x!).Category,
+            Amount = ((DO.Product)x!).InStock,
+            InStock = ((DO.Product)x!).InStock > 0 ? true : false
+        });
+    }
 
     #endregion
 
@@ -245,6 +290,7 @@ internal class Product : IProduct
                let product = (DO.Product)item
                select castProduct<ProductForList,DO.Product>(product);
     }
+
 
     #endregion
 

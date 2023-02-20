@@ -17,7 +17,7 @@ internal class Cart : ICart
     /// <returns>the cart after adding</returns>
     /// <exception cref="BO.ImpossibleActionBlException"></exception>
     /// <exception cref="BO.DoesNotExistedBlException"></exception>
-    public BO.Cart AddProductToCart(BO.Cart cart, int productId)
+    public BO.Cart AddProductToCart(BO.Cart cart, int productId,int amount)
     {
         try
         {
@@ -42,11 +42,11 @@ internal class Cart : ICart
                 {
                     Name = product.Name,
                     ProductID = productId,
-                    Amount = 1,
+                    Amount = amount,
                     Price = product.Price,
                     TotalPrice = product.Price
                 });
-            cart.TotalPrice += product.Price;
+            cart.TotalPrice += product.Price*amount;
 
             return cart;
         }
@@ -137,6 +137,9 @@ internal class Cart : ICart
             int id = dal.Order.Add(
                 new DO.Order
                 {
+                    CustomerAdress= cart.CustomerAdress,
+                    CustomerEmail= cart.CustomerEmail,
+                    CustomerName= cart.CustomerName,
                     CreateOrderDate = DateTime.Now,
                     ShippingDate = null,
                     DeliveryDate = null

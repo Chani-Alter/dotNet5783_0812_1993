@@ -7,32 +7,38 @@
         mc:Ignorable="d"
         DataContext="{Binding  RelativeSource={RelativeSource Mode=Self} }"        
         Title="Catalog" Height="450" Width="800">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="auto"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <Button Grid.Column="0" Content="Laptop"  Click="category_click" />
-        <Button Grid.Column="1" Content="Desktop Computer" Click="category_click" />
-        <Button Grid.Column="2" Content="Screens" Click="category_click" />
-        <Button Grid.Column="3" Content="Peripheral Equipment" Click="category_click" />
-        <Button Grid.Column="4" Content="All" Click="category_click" />
-        <Button Grid.Column="5" Content="Cart" Click="cart_Click" />
-        <ListView Grid.Row="1" Grid.ColumnSpan="6" x:Name="productListView" ItemsSource="{Binding Path=ProductsList}"   MouseDoubleClick="productListView_MouseDoubleClick" 
-                  FontSize="15"   Foreground="#FF101115">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn/>
-                </GridView>
-            </ListView.View>
-        </ListView>
-    </Grid>
+    <ScrollViewer>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Content="Laptop"  Click="category_click" />
+            <Button Grid.Column="1" Content="Desktop Computer" Click="category_click" />
+            <Button Grid.Column="2" Content="Screens" Click="category_click" />
+            <Button Grid.Column="3" Content="Peripheral Equipment" Click="category_click" />
+            <Button Grid.Column="4" Content="All" Click="category_click" />
+            <Button Grid.Column="5" Content="Popular" Click="Popular_click" />
+            <Button Grid.Column="6" Content="sales" Click="sales_click" />
+            <Button Grid.Column="7" Content="Cart" Click="cart_Click" />
+            <ListView Grid.Row="1" Grid.ColumnSpan="8" x:Name="productListView" ItemsSource="{Binding Path=ProductsList}"   MouseDoubleClick="productListView_MouseDoubleClick" 
+                      FontSize="15"   Foreground="#FF101115">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+    </ScrollViewer>
 </Window>

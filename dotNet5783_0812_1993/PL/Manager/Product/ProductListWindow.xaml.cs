@@ -46,7 +46,7 @@ public partial class ProductListWindow : Window
     /// <summary>
     /// instance of the bl who contains access to all the bl implementation
     /// </summary>
-    private BlApi.IBl? bl = BlApi.Factory.Get();
+    BlApi.IBl? bl = BlApi.Factory.Get();
 
 
     /// <summary>

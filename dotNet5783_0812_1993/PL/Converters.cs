@@ -1,6 +1,7 @@
 ﻿using BO;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -127,6 +128,19 @@ public class OneToFalse : IValueConverter
     }
 }
 
+public class arrayLengthToVisibility : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        return value != null && ((ObservableCollection<OrderItem?>)value).Count() > 0 ? "Visible" : "Hidden";
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        return value;
+    }
+}
+
 public class ZeroDoubleToEmptyString : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -166,6 +180,18 @@ public class TextLengthToTrue : IMultiValueConverter
     }
 }
 
+public class textBoxFullToTrue : IMultiValueConverter
+{
+    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+    {
+        return ((string)values[0]!).Length >0 && ((string)values[1]!).Length > 0 && ((string)values[2]!).Length > 0 ;
+    }
+
+    public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
 
 
 public class MaxAmountToTrue : IMultiValueConverter
