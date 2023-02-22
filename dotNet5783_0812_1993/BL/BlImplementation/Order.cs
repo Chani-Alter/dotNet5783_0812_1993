@@ -184,9 +184,8 @@ internal class Order : BlApi.IOrder
     /// <exception cref="ImpossibleActionBlException"></exception>
     /// <exception cref="InvalidInputBlException"></exception>
     /// <exception cref="Exception"></exception>
-    public BO.OrderItem UpdateAmountOfOProductInOrder(int orderId, int productId, int amount)
+    public BO.Order UpdateAmountOfOProductInOrder(int orderId, int productId, int amount)
     {
-
         try
         {
             DO.OrderItem ordItem = dal.OrderItem.GetByCondition(item => ((DO.OrderItem)item!).OrderID == orderId && ((DO.OrderItem)item!).ProductID == productId);
@@ -218,15 +217,8 @@ internal class Order : BlApi.IOrder
                 throw new Exception("The product remove from the order");
             }
 
-            return new BO.OrderItem
-            {
-                ID = ordItem.ID,
-                Amount = amount,
-                Price = ordItem.Price,
-                TotalPrice = amount * ordItem.Price,
-                ProductID = productId,
-                Name = product.Name
-            };
+
+            return returnBOOrder(orderDal);
 
         }
         catch (DO.DoesNotExistedDalException ex)

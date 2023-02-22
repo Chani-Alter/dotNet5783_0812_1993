@@ -28,9 +28,10 @@ public partial class ProductWindow : Window
     /// an one parameter ctor whoe open the window
     /// </summary>
     /// <param name="id"></param>
-    public ProductWindow(int id = 0)
+    public ProductWindow(Window prev_window ,int id = 0)
     {
         InitializeComponent();
+        this.prev_window = prev_window;
         try
         {
             var temp = id == 0 ? new BO.Product() : bl.Product.GetProductByIdManager(id);
@@ -52,14 +53,19 @@ public partial class ProductWindow : Window
     /// <summary>
     /// instance of the bl who contains access to all the bl implementation
     /// </summary>
-    private BlApi.IBl? bl = BlApi.Factory.Get();
+    BlApi.IBl? bl = BlApi.Factory.Get();
+
+    /// <summary>
+    /// the prev window
+    /// </summary>
+    Window prev_window;
 
     /// <summary>
     /// A function that confirm the updatimg of the product in the dl
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void updateBtn_Click(object sender, RoutedEventArgs e)
+    void updateBtn_Click(object sender, RoutedEventArgs e)
     {
         try
         {
@@ -88,7 +94,7 @@ public partial class ProductWindow : Window
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void addBtn_Click(object sender, RoutedEventArgs e)
+    void addBtn_Click(object sender, RoutedEventArgs e)
     {
         try
         {
@@ -117,25 +123,25 @@ public partial class ProductWindow : Window
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void delete_Click(object sender, RoutedEventArgs e)
+    void delete_Click(object sender, RoutedEventArgs e)
     {
         try
         {
             bl.Product.DeleteProduct(ProductData.ID);
-            new ProductListWindow().Show();
+            new ProductListWindow(this).Show();
             Close();
         }
         catch (BO.DoesNotExistedBlException ex)
         {
             MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
-            new ProductListWindow().Show();
+            new ProductListWindow(this).Show();
             Close();
         }
 
         catch (BO.ImpossibleActionBlException ex)
         {
             MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            new ProductListWindow().Show();
+            new ProductListWindow(this).Show();
             Close();
         }
         catch (Exception ex)
@@ -145,18 +151,29 @@ public partial class ProductWindow : Window
     }
 
     /// <summary>
+    /// make the prev window active and close this window
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    void back_to_parent_Click(object sender, RoutedEventArgs e)
+    {
+        prev_window.Activate();
+        Close();
+    }
+
+    /// <summary>
     /// A function for the PreviewKeyDown event for the idTextBox whoe cales the onlyNumbers Check
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void idTextBox_PreviewKeyDown(object sender, KeyEventArgs e) => onlyNumber(sender, e);
+    void idTextBox_PreviewKeyDown(object sender, KeyEventArgs e) => onlyNumber(sender, e);
 
     /// <summary>
     /// A function for the PreviewKeyDown event for the InStockTextBox whoe cales the onlyNumbers Check
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void InStockTextBox_PreviewKeyDown(object sender, KeyEventArgs e) => onlyNumber(sender, e);
+    void InStockTextBox_PreviewKeyDown(object sender, KeyEventArgs e) => onlyNumber(sender, e);
 
     /// <summary>
     /// A function for the PreviewKeyDown event for the priceTextBox whoe cales the onlyNumbers Check and allowed the dot be also
@@ -176,7 +193,7 @@ public partial class ProductWindow : Window
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void onlyNumber(object sender, KeyEventArgs e)
+    void onlyNumber(object sender, KeyEventArgs e)
     {
         TextBox? text = sender as TextBox;
         if (text == null) return;

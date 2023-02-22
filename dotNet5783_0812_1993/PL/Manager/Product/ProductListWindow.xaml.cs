@@ -34,10 +34,11 @@ public partial class ProductListWindow : Window
     /// <summary>
     /// ctor who open the window
     /// </summary>
-    public ProductListWindow()
+    public ProductListWindow(Window prev_window)
     {
         InitializeComponent();
         changeProductList();
+        this.prev_window = prev_window;
     }
     #endregion
 
@@ -48,6 +49,10 @@ public partial class ProductListWindow : Window
     /// </summary>
     BlApi.IBl? bl = BlApi.Factory.Get();
 
+    /// <summary>
+    /// the prev window
+    /// </summary>
+    Window prev_window;
 
     /// <summary>
     /// A function for the SelectionChanged event for the categorySelector whoe shoes all the product whoe mach to the category
@@ -63,7 +68,7 @@ public partial class ProductListWindow : Window
     /// <param name="e"></param>
     private void AddProductBtn_Click(object sender, RoutedEventArgs e)
     {
-        new ProductWindow().Show();
+        new ProductWindow(this).Show();
     }
 
     /// <summary>
@@ -74,7 +79,7 @@ public partial class ProductListWindow : Window
     private void productListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
         ProductForList product = (ProductForList)productListView.SelectedItem;
-        new ProductWindow(product.ID).Show();
+        new ProductWindow(this ,product.ID).Show();
 
     }
 
@@ -95,5 +100,18 @@ public partial class ProductListWindow : Window
           : bl.Product.GetProductListForManagerByCategory(Category);
         ProductsList = (temp == null) ? new() : new(temp);
     }
+
+    /// <summary>
+    /// make the prev window active and close this window
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    void back_to_parent_Click(object sender, RoutedEventArgs e)
+    {
+        prev_window.Activate();
+        Close();
+    }
+
+
     #endregion
 }

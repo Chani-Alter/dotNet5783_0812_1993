@@ -1,11 +1,9 @@
 ﻿using BO;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 
 namespace PL;
@@ -14,7 +12,7 @@ public class EnumToStringConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-      BO.Category category = (BO.Category)value;
+        Category category = (Category)value;
         return category.ToString().Replace('_', ' ');
 
     }
@@ -64,6 +62,7 @@ public class NullToHidden : IValueConverter
     }
 }
 
+
 public class NullToVisible : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -82,6 +81,32 @@ public class NullToFalse : IValueConverter
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         return value == null ? false : true;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+public class NullToStringShiping : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        return value == null ? "The order has not yet shipped" : value;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+public class NullToStringDelivery : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        return value == null ? "The order has not yet delivered" : value;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -206,7 +231,46 @@ public class MaxAmountToTrue : IMultiValueConverter
         throw new NotImplementedException();
     }
 }
-public class MinAmountToTrue : IValueConverter
+
+public class convertDateAndStatuseToVisibility : IMultiValueConverter
+{
+    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+    {
+      return  (values[0]==null &&((int)values[1]!)==2)? Visibility.Visible:Visibility.Hidden;
+        
+    }
+
+    public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+public class convertDateAndStatuseToHidden : IMultiValueConverter
+{
+    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+    {
+        return (values[0] == null && ((int)values[1]!) == 2) ? Visibility.Hidden : Visibility.Visible;
+    }
+
+    public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+public class convertDateAndStatuseManagerToVisibility : IMultiValueConverter
+{
+    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+    {
+        return (values[0] == null && ((int)values[1]!) == 1) ? Visibility.Visible : Visibility.Hidden;
+    }
+
+    public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+    public class MinAmountToTrue : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {

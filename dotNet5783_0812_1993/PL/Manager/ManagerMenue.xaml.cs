@@ -20,7 +20,7 @@ public partial class ManagerMenue : Window
         InitializeComponent();
     }
 
-    private void showOrdersBtn_Click(object sender, RoutedEventArgs e) => new OrderList().Show();
+    private void showOrdersBtn_Click(object sender, RoutedEventArgs e) => new OrderList(this).Show();
 
-    private void showProductBtn_Click(object sender, RoutedEventArgs e) => new ProductListWindow().Show();
+    private void showProductBtn_Click(object sender, RoutedEventArgs e) => new ProductListWindow(this).Show();
 }

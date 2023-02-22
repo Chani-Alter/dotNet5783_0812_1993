@@ -43,5 +43,7 @@
         </ListView>
 
         <Button Name="AddProductBtn" Grid.Row="1" Content="Add Product" Click="AddProductBtn_Click" Margin="0,492,0,0" Background="#FF17CEB9" />
+        <Button Grid.Row="2" Name="back_to_parent" Content=" ➜ " Click="back_to_parent_Click" ></Button>
+
     </Grid>
 </Window>

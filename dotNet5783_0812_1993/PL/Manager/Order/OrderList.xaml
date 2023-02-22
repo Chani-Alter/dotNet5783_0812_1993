@@ -8,11 +8,40 @@
         mc:Ignorable="d"
         Title="OrderList" Height="450" Width="800">
     <Grid>
+        <Button Grid.Column="8" Name="back_to_parent" Content=" ➜ " Click="back_to_parent_Click" ></Button>
         <ListView x:Name="orderListView" ItemsSource="{Binding }"   MouseDoubleClick="orderListView_MouseDoubleClick" 
                   Background="#FF9AF7D3" FontSize="15"   Foreground="#FF101115">
             <ListView.View>
                 <GridView >
-                    <GridViewColumn/>
+                    <GridViewColumn >
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Grid >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="Order ID:"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding Path=ID}"/>
+                                    <TextBlock Grid.Row="1" Text="Order status:"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Path=Status}"/>
+                                    <TextBlock Grid.Row="2" Text="customer name:"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Path=CustomerName}"/>
+                                    <TextBlock Grid.Row="3" Text="Amount of items:"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding Path=AmountOfItems}"/>
+                                    <TextBlock Grid.Row="4" Text="total price:"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding Path=TotalPrice}"/>
+                                </Grid>
+                            </DataTemplate>
+                    </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>

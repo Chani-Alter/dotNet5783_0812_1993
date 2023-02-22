@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 namespace PL.Customer;
 
 /// <summary>
@@ -19,8 +7,11 @@ namespace PL.Customer;
 /// </summary>
 public partial class UserDetails : UserControl
 {
+    #region PUBLIC MEMBERS
 
-
+    /// <summary>
+    /// cstomer name dependency property
+    /// </summary>
     public string CustomerName
     {
         get { return (string)GetValue(CustomerNameProperty); }
@@ -31,8 +22,9 @@ public partial class UserDetails : UserControl
     public static readonly DependencyProperty CustomerNameProperty =
         DependencyProperty.Register("CustomerName", typeof(string), typeof(Window), new PropertyMetadata(""));
 
-
-
+    /// <summary>
+    /// cstomer email dependency property
+    /// </summary>
     public string Email
     {
         get { return (string)GetValue(EmailProperty); }
@@ -43,8 +35,9 @@ public partial class UserDetails : UserControl
     public static readonly DependencyProperty EmailProperty =
         DependencyProperty.Register("Email", typeof(string), typeof(Window), new PropertyMetadata(""));
 
-
-
+    /// <summary>
+    /// cstomer Adress dependency property
+    /// </summary>
     public string Adress
     {
         get { return (string)GetValue(AdressProperty); }
@@ -55,15 +48,28 @@ public partial class UserDetails : UserControl
     public static readonly DependencyProperty AdressProperty =
         DependencyProperty.Register("Adress", typeof(string), typeof(Window), new PropertyMetadata(""));
 
-
-
+    /// <summary>
+    /// the user detailes control window
+    /// </summary>
     public UserDetails()
     {
         InitializeComponent();
     }
+
+    #endregion
+
+    #region PRIVATE MEMBERS
+
+    /// <summary>
+    /// save the user detailes and caled tothe function from the cart to make order
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void saveBtn_Click(object sender, RoutedEventArgs e)
     {
         Cart parentWindow = (Cart)Window.GetWindow(this);
         parentWindow.confirm_order(CustomerName, Email, Adress);
     }
+
+    #endregion
 }

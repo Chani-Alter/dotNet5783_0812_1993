@@ -1,7 +1,6 @@
 ﻿using System.Windows;
 using PL.Customer;
 using PL.Manager;
-using PL.Product;
 
 namespace PL;
 
@@ -21,12 +20,10 @@ public partial class MainWindow : Window
     /// <param name="sender"></param>
     /// <param name="e"></param>
 
-    private void orderTracking_Click(object sender, RoutedEventArgs e)
-    {
+    private void orderTracking_Click(object sender, RoutedEventArgs e)=> new OrderTrackingWindow(this).Show();  
+    
 
-    }
-
-    private void newOrder_Click(object sender, RoutedEventArgs e) => new Catalog().Show();
+    private void newOrder_Click(object sender, RoutedEventArgs e) => new Catalog(this).Show();
   
 
     private void manager_Click(object sender, RoutedEventArgs e)=> new ManagerMenue().Show();

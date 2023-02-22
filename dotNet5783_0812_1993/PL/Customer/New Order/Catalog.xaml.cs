@@ -16,14 +16,14 @@ public partial class Catalog : Window
     /// <summary>
     /// observer collection to the product list
     /// </summary>
-    public ObservableCollection<ProductItem?> ProductsList
+    public ObservableCollection<ProductItem?> ProductsCatalog
     {
         get { return (ObservableCollection<ProductItem?>)GetValue(ProductsProperty); }
         set { SetValue(ProductsProperty, value); }
     }
 
     public static readonly DependencyProperty ProductsProperty =
-        DependencyProperty.Register("ProductsList", typeof(ObservableCollection<ProductItem?>), typeof(Window), new PropertyMetadata(null));
+        DependencyProperty.Register("ProductsCatalog", typeof(ObservableCollection<ProductItem?>), typeof(Window), new PropertyMetadata(null));
 
     /// <summary>
     /// the customer cart
@@ -38,11 +38,11 @@ public partial class Catalog : Window
     /// <summary>
     /// the catalog window ctor
     /// </summary>
-    public Catalog()
+    public Catalog(Window prev_window)
     {
         InitializeComponent();
         changeProductList();
-
+        this.prev_window= prev_window;
     }
 
     #endregion
@@ -53,6 +53,11 @@ public partial class Catalog : Window
     /// instance of the bl who contains access to all the bl implementation
     /// </summary>
     BlApi.IBl? bl = BlApi.Factory.Get();
+
+    /// <summary>
+    /// the prev window
+    /// </summary>
+    Window prev_window;
 
     /// <summary>
     /// hopen a window of a specific product
@@ -106,7 +111,7 @@ public partial class Catalog : Window
     void sales_click(object sender, RoutedEventArgs e)
     {
         var temp = bl.Product.GetcheapestProductListForCustomer();
-        ProductsList = (temp == null) ? new() : new(temp);
+        ProductsCatalog = (temp == null) ? new() : new(temp);
     }
 
     /// <summary>
@@ -117,7 +122,7 @@ public partial class Catalog : Window
     void Popular_click(object sender, RoutedEventArgs e)
     {
         var temp = bl.Product.GetPopularProductListForCustomer();
-        ProductsList = (temp == null) ? new() : new(temp);
+        ProductsCatalog = (temp == null) ? new() : new(temp);
     }
 
     /// <summary>
@@ -136,9 +141,19 @@ public partial class Catalog : Window
     void changeProductList()
     {
         var temp = bl.Product.GetProductListForCustomer(Category);
-        ProductsList = (temp == null) ? new() : new(temp);
+        ProductsCatalog = (temp == null) ? new() : new(temp);
     }
 
+    /// <summary>
+    /// make the prev window active and close this window
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    void back_to_parent_Click(object sender, RoutedEventArgs e)
+    {
+        prev_window.Activate();
+        Close();
+    }
 
     #endregion
 

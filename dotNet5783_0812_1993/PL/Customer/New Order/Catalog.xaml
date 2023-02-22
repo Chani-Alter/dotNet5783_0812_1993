@@ -12,6 +12,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="100"/>
                 <RowDefinition Height="auto"/>
+                <RowDefinition Height="100"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -31,7 +32,7 @@
             <Button Grid.Column="5" Content="Popular" Click="Popular_click" />
             <Button Grid.Column="6" Content="sales" Click="sales_click" />
             <Button Grid.Column="7" Content="Cart" Click="cart_Click" />
-            <ListView Grid.Row="1" Grid.ColumnSpan="8" x:Name="productListView" ItemsSource="{Binding Path=ProductsList}"   MouseDoubleClick="productListView_MouseDoubleClick" 
+            <ListView Grid.Row="1" Grid.ColumnSpan="8" x:Name="productListView" ItemsSource="{Binding Path=ProductsCatalog}"   MouseDoubleClick="productListView_MouseDoubleClick" 
                       FontSize="15"   Foreground="#FF101115">
                 <ListView.View>
                     <GridView>
@@ -39,6 +40,7 @@
                     </GridView>
                 </ListView.View>
             </ListView>
+            <Button Grid.Column="8" Name="back_to_parent" Content=" ➜ " Click="back_to_parent_Click" ></Button>
         </Grid>
     </ScrollViewer>
 </Window>

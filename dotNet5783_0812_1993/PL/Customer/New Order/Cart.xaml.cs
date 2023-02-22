@@ -220,6 +220,5 @@ public partial class Cart : Window
         Close();
     }
 
-
     #endregion
 }

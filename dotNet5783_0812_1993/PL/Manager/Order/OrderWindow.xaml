@@ -4,74 +4,138 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        DataContext="{Binding OrderData, RelativeSource={RelativeSource Mode=Self} }" 
+        xmlns:local="clr-namespace:PL"
+        DataContext="{Binding  RelativeSource={RelativeSource Mode=Self} }" 
         Title="OrderWindow" Height="450" Width="800">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions >
+    <Window.Resources>
+        <local:NullToStringShiping x:Key="NullToStringShiping"/>
+        <local:NullToStringDelivery x:Key="NullToStringDelivery"/>
+        <local:convertDateAndStatuseToVisibility x:Key="convertDateAndStatuseToVisibility"/>
+        <local:convertDateAndStatuseToHidden x:Key="convertDateAndStatuseToHidden"/>
+        <local:convertDateAndStatuseManagerToVisibility x:Key="convertDateAndStatuseManagerToVisibility"/>
 
-        <Label Grid.Row="0" Grid.Column="0" Name="idLabel" Content="Order ID"  ></Label>
-        <TextBox Text="{Binding ID }" Grid.Row="0" Grid.Column="1" Name="idTextBox"></TextBox>
-
-        <Label Grid.Row="1" Grid.Column="0" Name="nameLabel" Content="customer name"  ></Label>
-        <TextBox Text="{Binding CustomerName}" Grid.Row="1" Grid.Column="1" Name="nameTextBox"></TextBox>
-
-        <Label Grid.Row="2" Grid.Column="0" Name="emailLabel" Content="customer email"  ></Label>
-        <TextBox Text="{Binding CustomerEmail}" Grid.Row="2" Grid.Column="1" Name="emailTextBox"></TextBox>
-
-        <Label Grid.Row="3" Grid.Column="0" Name="adressLabel" Content="customer adress"  ></Label>
-        <TextBox Text="{Binding CustomerAdress}" Grid.Row="3" Grid.Column="1" Name="adressTextBox"></TextBox>
-
-        <Label Grid.Row="4" Grid.Column="0" Name="orderItemsLabel" Content="order items"  ></Label>
-        <ListView x:Name="orderItemListView" ItemsSource="{Binding Items}" Grid.Row="4" Grid.Column="1">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=ProductID}" Width="auto" Header="ID"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Width="auto" Header="Name"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Price}" Width="auto" Header="Price"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Amount}" Width="auto" Header="Amount">
-                    </GridViewColumn>
-                        <GridViewColumn DisplayMemberBinding="{Binding Path=TotalPrice}" Width="auto" Header="Total Price"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
-
-        <Label Grid.Row="5" Grid.Column="0" Name="totalPriceLabel" Content="total price"  ></Label>
-        <TextBox Text="{Binding TotalPrice}" Grid.Row="5" Grid.Column="1" Name="totalPriceTextBox"></TextBox>
-
-        <Label Grid.Row="6" Grid.Column="0" Name="statusLabel" Content="order status"  ></Label>
-        <TextBox Text="{Binding Status}" Grid.Row="6" Grid.Column="1" Name="statusTextBox"></TextBox>
+    </Window.Resources>
+    <ScrollViewer>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions >
 
 
-        <Label Grid.Row="7" Grid.Column="0" Name="createDateLabel" Content="create order date"  ></Label>
-        <TextBox Text="{Binding CreateOrderDate}" Grid.Row="7" Grid.Column="1" Name="createDateTextBox"></TextBox>
+            <Label Grid.Row="0" Grid.Column="0" Name="idLabel" Content="Order ID"  ></Label>
+            <TextBox Text="{Binding OrderData.ID}" Grid.Row="0" Grid.Column="1" Name="idTextBox"></TextBox>
 
-        <Label Grid.Row="8" Grid.Column="0" Visibility="{Binding ShippingDate , Converter={StaticResource NullToHidden}}" Name="shipingDateLabel" Content="shipping order date"  ></Label>
-        <TextBox Text="{Binding ShippingDate}" Visibility="{Binding ShippingDate , Converter={StaticResource NullToHidden}}"  Grid.Row="8" Grid.Column="1" Name="shipingDateTextBox"></TextBox>
+            <Label Grid.Row="1" Grid.Column="0" Name="nameLabel" Content="customer name"  ></Label>
+            <TextBox Text="{Binding OrderData.CustomerName}" Grid.Row="1" Grid.Column="1" Name="nameTextBox"></TextBox>
 
-        <Label Grid.Row="9" Grid.Column="0" Visibility="{Binding DeliveryDate , Converter={StaticResource NullToHidden}}" Name="deliveryDateLabel" Content="delivery order date"  ></Label>
-        <TextBox Text="{Binding DeliveryDate}" Visibility="{Binding DeliveryDate , Converter={StaticResource NullToHidden}}" Grid.Row="9" Grid.Column="1" Name="deliveryDateTextBox"></TextBox>
+            <Label Grid.Row="2" Grid.Column="0" Name="emailLabel" Content="customer email"  ></Label>
+            <TextBox Text="{Binding OrderData.CustomerEmail}" Grid.Row="2" Grid.Column="1" Name="emailTextBox"></TextBox>
 
-        <Label Grid.Row="8" Grid.Column="0" Visibility="{Binding ShippingDate , Converter={StaticResource NullToVisible}}"  Content="shipping order"  ></Label>
-        <Button Content="Shipping confirmation" Visibility="{Binding ShippingDate , Converter={StaticResource NullToVisible}}"  Grid.Row="8" Grid.Column="1" Name="shippingUpdate" Click="shippingUpdate_Click" ></Button>
+            <Label Grid.Row="3" Grid.Column="0" Name="adressLabel" Content="customer adress"  ></Label>
+            <TextBox Text="{Binding OrderData.CustomerAdress}" Grid.Row="3" Grid.Column="1" Name="adressTextBox"></TextBox>
 
-        <Label Grid.Row="9" Grid.Column="0" Visibility="{Binding DeliveryDate , Converter={StaticResource NullToVisible}}"  Content="delivery order"  ></Label>
-        <Button Content="delivery confirmation" Visibility="{Binding DeliveryDate , Converter={StaticResource NullToVisible}}" IsEnabled="{Binding ShippingDate , Converter={StaticResource NullToFalse}}"  Grid.Row="9" Grid.Column="1" Name="deliveryUpdate" Click="deliveryUpdate_Click" ></Button>
+            <Label Grid.Row="4" Grid.Column="0" Name="orderItemsLabel" Content="order items"  ></Label>
+            <ListView Grid.Row="4" Grid.Column="1"  x:Name="productListView" ItemsSource="{Binding Path=OrderData.Items}"  FontSize="15"   Foreground="#FF101115">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=ProductID, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"   Header="ID" Width="100"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"   Header="name" Width="100"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Price, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"   Header="Price" Width="100"/>
+                        <GridViewColumn Header="Amount" Width="100" >
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid Visibility="{Binding ElementName=shippingUpdate, Path=Visibility}">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition   Width="*"/>
+                                                <ColumnDefinition   Width="*"/>
+                                                <ColumnDefinition   Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Button Grid.Column="0"  Content="-" Height="20" Width="15" Margin="10,3,0,0" IsEnabled="{Binding Amount, Converter={StaticResource ZeroToFalse}}"  Click="minuse_Click"/>
+                                            <TextBox Grid.Column="1" Height="23"   Width="22" Margin="5,3,0,0" Text="{Binding Path=Amount, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
+                                            <Button Grid.Column="2"  Content="+" Width="15" Margin="5,3,0,0" VerticalAlignment="Top"   Click="pluse_Click" />
+                                        </Grid>
+                                        <TextBlock Text="{Binding Path=Amount}" Visibility="{Binding ElementName=shipingDateTextBox, Path=Visibility}"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <Label Grid.Row="5" Grid.Column="0" Name="totalPriceLabel" Content="total price"  ></Label>
+            <TextBox Text="{Binding OrderData.TotalPrice}" Grid.Row="5" Grid.Column="1" Name="totalPriceTextBox"></TextBox>
 
-    </Grid>
-    
+            <Label Grid.Row="6" Grid.Column="0" Name="statusLabel" Content="order status"  ></Label>
+            <TextBox Text="{Binding OrderData.Status}" Grid.Row="6" Grid.Column="1" Name="statusTextBox"></TextBox>
+
+
+            <Label Grid.Row="7" Grid.Column="0" Name="createDateLabel" Content="create order date"  ></Label>
+            <TextBox Text="{Binding OrderData.CreateOrderDate}" Grid.Row="7" Grid.Column="1" Name="createDateTextBox"></TextBox>
+
+            <Label Grid.Row="8" Grid.Column="0"  Name="shipingDateLabel" Content="shipping order date" Visibility="{Binding ElementName=shipingDateTextBox, Path=Visibility}" />
+            <TextBox Text="{Binding OrderData.ShippingDate, Converter={StaticResource NullToStringShiping}}"   Grid.Row="8" Grid.Column="1" Name="shipingDateTextBox">
+                <TextBox.Visibility>
+                    <MultiBinding  Converter="{StaticResource convertDateAndStatuseToHidden}">
+                        <Binding Path="OrderData.ShippingDate" />
+                        <Binding Path="StatusPage" />
+                    </MultiBinding>
+                </TextBox.Visibility>
+            </TextBox>
+
+            <Label Grid.Row="9" Grid.Column="0"  Name="deliveryDateLabel" Content="delivery order date"  Visibility="{Binding ElementName=deliveryDateTextBox, Path=Visibility}"/>
+            <TextBox Text="{Binding OrderData.DeliveryDate , Converter={StaticResource NullToStringDelivery}}"  Grid.Row="9" Grid.Column="1" Name="deliveryDateTextBox">
+                <TextBox.Visibility>
+                    <MultiBinding  Converter="{StaticResource convertDateAndStatuseToHidden}">
+                        <Binding Path="OrderData.DeliveryDate" />
+                        <Binding Path="StatusPage" />
+                    </MultiBinding>
+                </TextBox.Visibility>
+            </TextBox>
+
+            <Label Grid.Row="8" Grid.Column="0"  Content="shipping order" Visibility="{Binding ElementName=shippingUpdate, Path=Visibility}" />
+            <Button Content="Shipping confirmation"   Grid.Row="8" Grid.Column="1" Name="shippingUpdate" Click="shippingUpdate_Click" >
+                <Button.Visibility>
+                    <MultiBinding  Converter="{StaticResource convertDateAndStatuseToVisibility}">
+                        <Binding Path="OrderData.ShippingDate" />
+                        <Binding Path="StatusPage" />
+                    </MultiBinding>
+                </Button.Visibility>
+            </Button>
+
+            <Label Grid.Row="9" Grid.Column="0"  Content="delivery order"  Visibility="{Binding ElementName=deliveryUpdate, Path=Visibility}"/>
+            <Button Content="delivery confirmation" IsEnabled="{Binding OrderData.ShippingDate , Converter={StaticResource NullToFalse}}"  Grid.Row="9" Grid.Column="1" Name="deliveryUpdate" Click="deliveryUpdate_Click" >
+                <Button.Visibility>
+                    <MultiBinding  Converter="{StaticResource convertDateAndStatuseToVisibility}">
+                        <Binding Path="OrderData.DeliveryDate" />
+                        <Binding Path="StatusPage" />
+                    </MultiBinding>
+                </Button.Visibility>
+            </Button>
+            <Button Content="update order" Click="update_Status_Click" >
+                <Button.Visibility>
+                    <MultiBinding  Converter="{StaticResource convertDateAndStatuseManagerToVisibility}">
+                        <Binding Path="OrderData.ShippingDate" />
+                        <Binding Path="StatusPage" />
+                    </MultiBinding>
+                </Button.Visibility>
+            </Button>
+
+            <Button Grid.Column="8" Name="back_to_parent" Content=" ➜ " Click="back_to_parent_Click" ></Button>
+
+        </Grid>
+    </ScrollViewer>
 </Window>

@@ -25,7 +25,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
 
-            <Button Grid.Column="1" Content=" ➜ " Background="#FF9AF7D3" FontSize="29" Click="Button_Click" BorderBrush="#FF9AF7D3"/>
+            <Button Grid.Column="1" Content=" ➜ " Background="#FF9AF7D3" FontSize="29" Click="back_to_catalog_Click" BorderBrush="#FF9AF7D3"/>
             
             <Label Grid.Row="1" Grid.Column="0" Name="idLabel" Content="ID"  ></Label>
             <TextBlock  Text="{Binding ProductData.ID}" Grid.Row="1" Grid.Column="1" Name="idTextBox" Height="54" VerticalAlignment="Top" />
