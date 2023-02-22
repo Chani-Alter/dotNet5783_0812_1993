@@ -1,0 +1,192 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfOrder xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Order>
+    <ID>1001</ID>
+    <CustomerName>Motti Weiss</CustomerName>
+    <CustomerEmail>MottiWeiss@gmail.com</CustomerEmail>
+    <CustomerAdress>Chazon Ish 3 Beit Shemesh</CustomerAdress>
+    <CreateOrderDate>2019-09-16T03:01:13</CreateOrderDate>
+    <ShippingDate>2019-09-18T03:01:13</ShippingDate>
+    <DeliveryDate>2019-09-23T03:01:13</DeliveryDate>
+  </Order>
+  <Order>
+    <ID>1002</ID>
+    <CustomerName>Moshe Feld</CustomerName>
+    <CustomerEmail>MosheFeld@gmail.com</CustomerEmail>
+    <CustomerAdress>Rabbi Akiva 170 Bnei Brak</CustomerAdress>
+    <CreateOrderDate>2013-08-27T05:23:50</CreateOrderDate>
+    <ShippingDate>2013-09-02T05:23:50</ShippingDate>
+    <DeliveryDate>2013-09-01T05:23:50</DeliveryDate>
+  </Order>
+  <Order>
+    <ID>1003</ID>
+    <CustomerName>Itzik Orlev</CustomerName>
+    <CustomerEmail>ItzikOrlev@gmail.com</CustomerEmail>
+    <CustomerAdress>Hakalanit 17 herzelia</CustomerAdress>
+    <CreateOrderDate>2017-02-23T15:24:00</CreateOrderDate>
+    <ShippingDate>2017-02-24T15:24:00</ShippingDate>
+    <DeliveryDate>2017-03-02T15:24:00</DeliveryDate>
+  </Order>
+  <Order>
+    <ID>1004</ID>
+    <CustomerName>Ruli Dikman</CustomerName>
+    <CustomerEmail>RuliDikman@gmail.com</CustomerEmail>
+    <CustomerAdress>Haturim 6 Jerusalem</CustomerAdress>
+    <CreateOrderDate>2005-02-14T19:44:33</CreateOrderDate>
+    <ShippingDate>2005-02-20T19:44:33</ShippingDate>
+    <DeliveryDate>2005-02-17T19:44:33</DeliveryDate>
+  </Order>
+  <Order>
+    <ID>1005</ID>
+    <CustomerName>Ari Hill</CustomerName>
+    <CustomerEmail>AriHill@gmail.com</CustomerEmail>
+    <CustomerAdress>Malchei Israel 40 Jerusalem</CustomerAdress>
+    <CreateOrderDate>2012-11-08T12:10:04</CreateOrderDate>
+    <ShippingDate>2012-11-10T12:10:04</ShippingDate>
+    <DeliveryDate>2012-11-12T12:10:04</DeliveryDate>
+  </Order>
+  <Order>
+    <ID>1006</ID>
+    <CustomerName>Shuli Rand</CustomerName>
+    <CustomerEmail>ShuliRand@gmail.com</CustomerEmail>
+    <CustomerAdress>miron 20 Bnei Brak</CustomerAdress>
+    <CreateOrderDate>2002-09-26T22:59:26</CreateOrderDate>
+    <ShippingDate>2002-09-28T22:59:26</ShippingDate>
+    <DeliveryDate>2002-09-28T22:59:26</DeliveryDate>
+  </Order>
+  <Order>
+    <ID>1007</ID>
+    <CustomerName>Ishay Ribo</CustomerName>
+    <CustomerEmail>IshayRibo@gmail.com</CustomerEmail>
+    <CustomerAdress>Hameiri 4 Jerusalem</CustomerAdress>
+    <CreateOrderDate>2004-05-14T00:56:24</CreateOrderDate>
+    <ShippingDate>2004-05-17T00:56:24</ShippingDate>
+    <DeliveryDate>2004-05-17T00:56:24</DeliveryDate>
+  </Order>
+  <Order>
+    <ID>1008</ID>
+    <CustomerName>Beri Weber</CustomerName>
+    <CustomerEmail>BeriWeber@gmail.com</CustomerEmail>
+    <CustomerAdress>begin 72 Naaria</CustomerAdress>
+    <CreateOrderDate>2016-03-03T12:56:56</CreateOrderDate>
+    <ShippingDate>2016-03-12T12:56:56</ShippingDate>
+    <DeliveryDate>2016-03-04T12:56:56</DeliveryDate>
+  </Order>
+  <Order>
+    <ID>1009</ID>
+    <CustomerName>Simcha Friedman</CustomerName>
+    <CustomerEmail>SimchaFriedman@gmail.com</CustomerEmail>
+    <CustomerAdress>hagefen 22 Kfar Chabad</CustomerAdress>
+    <CreateOrderDate>2006-01-28T01:24:30</CreateOrderDate>
+    <ShippingDate>2006-01-31T01:24:30</ShippingDate>
+    <DeliveryDate xsi:nil="true" />
+  </Order>
+  <Order>
+    <ID>1010</ID>
+    <CustomerName>Avraam Fried</CustomerName>
+    <CustomerEmail>AvraamFried@gmail.com</CustomerEmail>
+    <CustomerAdress>hanurit 7 Ashdod</CustomerAdress>
+    <CreateOrderDate>2018-06-20T04:47:32</CreateOrderDate>
+    <ShippingDate>2018-06-25T04:47:32</ShippingDate>
+    <DeliveryDate xsi:nil="true" />
+  </Order>
+  <Order>
+    <ID>1011</ID>
+    <CustomerName>Mordechai Ben David</CustomerName>
+    <CustomerEmail>MordechaiBenDavid@gmail.com</CustomerEmail>
+    <CustomerAdress>Shamgar 20 Jerusalem</CustomerAdress>
+    <CreateOrderDate>2010-11-17T10:48:42</CreateOrderDate>
+    <ShippingDate>2010-11-26T10:48:42</ShippingDate>
+    <DeliveryDate xsi:nil="true" />
+  </Order>
+  <Order>
+    <ID>1012</ID>
+    <CustomerName>Yaakov Shwekey</CustomerName>
+    <CustomerEmail>YaakovShwekey@gmail.com</CustomerEmail>
+    <CustomerAdress>Pnei Menachem 1 Petach Tikwa</CustomerAdress>
+    <CreateOrderDate>2014-03-02T19:49:10</CreateOrderDate>
+    <ShippingDate>2014-03-05T19:49:10</ShippingDate>
+    <DeliveryDate xsi:nil="true" />
+  </Order>
+  <Order>
+    <ID>1013</ID>
+    <CustomerName>Naftali Kempeh</CustomerName>
+    <CustomerEmail>NaftaliKempeh@gmail.com</CustomerEmail>
+    <CustomerAdress>Hadekel 16 Tel Aviv</CustomerAdress>
+    <CreateOrderDate>2020-05-22T07:41:09</CreateOrderDate>
+    <ShippingDate>2020-05-29T07:41:09</ShippingDate>
+    <DeliveryDate xsi:nil="true" />
+  </Order>
+  <Order>
+    <ID>1014</ID>
+    <CustomerName>Motti Weiss</CustomerName>
+    <CustomerEmail>MottiWeiss@gmail.com</CustomerEmail>
+    <CustomerAdress>Chazon Ish 3 Beit Shemesh</CustomerAdress>
+    <CreateOrderDate>2011-11-13T00:15:49</CreateOrderDate>
+    <ShippingDate>2011-11-14T00:15:49</ShippingDate>
+    <DeliveryDate xsi:nil="true" />
+  </Order>
+  <Order>
+    <ID>1015</ID>
+    <CustomerName>Moshe Feld</CustomerName>
+    <CustomerEmail>MosheFeld@gmail.com</CustomerEmail>
+    <CustomerAdress>Rabbi Akiva 170 Bnei Brak</CustomerAdress>
+    <CreateOrderDate>2007-01-15T12:59:56</CreateOrderDate>
+    <ShippingDate>2007-01-17T12:59:56</ShippingDate>
+    <DeliveryDate xsi:nil="true" />
+  </Order>
+  <Order>
+    <ID>1016</ID>
+    <CustomerName>Itzik Orlev</CustomerName>
+    <CustomerEmail>ItzikOrlev@gmail.com</CustomerEmail>
+    <CustomerAdress>Hakalanit 17 herzelia</CustomerAdress>
+    <CreateOrderDate>2000-04-08T09:24:45</CreateOrderDate>
+    <ShippingDate>2000-04-11T09:24:45</ShippingDate>
+    <DeliveryDate xsi:nil="true" />
+  </Order>
+  <Order>
+    <ID>1017</ID>
+    <CustomerName>Ruli Dikman</CustomerName>
+    <CustomerEmail>RuliDikman@gmail.com</CustomerEmail>
+    <CustomerAdress>Haturim 6 Jerusalem</CustomerAdress>
+    <CreateOrderDate>2020-07-26T03:00:59</CreateOrderDate>
+    <ShippingDate xsi:nil="true" />
+    <DeliveryDate xsi:nil="true" />
+  </Order>
+  <Order>
+    <ID>1018</ID>
+    <CustomerName>Ari Hill</CustomerName>
+    <CustomerEmail>AriHill@gmail.com</CustomerEmail>
+    <CustomerAdress>Malchei Israel 40 Jerusalem</CustomerAdress>
+    <CreateOrderDate>2020-01-16T01:32:47</CreateOrderDate>
+    <ShippingDate xsi:nil="true" />
+    <DeliveryDate xsi:nil="true" />
+  </Order>
+  <Order>
+    <ID>1019</ID>
+    <CustomerName>Shuli Rand</CustomerName>
+    <CustomerEmail>ShuliRand@gmail.com</CustomerEmail>
+    <CustomerAdress>miron 20 Bnei Brak</CustomerAdress>
+    <CreateOrderDate>2002-08-18T05:02:53</CreateOrderDate>
+    <ShippingDate xsi:nil="true" />
+    <DeliveryDate xsi:nil="true" />
+  </Order>
+  <Order>
+    <ID>1020</ID>
+    <CustomerName>Ishay Ribo</CustomerName>
+    <CustomerEmail>IshayRibo@gmail.com</CustomerEmail>
+    <CustomerAdress>Hameiri 4 Jerusalem</CustomerAdress>
+    <CreateOrderDate>2006-06-27T10:17:12</CreateOrderDate>
+    <ShippingDate xsi:nil="true" />
+    <DeliveryDate xsi:nil="true" />
+  </Order>
+  <Order>
+    <ID>1026</ID>
+    <CustomerName>gfgf</CustomerName>
+    <CustomerEmail>dfg</CustomerEmail>
+    <CustomerAdress>erhfht</CustomerAdress>
+    <CreateOrderDate>2023-02-22T23:59:53.7818629+02:00</CreateOrderDate>
+    <ShippingDate xsi:nil="true" />
+    <DeliveryDate xsi:nil="true" />
+  </Order>
+</ArrayOfOrder>

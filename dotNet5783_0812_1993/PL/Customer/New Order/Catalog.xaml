@@ -23,6 +23,7 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0" Content="Laptop"  Click="category_click" />
             <Button Grid.Column="1" Content="Desktop Computer" Click="category_click" />
