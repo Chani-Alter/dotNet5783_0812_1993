@@ -22,7 +22,7 @@ sealed internal class Bl : IBl
     /// </summary>
     public ICart cart { get; } = new Cart();
 
-    //public IUser User { get; } = new User();    
+    public IUser User { get; } = new User();
 
 
 }

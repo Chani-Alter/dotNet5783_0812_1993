@@ -13,7 +13,7 @@ public interface IUser
     /// </summary>
     /// <param name="product"></param>
     /// <returns></returns>
-    public int AddUser(User user);
+    public int AddUser(BO.User user);
 
     /// <summary>
     /// A function Defination for deleteing a product
@@ -26,12 +26,12 @@ public interface IUser
     /// </summary>
     /// <param name="product"></param>
     /// <returns></returns>
-    public Product UpdateUser(Product product);
+    public void UpdateUser(BO.User user);
 
     /// <summary>
     /// A function Defination for return a user by email and password
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public ProductItem GetUserByEmailAndPass(string email , string password);
+    public BO.User GetUserByEmailAndPass(string email , string password);
 }

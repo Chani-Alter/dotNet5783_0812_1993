@@ -11,21 +11,62 @@ internal class User : IUser
 {
     public int AddUser(BO.User user)
     {
-        throw new NotImplementedException();
+        try
+        {
+           int id = dal.User.Add(Utils.cast<DO.User,BO.User>(user)); 
+           return id;
+        }
+        catch(DO.DuplicateDalException ex)
+        {
+          throw new BLAlreadyExistException("Email already exist" , ex);
+        }
+        catch(DO.XMLFileNullExeption ex)
+        {
+            throw new DoesNotExistedBlException("user doesnwt exist" ,ex);  
+        }
     }
 
     public void DeleteUser(int id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            dal.User.Delete(id); 
+        }
+        catch (DO.DoesNotExistedDalException ex) 
+        {
+            throw new DoesNotExistedBlException("user doesnwt exist", ex);
+        }
     }
 
-    public ProductItem GetUserByEmailAndPass(string email, string password)
+    public BO.User GetUserByEmailAndPass(string email, string password)
     {
-        throw new NotImplementedException();
+        try
+        {
+            return Utils.cast<BO.User, DO.User>(dal.User.GetByCondition(u => u?.CustomerEmail == email && u?.Password == password));
+        }
+        catch(DO.DoesNotExistedDalException ex) 
+        { 
+            throw new DoesNotExistedBlException("User doesnt exist",ex);
+        }
     }
 
-    public BO.Product UpdateUser(BO.Product product)
+ 
+    public void UpdateUser(BO.User user)
     {
-        throw new NotImplementedException();
+        try
+        {
+            dal.User.Update(Utils.cast<DO.User,BO.User>(user));
+        }
+        catch (DO.DoesNotExistedDalException ex)
+        {
+            throw new DoesNotExistedBlException("User doesnt exist", ex);
+        }
     }
+
+
+    /// <summary>
+    /// An attribute that contains access to all the dallist data
+    /// </summary>
+    DalApi.IDal? dal = DalApi.Factory.Get();
+
 }

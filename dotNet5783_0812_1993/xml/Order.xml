@@ -180,4 +180,13 @@
     <ShippingDate xsi:nil="true" />
     <DeliveryDate xsi:nil="true" />
   </Order>
+  <Order>
+    <ID>1027</ID>
+    <CustomerName>עעעע</CustomerName>
+    <CustomerEmail>ההנמצ</CustomerEmail>
+    <CustomerAdress>גכעיח</CustomerAdress>
+    <CreateOrderDate>2023-02-23T17:53:23.7992948+02:00</CreateOrderDate>
+    <ShippingDate xsi:nil="true" />
+    <DeliveryDate xsi:nil="true" />
+  </Order>
 </ArrayOfOrder>

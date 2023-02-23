@@ -19,6 +19,8 @@ internal class DalUser : IUser
     public int Add(User user)
     {
         List<User?> userList = XmlTools.LoadListFromXmlSerializer<User>(entityName);
+        var result = userList.Where(u => u?.CustomerEmail == user.CustomerEmail);
+        if (result.Count() > 0) throw new DuplicateDalException("Email already exist in the system");
         user.ID = XmlTools.NewID(entityName);
         userList.Add(user);
 

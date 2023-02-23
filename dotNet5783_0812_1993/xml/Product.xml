@@ -8,25 +8,11 @@
     <InStock>150</InStock>
   </Product>
   <Product>
-    <ID>958742</ID>
-    <Name>Lenovo IdeaPad</Name>
-    <Category>Laptop</Category>
-    <Price>3400</Price>
-    <InStock>120</InStock>
-  </Product>
-  <Product>
     <ID>125412</ID>
     <Name>Apple Mac mini</Name>
     <Category>Desktop_Computer</Category>
     <Price>5000</Price>
     <InStock>80</InStock>
-  </Product>
-  <Product>
-    <ID>563258</ID>
-    <Name>Lenovo legion</Name>
-    <Category>Desktop_Computer</Category>
-    <Price>3100</Price>
-    <InStock>92</InStock>
   </Product>
   <Product>
     <ID>745896</ID>
@@ -69,5 +55,26 @@
     <Category>Laptop</Category>
     <Price>3800</Price>
     <InStock>0</InStock>
+  </Product>
+  <Product>
+    <ID>123344</ID>
+    <Name>כיחחח</Name>
+    <Price>6778</Price>
+    <Category>Screens</Category>
+    <InStock>0</InStock>
+  </Product>
+  <Product>
+    <ID>958742</ID>
+    <Name>Lenovo IdeaPad</Name>
+    <Category>Laptop</Category>
+    <Price>3400</Price>
+    <InStock>115</InStock>
+  </Product>
+  <Product>
+    <ID>563258</ID>
+    <Name>Lenovo legion</Name>
+    <Category>Desktop_Computer</Category>
+    <Price>3100</Price>
+    <InStock>91</InStock>
   </Product>
 </ArrayOfProduct>

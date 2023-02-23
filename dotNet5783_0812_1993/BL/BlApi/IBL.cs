@@ -20,6 +20,6 @@ public interface IBl
     /// </summary>
     public ICart cart { get; }
 
-    //public ICart User { get; }
+    public IUser User { get; }
 
 }
