@@ -1,20 +1,19 @@
 ﻿using DalApi;
 using DO;
-using System.Security.Cryptography;
 using System.Xml.Linq;
 
 namespace Dal;
 
 /// <summary>
 /// A department that performs operations: 
-/// adding, updating, repeating and deleting on the product array
+/// adding, updating, repeating and deleting on the product file
 /// </summary>
 internal class DalProduct : IProduct
 {
     #region PUBLIC MEMBERS
 
     /// <summary>
-    /// Add a product to the productArray
+    /// Add a product to the product file
     /// </summary>
     /// <param name="product">the new product to add</param>
     /// <returns>the id of the new product</returns>
@@ -89,21 +88,19 @@ internal class DalProduct : IProduct
     /// <exception cref="Exception">if the product didnt exist</exception>
     public void Update(Product product)
     {
-        List<Product?> productList = XmlTools.LoadListFromXmlSerializer<Product>(entityName);
-
-        int index = productList.FindIndex(prod => prod?.ID == product.ID);
-        if (index == -1)
-            throw new DoesNotExistedDalException(product.ID, "product", "product is not exist");
-
-        productList[index] = product;
-        XmlTools.SaveListForXmlSerializer(productList, entityName);
-
+        Delete(product.ID);
+        Add(product);   
     }
 
     #endregion
 
     #region PRIVATE MEMBER
+
+    /// <summary>
+    /// the entity name
+    /// </summary>
     const string entityName = @"Product";
+
     #endregion
 
 }

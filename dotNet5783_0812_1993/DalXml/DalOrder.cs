@@ -7,14 +7,14 @@ namespace Dal;
 
 /// <summary>
 /// A department that performs operations: 
-/// adding, updating, repeating and deleting on the order array
+/// adding, updating, repeating and deleting on the order file
 /// </summary>
 internal class DalOrder : IOrder
 {
     #region PUBLIC MEMBERS
 
     /// <summary>
-    /// add a order to the order array
+    /// add a order to the order file
     /// </summary>
     /// <param name="order">the new order</param>
     /// <returns>the insert new order id</returns>
@@ -29,7 +29,7 @@ internal class DalOrder : IOrder
     /// <summary>
     /// get list of orders by condition
     /// </summary>
-    /// <returns>an array of orders</returns>
+    /// <returns>colection of orders</returns>
     public IEnumerable<Order?> GetList(Func<Order?, bool>? predicate)
     {
         List<Order?> orderList = XmlTools.LoadListFromXmlSerializer<Order>(entityName);
@@ -92,8 +92,13 @@ internal class DalOrder : IOrder
 
     #endregion
 
+    #region PRIVATE MEMBER
+
+    /// <summary>
+    /// the entity name 
+    /// </summary>
     const string entityName = @"Order";
 
-
+    #endregion
 
 }

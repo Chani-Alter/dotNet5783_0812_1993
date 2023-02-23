@@ -31,10 +31,19 @@ sealed internal class DalXml : IDal
 
     #region PRIVATE MEMBERS
 
+    /// <summary>
+    /// the Key for locking the get of the instance that 2 thred will not take it by the same time.
+    /// </summary>
     private static readonly object key = new();
 
+    /// <summary>
+    /// the instance of the class
+    /// </summary>
     private static IDal? instance;
 
+    /// <summary>
+    /// a private ctor for the single ton class
+    /// </summary>
     private DalXml() { }
 
     #endregion

@@ -72,3 +72,12 @@ public class DalConfigException : Exception
     public DalConfigException(string msg, Exception ex) : base(msg, ex) { }
 }
 
+[Serializable]
+public class XMLFileNullExeption : Exception
+{
+    public XMLFileNullExeption(string msg) : base(msg) { }
+    public XMLFileNullExeption(string msg, Exception ex) : base(msg, ex) { }
+
+    public override string ToString() => $"fail by laoding xml files";
+
+}

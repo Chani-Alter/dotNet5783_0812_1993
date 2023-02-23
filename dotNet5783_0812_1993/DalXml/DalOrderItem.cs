@@ -5,14 +5,14 @@ namespace Dal;
 
 /// <summary>
 /// A department that performs operations: 
-/// adding, updating, repeating and deleting on the orderItem array
+/// adding, updating, repeating and deleting on the orderItem file
 /// </summary>
 internal class DalOrderItem : IOrderItem
 {
     #region PUBLIC MEMBERS
 
     /// <summary>
-    /// add a orderitem to the array
+    /// add a orderitem to the file
     /// </summary>
     /// <param name="orderItem">the new order item </param>
     /// <returns>the id of the new order item</returns>
@@ -108,6 +108,9 @@ internal class DalOrderItem : IOrderItem
 
     #region PRIVATE MEMBER
 
+    /// <summary>
+    /// the entity name
+    /// </summary>
     const string entityName = @"OrderItem";
 
     #endregion
