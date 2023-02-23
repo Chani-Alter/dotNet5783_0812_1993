@@ -5,10 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Manager"
         mc:Ignorable="d"
-        Title="ManagerMenue" Height="450" Width="800">
-    <Grid Background="#FF9AF7D3">
-        <Button Name="showProductBtn" FontSize="16" Cursor="Hand" FontWeight="Bold" Content="show products" Background="#FF17CEB9" Margin="0,166,0,0"   Height="69" Width="152" Click="showProductBtn_Click"/>
-        <Button Name="showOrdersBtn" FontSize="16" Cursor="Hand" FontWeight="Bold" Content="show orders" Background="#FF17CEB9"  Margin="0,166,0,0" VerticalAlignment="Top"  Height="69" Width="152" Click="showOrdersBtn_Click"/>
+        Title="ManagerMenue" Height="768" Width="1366">
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Manager/background2.jpg"/>
+        </Grid.Background>
+        <Button Name="showProductBtn" FontSize="30" Cursor="Hand" FontWeight="Bold" Content="show products" Background="#FF1E3D59" Margin="275,24,230,39" Click="showProductBtn_Click" BorderBrush="#FF1E3D59" Width="295" Height="135"/>
+        <Button Name="showOrdersBtn" FontSize="30" Cursor="Hand" FontWeight="Bold" Content="show orders" Background="#FF1E3D59"  Margin="275,97,230,0" VerticalAlignment="Top"  Height="135" Click="showOrdersBtn_Click" BorderBrush="#FF1E3D59" Width="295"/>
 
     </Grid>
 </Window>

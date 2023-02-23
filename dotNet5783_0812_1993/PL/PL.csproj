@@ -14,11 +14,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\background.png" />
+    <None Remove="Manager\background2.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BL\BL.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\background.png" />
+    <Resource Include="Manager\background2.jpg" />
   </ItemGroup>
 
 </Project>

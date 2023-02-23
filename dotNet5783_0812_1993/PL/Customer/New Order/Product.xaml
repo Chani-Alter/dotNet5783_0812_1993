@@ -7,9 +7,9 @@
         mc:Ignorable="d"
         DataContext="{Binding  RelativeSource={RelativeSource Mode=Self} }"        
 
-        Title="Product" Height="450" Width="800">
+        Title="Product" Height="768" Width="1366">
     <ScrollViewer >
-        <Grid  Background="#FF9AF7D3">
+        <Grid  Background="#f5f0e1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
@@ -21,28 +21,28 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="0.25*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
 
-            <Button Grid.Column="1" Content=" ➜ " Background="#FF9AF7D3" FontSize="29" Click="back_to_catalog_Click" BorderBrush="#FF9AF7D3"/>
+            <Button Grid.Column="1" Content=" ➜ " Background="#FFFF6E40" FontSize="29" Click="back_to_catalog_Click" BorderBrush="#FF9AF7D3" HorizontalAlignment="Left" Margin="909,0,0,0" Width="170"/>
             
-            <Label Grid.Row="1" Grid.Column="0" Name="idLabel" Content="ID"  ></Label>
-            <TextBlock  Text="{Binding ProductData.ID}" Grid.Row="1" Grid.Column="1" Name="idTextBox" Height="54" VerticalAlignment="Top" />
+            <Label Grid.Row="1" Grid.Column="0" Name="idLabel" Content="ID" BorderBrush="#FFF5F0E1" BorderThickness="1,1,0,1" Background="#FF1E3D59"  ></Label>
+            <TextBlock  Text="{Binding ProductData.ID}" Grid.Row="1" Grid.Column="1" Name="idTextBox" Height="54" VerticalAlignment="Center" />
 
-            <Label Grid.Row="2" Grid.Column="0" Name="nameLabel" Content="name"  ></Label>
-            <TextBlock Text="{Binding ProductData.Name}" Grid.Row="2" Grid.Column="1" Name="nameTextBox"  ></TextBlock>
+            <Label Grid.Row="2" Grid.Column="0" Name="nameLabel" Content="name" BorderBrush="#FFF5F0E1" BorderThickness="1,1,0,1" Background="#FF1E3D59" ></Label>
+            <TextBlock Text="{Binding ProductData.Name}" Grid.Row="2" Grid.Column="1" Name="nameTextBox" VerticalAlignment="Center"  />
 
-            <Label Grid.Row="3" Grid.Column="0" Name="priceLabel" Content="price"  ></Label>
-            <TextBlock Text="{Binding ProductData.Price}" Grid.Row="3" Grid.Column="1" Name="priceTextBox"></TextBlock>
+            <Label Grid.Row="3" Grid.Column="0" Name="priceLabel" Content="price" BorderBrush="#FFF5F0E1" BorderThickness="1,1,0,1" Background="#FF1E3D59" ></Label>
+            <TextBlock Text="{Binding ProductData.Price}" Grid.Row="3" Grid.Column="1" Name="priceTextBox" VerticalAlignment="Center"></TextBlock>
 
-            <Label Grid.Row="4" Grid.Column="0" Name="categoryLabel" Content="category"  ></Label>
-            <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding ProductData.Category}"></TextBlock>
-        
-            <Label Grid.Row="5" Grid.Column="0" Name="InStockLabel" Content="in stock"  ></Label>
-            <TextBlock  Text="{Binding ProductData.InStock }" Grid.Row="5" Grid.Column="1" Name="InStockTextBox"></TextBlock>
+            <Label Grid.Row="4" Grid.Column="0" Name="categoryLabel" Content="category" BorderBrush="#FFF5F0E1" BorderThickness="1,1,0,1" Background="#FF1E3D59" ></Label>
+            <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding ProductData.Category}" VerticalAlignment="Center"></TextBlock>
 
-            <Label Grid.Row="6" Grid.Column="0" Name="amountInCartLabel" Content="Amount in Cart"  ></Label>
+            <Label Grid.Row="5" Grid.Column="0" Name="InStockLabel" Content="in stock" BorderBrush="#FFF5F0E1" BorderThickness="1,1,0,1" Background="#FF1E3D59" ></Label>
+            <TextBlock  Text="{Binding ProductData.InStock }" Grid.Row="5" Grid.Column="1" Name="InStockTextBox" VerticalAlignment="Center"></TextBlock>
+
+            <Label Grid.Row="6" Grid.Column="0" Name="amountInCartLabel" Content="Amount in Cart" BorderBrush="#FFF5F0E1" BorderThickness="1,1,1,1" Background="#FF1E3D59" ></Label>
             <Grid Grid.Row="6" Grid.Column="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
@@ -50,7 +50,7 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
-                <Button x:Name="pluse" Grid.Column="2" Content="+" Click="pluse_Click" FontSize="20" >
+                <Button x:Name="pluse" Grid.Column="2" Content="+" Click="pluse_Click" FontSize="20" Background="#FFFFC13B" >
                     <Button.IsEnabled>
                         <MultiBinding  Converter="{StaticResource MaxAmountToTrue}">
                             <Binding  Path="AmountCart" />
@@ -58,14 +58,14 @@
                         </MultiBinding>
                     </Button.IsEnabled>
                 </Button>
-                <TextBlock  Text="{Binding AmountCart }"  Grid.Column="1" Name="amountInCartTextBox"></TextBlock>
-                <Button  x:Name="minuse" Content="-" Grid.Column="0" FontSize="20" IsEnabled="{Binding AmountCart, Converter={StaticResource MinAmountToTrue}}" Click="minuse_Click" ></Button>
+                <TextBlock  Text="{Binding AmountCart }"  Grid.Column="1"  Name="amountInCartTextBox" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Button  x:Name="minuse" Content="-" Grid.Column="0" FontSize="20" IsEnabled="{Binding AmountCart, Converter={StaticResource MinAmountToTrue}}" Click="minuse_Click" Background="#FFFFC13B" ></Button>
 
             </Grid>
 
-            <Button Grid.Row="7" x:Name="addCart" Content="Add to cart" IsEnabled="{Binding AmountCart, Converter={StaticResource ZeroToFalse}}" Visibility="{Binding AmountCart, Converter={StaticResource ZeroToVisible} , Mode=OneTime}" Click="addCart_Click"/>
-            <Button Grid.Row="7" x:Name="updateCart" Content="update" Visibility="{Binding AmountCart, Converter={StaticResource ZeroToHidden} , Mode=OneTime}" Click="updateCart_Click" />
-            <Button Grid.Row="7" Grid.Column="1" x:Name="deleteCart" Content="delete" Visibility="{Binding AmountCart, Converter={StaticResource ZeroToHidden} , Mode=OneTime}" Click="deleteCart_Click" />
+            <Button Grid.Row="7" x:Name="addCart" Content="Add to cart" IsEnabled="{Binding AmountCart, Converter={StaticResource ZeroToFalse}}" Visibility="{Binding AmountCart, Converter={StaticResource ZeroToVisible} , Mode=OneTime}" Click="addCart_Click" Background="#ff6e40" Grid.ColumnSpan="2"/>
+            <Button Grid.Row="7" x:Name="updateCart" Content="update" Visibility="{Binding AmountCart, Converter={StaticResource ZeroToHidden} , Mode=OneTime}" Click="updateCart_Click" Background="#FFFF6E40" />
+            <Button Grid.Row="7" Grid.Column="1" x:Name="deleteCart" Content="delete" Visibility="{Binding AmountCart, Converter={StaticResource ZeroToHidden} , Mode=OneTime}" Click="deleteCart_Click" Background="#FFFF6E40" />
         </Grid>
     </ScrollViewer>
 

@@ -7,18 +7,24 @@
         xmlns:local="clr-namespace:PL.Customer"
         mc:Ignorable="d"
         DataContext="{Binding  RelativeSource={RelativeSource Mode=Self} }"        
-    Title="Cart" Height="450" Width="800">
-    
+    Title="Cart" Height="768" Width="1366">
+
     <ScrollViewer>
-        <Grid>
+        <Grid Background="#FFF5F0E1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="771*"/>
+                <ColumnDefinition Width="8*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            <ListView Grid.Row="0"  x:Name="productListView" ItemsSource="{Binding Path=CartItems}" Visibility="{Binding CartItems , Converter={StaticResource arrayLengthToVisibility}}"
-                      FontSize="15"   Foreground="#FF101115">
+            <ListView Grid.Row="0"  x:Name="productListView" ItemsSource="{Binding CartItems}" Visibility="{Binding CartItems , Converter={StaticResource arrayLengthToVisibility}}"
+                      FontSize="15"   Foreground="#FF101115" Grid.ColumnSpan="4" Background="#FFF5F0E1">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn DisplayMemberBinding="{Binding Path=ProductID, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"   Header="ID" Width="100"/>
@@ -53,21 +59,22 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-            <Label Visibility="{Binding CartItems , Converter={StaticResource arrayLengthToVisibility}}" Grid.Row="1"  Content="total price"/>
-            <TextBlock  Text="{Binding MyTotalPrice}" Grid.Row="2"  Visibility="{Binding CartItems , Converter={StaticResource arrayLengthToVisibility}}"/>
-            <Grid Grid.Row="3">
+            <Label Visibility="{Binding CartItems , Converter={StaticResource arrayLengthToVisibility}}"  Content="total price" Grid.ColumnSpan="4" Margin="0,29,0,16" Grid.RowSpan="2" Grid.Row="1" FontSize="18" FontWeight="Bold"/>
+            <TextBlock  Text="{Binding MyTotalPrice}" Grid.Row="3"  Visibility="{Binding CartItems , Converter={StaticResource arrayLengthToVisibility}}" Grid.ColumnSpan="4" Margin="10,10,-10,-26" FontSize="18" FontWeight="Bold"/>
+            <Grid Grid.Row="3" Grid.ColumnSpan="4" Margin="291,73,-291,-86">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="90*"/>
+                    <ColumnDefinition Width="37*"/>
+                    <ColumnDefinition Width="53*"/>
+                    <ColumnDefinition Width="90*"/>
                 </Grid.ColumnDefinitions>
-                <Button Visibility="{Binding CartItems , Converter={StaticResource arrayLengthToVisibility}}" Content="confirm order" Grid.Column="1" Click="confirm_Click"/>
-                <Button Grid.Column="2" Name="back_to_catalog" Content=" ➜ " Click="back_to_catalog_Click" ></Button>
+                <Button Visibility="{Binding CartItems , Converter={StaticResource arrayLengthToVisibility}}" Content="confirm order" Click="confirm_Click" Background="#FFFF6E40" BorderBrush="{x:Null}" Margin="-285,32,274,-104" Grid.ColumnSpan="4" FontSize="24"/>
+                <Button Grid.Column="3" Name="back_to_catalog" Content=" ➜ " Click="back_to_catalog_Click" Background="#FFFF6E40" Margin="0,-474,294,429" HorizontalAlignment="Right" Width="130" FontSize="36" FontWeight="Bold" BorderBrush="{x:Null}" />
 
             </Grid>
-            <local:UserDetails x:Name="userDetails" Visibility="Hidden" ></local:UserDetails>
-            <TextBlock  Visibility="{Binding CartItems.Count , Converter={StaticResource ZeroToVisible}}"  Text="העגלה שלכם עדיין ריקה" Margin="170,70,170,150" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="35" />
-            <TextBlock Visibility="{Binding CartItems.Count , Converter={StaticResource ZeroToVisible}}"  Text="🛒" Foreground="#FF9AF7D3" FontSize="100" Margin="180,200,180,80" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Grid>
+            <local:UserDetails x:Name="userDetails" Visibility="Hidden" Grid.ColumnSpan="4" ></local:UserDetails>
+            <TextBlock  Visibility="{Binding CartItems.Count , Converter={StaticResource ZeroToVisible}}"  Text="העגלה שלכם עדיין ריקה" Margin="494,104,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="35" Foreground="#FFFF6E40" />
+            <TextBlock Visibility="{Binding CartItems.Count , Converter={StaticResource ZeroToVisible}}"  Text="🛒" Foreground="#FF1E3D59" FontSize="100" Margin="606,175,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        </Grid>
     </ScrollViewer>
 </Window>

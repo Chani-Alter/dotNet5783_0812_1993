@@ -6,8 +6,21 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         DataContext="{Binding ProductData, RelativeSource={RelativeSource Mode=Self} }" 
-        Title="ProductWindow" Height="450" Width="800">
-    <Grid  Background="#FF9AF7D3">
+        Title="ProductWindow" Height="768" Width="1366">
+    <Window.Resources>
+        <Style x:Key="labels" TargetType="Label" >
+            <Setter Property="Background" Value="#1e3d59" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="HorizontalContentAlignment" Value="center" />
+            <Setter Property="VerticalContentAlignment" Value="center" />
+            <Setter Property="BorderBrush" Value="#FFFFC13B" />
+            <Setter Property="BorderThickness" Value="0,2,0,0" />
+
+        </Style>
+    </Window.Resources>
+
+    <Grid  Background="#f5f0e1">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -15,36 +28,38 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <!--<RowDefinition Height="*"/>-->
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions >
-        <Button  Name="back_to_parent" Content=" ➜ " Click="back_to_parent_Click" ></Button>
+            <ColumnDefinition Width="0.33*"/>
+            <ColumnDefinition Width="0.33*"/>
+            <ColumnDefinition Width="0.33*"/>
 
-        <Label Grid.Row="1" Grid.Column="0" Name="idLabel" Content="ID"  ></Label>
-        <TextBox Text="{Binding ID ,Converter={StaticResource ZeroIntToEmptyString}}" MaxLength="6"  Grid.Row="1" Grid.Column="1" Name="idTextBox"  PreviewKeyDown="idTextBox_PreviewKeyDown" ></TextBox>
-        
-        <Label Grid.Row="2" Grid.Column="0" Name="nameLabel" Content="name"  ></Label>
-        <TextBox Text="{Binding Name}" Grid.Row="2" Grid.Column="2" Name="nameTextBox"  ></TextBox>
-        
-        <Label Grid.Row="3" Grid.Column="0" Name="priceLabel" Content="price"  ></Label>
-        <TextBox Text="{Binding Price ,Converter={StaticResource ZeroDoubleToEmptyString}}" Grid.Row="3" Grid.Column="1" Name="priceTextBox" PreviewKeyDown="priceTextBox_PreviewKeyDown"></TextBox>
-        
-        <Label Grid.Row="4" Grid.Column="0" Name="categoryLabel" Content="category"  ></Label>
-        <ComboBox ItemsSource="{Binding Source={StaticResource Categorys} }" SelectedItem="{Binding Category }" Grid.Row="4" Grid.Column="1" Name="categoryComboBox" Height="72" Margin="0,72,0,0" Grid.RowSpan="2" VerticalAlignment="Top"  >
+        </Grid.ColumnDefinitions >
+        <Button  Name="back_to_parent" Content=" ➜ " Click="back_to_parent_Click" Grid.Row="5" Background="#ffc13b" Grid.Column="2"></Button>
+
+        <Label Style="{StaticResource labels}" Grid.Row="0" Grid.Column="0" Name="idLabel" Content="ID" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="#FFFFC13B" BorderThickness="0,2,0,0"  />
+        <TextBox Text="{Binding ID ,Converter={StaticResource ZeroIntToEmptyString}}" MaxLength="6"  Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"  Name="idTextBox"  PreviewKeyDown="idTextBox_PreviewKeyDown" Background="#FFF5F0E1" ></TextBox>
+
+        <Label Style="{StaticResource labels}" Grid.Row="1" Grid.Column="0" Name="nameLabel" Content="name"  ></Label>
+        <TextBox Text="{Binding Name}" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Name="nameTextBox" Background="#FFF5F0E1"  ></TextBox>
+
+        <Label Style="{StaticResource labels}" Grid.Row="2" Grid.Column="0" Name="priceLabel" Content="price"  ></Label>
+        <TextBox Text="{Binding Price ,Converter={StaticResource ZeroDoubleToEmptyString}}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Name="priceTextBox" PreviewKeyDown="priceTextBox_PreviewKeyDown" Background="#FFF5F0E1"></TextBox>
+
+        <Label Style="{StaticResource labels}" Grid.Row="3" Grid.Column="0" Name="categoryLabel" Content="category"  ></Label>
+        <ComboBox ItemsSource="{Binding Source={StaticResource Categorys} }" SelectedItem="{Binding Category }" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Name="categoryComboBox" Height="72" Margin="0,72,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Background="#f5f0e1" >
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text , Converter={StaticResource AllToHidden}}" Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        
-        <Label Grid.Row="5" Grid.Column="0" Name="InStockLabel" Content="in stock"  ></Label>
-        <TextBox  Text="{Binding InStock }" Grid.Row="5" Grid.Column="1" Name="InStockTextBox" PreviewKeyDown="InStockTextBox_PreviewKeyDown"></TextBox>
 
-        <Button  Name="addBtn" Content="Add"  Visibility="{Binding ID , Mode=OneTime , Converter={StaticResource ZeroToVisible}}" Grid.Row="6" Grid.Column="1" Click="addBtn_Click">
+        <Label Style="{StaticResource labels}" Grid.Row="4" Grid.Column="0" Name="InStockLabel" Content="in stock"  ></Label>
+        <TextBox  Text="{Binding InStock }" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Name="InStockTextBox" PreviewKeyDown="InStockTextBox_PreviewKeyDown" Background="#FFF5F0E1"></TextBox>
+
+        <Button  Name="addBtn" Content="Add"  Visibility="{Binding ID , Mode=OneTime , Converter={StaticResource ZeroToVisible}}" Grid.Row="5" Grid.Column="1" Background="#ffc13b" Click="addBtn_Click">
             <Button.IsEnabled>
                 <MultiBinding  Converter="{StaticResource TextLengthToTrue}">
                     <Binding ElementName="idTextBox" Path="Text" />
@@ -55,7 +70,7 @@
                 </MultiBinding>
             </Button.IsEnabled>
         </Button>
-        <Button Name="updateBtn" Content="Update"  Visibility="{Binding ID , Mode=OneTime , Converter={StaticResource ZeroToHidden}}" Grid.Row="6" Grid.Column="1" Click="updateBtn_Click" >
+        <Button Name="updateBtn" Content="Update"  Visibility="{Binding ID , Mode=OneTime , Converter={StaticResource ZeroToHidden}}" Grid.Row="5" Grid.Column="1" Background="#ffc13b" Click="updateBtn_Click" >
             <Button.IsEnabled>
                 <MultiBinding  Converter="{StaticResource TextLengthToTrue}">
                     <Binding ElementName="idTextBox" Path="Text" />
@@ -66,6 +81,6 @@
                 </MultiBinding>
             </Button.IsEnabled>
         </Button>
-        <Button Name="delete" Content="delete" Grid.Row="6" Grid.Column="0" Visibility="{Binding ID , Mode=OneTime, Converter={StaticResource ZeroToHidden}}" Click="delete_Click" ></Button>
+        <Button Name="delete" Content="delete" Grid.Row="5" Grid.Column="0" Background="#ffc13b"  Visibility="{Binding ID , Mode=OneTime, Converter={StaticResource ZeroToHidden}}" Click="delete_Click" ></Button>
     </Grid>
 </Window>

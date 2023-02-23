@@ -6,9 +6,18 @@
         xmlns:local="clr-namespace:PL.Customer"
         mc:Ignorable="d"
         DataContext="{Binding  RelativeSource={RelativeSource Mode=Self} }"        
-        Title="Catalog" Height="450" Width="800">
+        Title="Catalog" Height="768" Width="1366">
+    <Window.Resources>
+        <Style x:Key="categoryButtons" TargetType="Button" >
+            <Setter Property="Background" Value="#1e3d59" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="BorderBrush" Value="#ffc13b" />
+        </Style>
+    </Window.Resources>
+
     <ScrollViewer>
-        <Grid>
+        <Grid Background="#FFF5F0E1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="100"/>
                 <RowDefinition Height="auto"/>
@@ -23,16 +32,17 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Content="Laptop"  Click="category_click" />
-            <Button Grid.Column="1" Content="Desktop Computer" Click="category_click" />
-            <Button Grid.Column="2" Content="Screens" Click="category_click" />
-            <Button Grid.Column="3" Content="Peripheral Equipment" Click="category_click" />
-            <Button Grid.Column="4" Content="All" Click="category_click" />
-            <Button Grid.Column="5" Content="Popular" Click="Popular_click" />
-            <Button Grid.Column="6" Content="sales" Click="sales_click" />
-            <Button Grid.Column="7" Content="Cart" Click="cart_Click" />
-            <ListView Grid.Row="1" Grid.ColumnSpan="8" x:Name="productListView" ItemsSource="{Binding Path=ProductsCatalog}"   MouseDoubleClick="productListView_MouseDoubleClick" 
+            <Button Style="{StaticResource categoryButtons}"  Grid.Column="0" Content="Laptop"  Click="category_click" />
+            <Button Style="{StaticResource categoryButtons}" Grid.Column="1" Content="Desktop&#xD;&#xA; Computer" Click="category_click" />
+            <Button Style="{StaticResource categoryButtons}" Grid.Column="2" Content="Screens" Click="category_click" />
+            <Button Style="{StaticResource categoryButtons}" Grid.Column="3" Content="Peripheral Equipment" Click="category_click" />
+            <Button Style="{StaticResource categoryButtons}" Grid.Column="4" Content="All" Click="category_click" />
+            <Button Style="{StaticResource categoryButtons}" Grid.Column="5" Content="Popular" Click="Popular_click" />
+            <Button Style="{StaticResource categoryButtons}" Grid.Column="6" Content="sales" Click="sales_click" />
+            <Button Style="{StaticResource categoryButtons}" Grid.Column="7" Content="🛒" Click="cart_Click" FontSize="36" FontWeight="Bold" />
+            <ListView Grid.Row="1" Grid.ColumnSpan="9" x:Name="productListView" ItemsSource="{Binding Path=ProductsCatalog}"   MouseDoubleClick="productListView_MouseDoubleClick" Background="#f5f0e1"
                       FontSize="15"   Foreground="#FF101115">
                 <ListView.View>
                     <GridView>
@@ -40,7 +50,7 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-            <Button Grid.Column="8" Name="back_to_parent" Content=" ➜ " Click="back_to_parent_Click" ></Button>
+            <Button Style="{StaticResource categoryButtons}" Grid.Column="8" Name="back_to_parent" Content=" ➜ " Click="back_to_parent_Click" FontSize="36" ></Button>
         </Grid>
     </ScrollViewer>
 </Window>
