@@ -9,6 +9,7 @@ namespace BlImplementation;
 internal class Cart : ICart
 {
     #region PUBLIC MEMBERS
+
     /// <summary>
     ///Adding product to the cart
     /// </summary>
@@ -51,6 +52,10 @@ internal class Cart : ICart
             return cart;
         }
         catch (DO.DoesNotExistedDalException ex)
+        {
+            throw new DoesNotExistedBlException("product dosent exsit", ex);
+        }
+        catch(DO.XMLFileNullExeption ex)
         {
             throw new DoesNotExistedBlException("product dosent exsit", ex);
         }
@@ -113,6 +118,11 @@ internal class Cart : ICart
         {
             throw new DoesNotExistedBlException("product dosent exsit", ex);
         }
+        catch (DO.XMLFileNullExeption ex)
+        {
+            throw new DoesNotExistedBlException("product dosent exsit", ex);
+        }
+
     }
 
 
@@ -197,6 +207,11 @@ internal class Cart : ICart
         {
             throw new DoesNotExistedBlException($"{ex.EntityName} dosent exsit", ex);
         }
+        catch (DO.XMLFileNullExeption ex)
+        {
+            throw new DoesNotExistedBlException("product dosent exsit", ex);
+        }
+
     }
 
     #endregion

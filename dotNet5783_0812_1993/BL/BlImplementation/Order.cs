@@ -39,6 +39,11 @@ internal class Order : BlApi.IOrder
         {
             throw new DoesNotExistedBlException("order doesnot exist", ex);
         }
+        catch (DO.XMLFileNullExeption ex)
+        {
+            throw new DoesNotExistedBlException("order dosent exsit", ex);
+        }
+
     }
 
 
@@ -60,6 +65,11 @@ internal class Order : BlApi.IOrder
         {
             throw new DoesNotExistedBlException("order doesnot exist", ex);
         }
+        catch (DO.XMLFileNullExeption ex)
+        {
+            throw new DoesNotExistedBlException("order dosent exsit", ex);
+        }
+
     }
 
 
@@ -92,6 +102,10 @@ internal class Order : BlApi.IOrder
         catch (DO.DoesNotExistedDalException ex)
         {
             throw new DoesNotExistedBlException("order does not exist", ex);
+        }
+        catch (DO.XMLFileNullExeption ex)
+        {
+            throw new DoesNotExistedBlException("order dosent exsit", ex);
         }
 
     }
@@ -133,7 +147,10 @@ internal class Order : BlApi.IOrder
         {
             throw new DoesNotExistedBlException("order does not exist", ex);
         }
-
+        catch (DO.XMLFileNullExeption ex)
+        {
+            throw new DoesNotExistedBlException("order dosent exsit", ex);
+        }
     }
 
 
@@ -170,6 +187,11 @@ internal class Order : BlApi.IOrder
         {
             throw new DoesNotExistedBlException("order doesnot exist", ex);
         }
+        catch (DO.XMLFileNullExeption ex)
+        {
+            throw new DoesNotExistedBlException("order dosent exsit", ex);
+        }
+
     }
 
 
@@ -210,6 +232,11 @@ internal class Order : BlApi.IOrder
             {
                 throw new UpdateErrorBlException($"{ex.EntityName} update fails", ex);
             }
+            catch (DO.XMLFileNullExeption ex)
+            {
+                throw new UpdateErrorBlException($"update fails", ex);
+            }
+
 
             if (amount == 0)
             {
@@ -225,7 +252,13 @@ internal class Order : BlApi.IOrder
         {
             throw new DoesNotExistedBlException($"{ex.EntityName} does not exist", ex);
         }
+        catch (DO.XMLFileNullExeption ex)
+        {
+            throw new DoesNotExistedBlException("order dosent exsit", ex);
+        }
+
     }
+
     #endregion
 
     #region PRIVATE MEMMBER
@@ -281,7 +314,10 @@ internal class Order : BlApi.IOrder
             throw new DoesNotExistedBlException("order items doesnot exist", ex);
 
         }
-
+        catch (DO.XMLFileNullExeption ex)
+        {
+            throw new DoesNotExistedBlException("order dosent exsit", ex);
+        }
     }
 
     #endregion
