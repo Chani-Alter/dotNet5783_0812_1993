@@ -1,7 +1,7 @@
 ﻿using DO;
 using DalApi;
 
-//namespace Dal;
+namespace Dal;
 
 /// <summary>
 /// A department that performs operations: 
@@ -12,7 +12,7 @@ internal class DalOrder : IOrder
     #region PUBLIC MEMBERS
 
     /// <summary>
-    /// add a order to the order array
+    /// add a order to the order file
     /// </summary>
     /// <param name="order">the new order</param>
     /// <returns>the insert new order id</returns>
@@ -27,16 +27,16 @@ internal class DalOrder : IOrder
         return order.ID;
     }
 
-
     /// <summary>
     /// get list of orders by condition
     /// </summary>
-    /// <returns>an array of orders</returns>
+    /// <returns>colection of orders</returns>
     public IEnumerable<Order?> GetList(Func<Order?, bool>? predicate)
     {
+        List<Order?> orderList = XmlTools.LoadListFromXmlSerializer<Order>(entityName);
         if (predicate == null)
-            return OrderList.Select(order => order);
-        return OrderList.Where(predicate);
+            return orderList.Select(order => order);
+        return orderList.Where(predicate);
     }
 
     /// <summary>
@@ -47,7 +47,9 @@ internal class DalOrder : IOrder
     /// <exception cref="DoesNotExistedDalException">if the order does not exist</exception>
     public Order GetByCondition(Func<Order?, bool> predicate)
     {
-        return OrderList.FirstOrDefault(predicate) ??
+        List<Order?> orderList = XmlTools.LoadListFromXmlSerializer<Order>(entityName);
+
+        return orderList.FirstOrDefault(predicate) ??
             throw new DoesNotExistedDalException("There is no order that matches the condition");
     }
 
@@ -58,14 +60,18 @@ internal class DalOrder : IOrder
     /// <exception cref="Exception">if the order didoes notdnt exist</exception>
     public void Delete(int id)
     {
-        var result = OrderList.FirstOrDefault(ord => ord?.ID == id);
+        List<Order?> orderList = XmlTools.LoadListFromXmlSerializer<Order>(entityName);
 
-//        if (result == null)
-//            throw new DoesNotExistedDalException(id, "order", "order is not exist");
+        var result = orderList.FirstOrDefault(ord => ord?.ID == id);
 
-        OrderList.Remove(result);
+        if (result == null)
+            throw new DoesNotExistedDalException(id, "order", "order is not exist");
+
+        orderList.Remove(result);
+
+        XmlTools.SaveListForXmlSerializer(orderList, entityName);
+
     }
-
 
     /// <summary>
     /// update an order
@@ -74,13 +80,26 @@ internal class DalOrder : IOrder
     /// <exception cref="Exception">if the order doesnt exist</exception>
     public void Update(Order order)
     {
-        int index = OrderList.FindIndex(ord => ord?.ID == order.ID);
+        List<Order?> orderList = XmlTools.LoadListFromXmlSerializer<Order>(entityName);
+
+        int index = orderList.FindIndex(ord => ord?.ID == order.ID);
         if (index == -1)
             throw new DoesNotExistedDalException(order.ID, "order", "order is not exist");
 
-        OrderList[index] = order;
+        orderList[index] = order;
+        XmlTools.SaveListForXmlSerializer(orderList, entityName);
 
-//    }
+    }
 
     #endregion
+
+    #region PRIVATE MEMBER
+
+    /// <summary>
+    /// the entity name 
+    /// </summary>
+    const string entityName = @"Order";
+
+    #endregion
+
 }
