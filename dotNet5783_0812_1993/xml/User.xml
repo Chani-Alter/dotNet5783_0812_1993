@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfUser xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <User>
+    <ID>1</ID>
+    <CustomerName>Motti Weiss</CustomerName>
+    <Password>a123a456</Password>
+    <CustomerEmail>MottiWeiss@gmail.com</CustomerEmail>
+    <CustomerAdress>Chazon Ish 3 Beit Shemesh</CustomerAdress>
+    <IsAdmin>true</IsAdmin>
+  </User>
+  <User>
+    <ID>2</ID>
+    <CustomerName>Moshe Feld</CustomerName>
+    <Password>b123b456</Password>
+    <CustomerEmail>MosheFeld@gmail.com</CustomerEmail>
+    <CustomerAdress>Rabbi Akiva 170 Bnei Brak</CustomerAdress>
+    <IsAdmin>false</IsAdmin>
+  </User>
+  <User>
+    <ID>3</ID>
+    <CustomerName>Itzik Orlev</CustomerName>
+    <Password>c123c456</Password>
+    <CustomerEmail>ItzikOrlev@gmail.com</CustomerEmail>
+    <CustomerAdress>Hakalanit 17 herzelia</CustomerAdress>
+    <IsAdmin>false</IsAdmin>
+  </User>
+  <User>
+    <ID>4</ID>
+    <CustomerName>Ruli Dikman</CustomerName>
+    <Password>d123d456</Password>
+    <CustomerEmail>RuliDikman@gmail.com</CustomerEmail>
+    <CustomerAdress>Haturim 6 Jerusalem</CustomerAdress>
+    <IsAdmin>false</IsAdmin>
+  </User>
+  <User>
+    <ID>5</ID>
+    <CustomerName>Ari Hill</CustomerName>
+    <Password>e123e456</Password>
+    <CustomerEmail>AriHill@gmail.com</CustomerEmail>
+    <CustomerAdress>Malchei Israel 40 Jerusalem</CustomerAdress>
+    <IsAdmin>false</IsAdmin>
+  </User>
+  <User>
+    <ID>6</ID>
+    <CustomerName>Shuli Rand</CustomerName>
+    <Password>ff12ff34</Password>
+    <CustomerEmail>ShuliRand@gmail.com</CustomerEmail>
+    <CustomerAdress>miron 20 Bnei Brak</CustomerAdress>
+    <IsAdmin>false</IsAdmin>
+  </User>
+  <User>
+    <ID>7</ID>
+    <CustomerName>Ishay Ribo</CustomerName>
+    <Password>gg12gg45</Password>
+    <CustomerEmail>IshayRibo@gmail.com</CustomerEmail>
+    <CustomerAdress>Hameiri 4 Jerusalem</CustomerAdress>
+    <IsAdmin>false</IsAdmin>
+  </User>
+  <User>
+    <ID>8</ID>
+    <CustomerName>Beri Weber</CustomerName>
+    <Password>abcdefgh</Password>
+    <CustomerEmail>BeriWeber@gmail.com</CustomerEmail>
+    <CustomerAdress>begin 72 Naaria</CustomerAdress>
+    <IsAdmin>false</IsAdmin>
+  </User>
+  <User>
+    <ID>9</ID>
+    <CustomerName>Simcha Friedman</CustomerName>
+    <Password>123ert</Password>
+    <CustomerEmail>SimchaFriedman@gmail.com</CustomerEmail>
+    <CustomerAdress>hagefen 22 Kfar Chabad</CustomerAdress>
+    <IsAdmin>false</IsAdmin>
+  </User>
+  <User>
+    <ID>10</ID>
+    <CustomerName>Avraam Fried</CustomerName>
+    <Password>e1234567</Password>
+    <CustomerEmail>AvraamFried@gmail.com</CustomerEmail>
+    <CustomerAdress>hanurit 7 Ashdod</CustomerAdress>
+    <IsAdmin>false</IsAdmin>
+  </User>
+  <User>
+    <ID>11</ID>
+    <CustomerName>Mordechai Ben David</CustomerName>
+    <Password>ooo000oo</Password>
+    <CustomerEmail>MordechaiBenDavid@gmail.com</CustomerEmail>
+    <CustomerAdress>Shamgar 20 Jerusalem</CustomerAdress>
+    <IsAdmin>false</IsAdmin>
+  </User>
+  <User>
+    <ID>12</ID>
+    <CustomerName>Yaakov Shwekey</CustomerName>
+    <Password>eo34oe56</Password>
+    <CustomerEmail>YaakovShwekey@gmail.com</CustomerEmail>
+    <CustomerAdress>Pnei Menachem 1 Petach Tikwa</CustomerAdress>
+    <IsAdmin>false</IsAdmin>
+  </User>
+  <User>
+    <ID>13</ID>
+    <CustomerName>Naftali Kempeh</CustomerName>
+    <Password>odf87609</Password>
+    <CustomerEmail>NaftaliKempeh@gmail.com</CustomerEmail>
+    <CustomerAdress>Hadekel 16 Tel Aviv</CustomerAdress>
+    <IsAdmin>false</IsAdmin>
+  </User>
+</ArrayOfUser>

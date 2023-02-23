@@ -1,7 +1,5 @@
 ﻿using DO;
 using DalApi;
-using System.Xml.Linq;
-using System.Reflection;
 
 namespace Dal;
 
@@ -23,6 +21,9 @@ internal class DalOrder : IOrder
         List<Order?> orderList = XmlTools.LoadListFromXmlSerializer<Order>(entityName);
         order.ID = XmlTools.NewID(entityName);
         orderList.Add(order);
+
+        XmlTools.SaveListForXmlSerializer(orderList, entityName);
+
         return order.ID;
     }
 

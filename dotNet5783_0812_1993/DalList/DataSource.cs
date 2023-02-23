@@ -25,6 +25,11 @@ static public class DataSource
     /// </summary>
     private static int orderItemId = s_startOrderItemId;
 
+    private static int cartItemId = s_startOrderItemId;
+    private static int userId = s_startOrderItemId;
+    private static int cartId = s_startOrderItemId;
+
+
     /// <summary>
     /// the next order id
     /// </summary>
@@ -38,6 +43,10 @@ static public class DataSource
         initProductArray();
         initOrderArray();
         initOrderItemArray();
+        initUserArray();
+        initCartArray();
+        initCartItemArray();
+
     }
 
     /// <summary>
@@ -164,6 +173,77 @@ static public class DataSource
         }
     }
 
+    static private void initUserArray()
+    {
+        String[] Passwordes = new string[]{
+        "a123a456","b123b456","c123c456","d123d456","e123e456","ff12ff34","gg12gg45","abcdefgh","123ert","e1234567","ooo000oo","eo34oe56","odf87609"
+        };
+
+
+        String[] CustomerName = new String[13] {"Motti Weiss","Moshe Feld","Itzik Orlev","Ruli Dikman",
+        "Ari Hill","Shuli Rand","Ishay Ribo","Beri Weber","Simcha Friedman","Avraam Fried","Mordechai Ben David",
+        "Yaakov Shwekey","Naftali Kempeh"
+        };
+        string[] CustomerEmail = new string[]
+        {
+            "MottiWeiss@gmail.com","MosheFeld@gmail.com","ItzikOrlev@gmail.com","RuliDikman@gmail.com",
+        "AriHill@gmail.com","ShuliRand@gmail.com","IshayRibo@gmail.com","BeriWeber@gmail.com",
+            "SimchaFriedman@gmail.com","AvraamFried@gmail.com","MordechaiBenDavid@gmail.com",
+        "YaakovShwekey@gmail.com","NaftaliKempeh@gmail.com"
+        };
+        string[] address = new string[13]
+        {
+            "Chazon Ish 3 Beit Shemesh","Rabbi Akiva 170 Bnei Brak","Hakalanit 17 herzelia","Haturim 6 Jerusalem" ,
+            "Malchei Israel 40 Jerusalem","miron 20 Bnei Brak","Hameiri 4 Jerusalem","begin 72 Naaria",
+            "hagefen 22 Kfar Chabad", "hanurit 7 Ashdod","Shamgar 20 Jerusalem","Pnei Menachem 1 Petach Tikwa",
+            "Hadekel 16 Tel Aviv"
+        };
+
+        UserList.Add(new User { ID = UserId, CustomerName = CustomerName[0], CustomerEmail = CustomerEmail[0], CustomerAdress = address[0], Password = Passwordes[0], IsAdmin = true });
+
+        for (int i = 1; i < 13; i++)
+            UserList.Add(new User { ID = UserId, CustomerName = CustomerName[i % 13], CustomerEmail = CustomerEmail[i % 13], CustomerAdress = address[i % 13], Password = Passwordes[i % 13] , IsAdmin=false});
+    }
+
+
+    static private void initCartArray()
+    {
+        for (int i = 0; i < 12; i++)
+            CartList.Add(new Cart { ID = CartId,UserID=i});
+    }
+    static private void initCartItemArray()
+    {
+        foreach (Cart? c in CartList)
+        {
+            int randA = randNum.Next(9);
+            double price = new double();
+            double price2 = new double();
+            foreach (Product? p in ProductList)
+            {
+                if (p?.ID == ProductList[randA]?.ID)
+                {
+                    price = p?.Price ?? 0;
+                    break;
+                }
+            }
+            int randB;
+            do
+                randB = randNum.Next(9);
+            while (randA == randB);
+            foreach (Product? p in ProductList)
+            {
+                if (p?.ID == ProductList[randB]?.ID)
+                {
+                    price2 = p?.Price ?? 0;
+                    break;
+                }
+            }
+            CartItemList.Add(new CartItem { ID = CartItemId, CartID = c?.ID ?? 0, ProductID = ProductList[randA]?.ID ?? 0, Price = price, Amount = randNum.Next(1, 5) });
+            CartItemList.Add(new CartItem { ID = CartItemId, CartID = c?.ID ?? 0, ProductID = ProductList[randB]?.ID ?? 0, Price = price2, Amount = randNum.Next(1, 5) });
+
+        }
+    }
+
     #endregion
 
     #region INTERNAL MEMBERS
@@ -178,6 +258,10 @@ static public class DataSource
     /// the get propety of the order item id
     /// </summary>
     internal static int OrderItemId { get => ++orderItemId; }
+    internal static int CartItemId { get => ++cartItemId; }
+    internal static int UserId { get => ++userId; }
+
+    internal static int CartId { get => ++cartId; }
 
     /// <summary>
     /// the product array
@@ -193,6 +277,12 @@ static public class DataSource
     /// the order items array
     /// </summary>
     public static List<OrderItem?> OrderItemList = new List<OrderItem?>();
+
+    public static List<User?> UserList = new List<User?>();
+
+    public static List<Cart?> CartList= new List<Cart?>();
+
+    public static List<CartItem?> CartItemList = new List<CartItem?>();    
 
     /// <summary>
     /// the static constractor how caled the s_Initialize function

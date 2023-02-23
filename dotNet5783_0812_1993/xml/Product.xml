@@ -5,14 +5,14 @@
     <Name>Dell Vostro</Name>
     <Category>Laptop</Category>
     <Price>4500</Price>
-    <InStock>148</InStock>
+    <InStock>150</InStock>
   </Product>
   <Product>
-    <ID>885632</ID>
-    <Name>Lenovo ThinkBook</Name>
+    <ID>958742</ID>
+    <Name>Lenovo IdeaPad</Name>
     <Category>Laptop</Category>
-    <Price>3800</Price>
-    <InStock>180</InStock>
+    <Price>3400</Price>
+    <InStock>120</InStock>
   </Product>
   <Product>
     <ID>125412</ID>
@@ -64,10 +64,10 @@
     <InStock>523</InStock>
   </Product>
   <Product>
-    <ID>123567</ID>
-    <Name>gfggf</Name>
-    <Price>1122</Price>
-    <Category>Screens</Category>
+    <ID>885632</ID>
+    <Name>Lenovo ThinkBook</Name>
+    <Category>Laptop</Category>
+    <Price>3800</Price>
     <InStock>0</InStock>
   </Product>
 </ArrayOfProduct>

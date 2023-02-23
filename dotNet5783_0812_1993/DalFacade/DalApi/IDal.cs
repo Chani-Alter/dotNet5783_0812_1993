@@ -20,4 +20,10 @@ public interface IDal
     /// A property that returns the IProduct entity
     /// </summary>
     public IProduct Product { get; }
+
+    public IUser User { get; } 
+    
+    public ICart Cart { get; }
+
+    public ICartItem CartItem { get; }
 }

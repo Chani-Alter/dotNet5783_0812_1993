@@ -28,11 +28,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{C97BADBE-9EB5-41CA-9595-1A1EC7617BD2}"
 	ProjectSection(SolutionItems) = preProject
+		xml\Cart.xml = xml\Cart.xml
+		xml\CartItem.xml = xml\CartItem.xml
 		xml\config.xml = xml\config.xml
 		xml\dal-config.xml = xml\dal-config.xml
 		xml\Order.xml = xml\Order.xml
 		xml\OrderItem.xml = xml\OrderItem.xml
 		xml\Product.xml = xml\Product.xml
+		xml\User.xml = xml\User.xml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalXml", "DalXml\DalXml.csproj", "{A1305BD1-AA59-407C-81DB-7831AA338CC4}"
