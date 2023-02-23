@@ -13,14 +13,14 @@ public partial class Product : Window
     /// <summary>
     /// A dependency property of the product data
     /// </summary>
-    public BO.ProductItem ProductData
+    public BO.ProductItem ProductCatalog
     {
-        get { return (BO.ProductItem)GetValue(ProductDataProperty); }
-        set { SetValue(ProductDataProperty, value); }
+        get { return (BO.ProductItem)GetValue(ProductCatalogProperty); }
+        set { SetValue(ProductCatalogProperty, value); }
     }
 
-    public static readonly DependencyProperty ProductDataProperty =
-        DependencyProperty.Register("ProductData", typeof(BO.ProductItem), typeof(Window), new PropertyMetadata(null));
+    public static readonly DependencyProperty ProductCatalogProperty =
+        DependencyProperty.Register("ProductCatalog", typeof(BO.ProductItem), typeof(Window), new PropertyMetadata(null));
 
     /// <summary>
     /// A depency property for the amount of the product in the cart
@@ -41,7 +41,7 @@ public partial class Product : Window
     /// <param name="catalog"></param>
     public Product(BO.ProductItem product, Catalog catalog)
     {
-        ProductData = (product == null) ? new() : product;
+        ProductCatalog = (product == null) ? new() : product;
         cart = catalog.Cart;
         myCatalog = catalog;
         amountInCart();
@@ -72,7 +72,7 @@ public partial class Product : Window
     /// </summary>
     private void amountInCart()
     {
-        var result = cart.Items?.FirstOrDefault(item => item.ProductID == ProductData.ID);
+        var result = cart.Items?.FirstOrDefault(item => item.ProductID == ProductCatalog.ID);
         AmountCart = (result == null) ? 0 : result.Amount;
 
     }
@@ -84,7 +84,7 @@ public partial class Product : Window
     /// <param name="e"></param>
     private void addCart_Click(object sender, RoutedEventArgs e)
     {
-        bl.cart.AddProductToCart(cart!, ProductData.ID, AmountCart);
+        bl.cart.AddProductToCart(cart!, ProductCatalog.ID, AmountCart);
         myCatalog.Activate();
         Close();
     }
@@ -134,7 +134,7 @@ public partial class Product : Window
     /// </summary>
     private void updateAmount()
     {
-        bl.cart.UpdateProductAmountInCart(cart!, ProductData.ID, AmountCart);
+        bl.cart.UpdateProductAmountInCart(cart!, ProductCatalog.ID, AmountCart);
         myCatalog.Activate();
         Close();
     }

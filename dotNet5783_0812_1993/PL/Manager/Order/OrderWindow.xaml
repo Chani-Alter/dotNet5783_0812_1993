@@ -128,7 +128,7 @@
             <Button Content="update order" Click="update_Status_Click" >
                 <Button.Visibility>
                     <MultiBinding  Converter="{StaticResource convertDateAndStatuseManagerToVisibility}">
-                        <Binding Path="OrderData.ShippingDate" />
+                        <Binding Path="OrderData.DeliveryDate" />
                         <Binding Path="StatusPage" />
                     </MultiBinding>
                 </Button.Visibility>

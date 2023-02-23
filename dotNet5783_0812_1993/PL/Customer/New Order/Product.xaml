@@ -28,19 +28,19 @@
             <Button Grid.Column="1" Content=" ➜ " Background="#FFFF6E40" FontSize="29" Click="back_to_catalog_Click" BorderBrush="#FF9AF7D3" HorizontalAlignment="Left" Margin="909,0,0,0" Width="170"/>
             
             <Label Grid.Row="1" Grid.Column="0" Name="idLabel" Content="ID" BorderBrush="#FFF5F0E1" BorderThickness="1,1,0,1" Background="#FF1E3D59"  ></Label>
-            <TextBlock  Text="{Binding ProductData.ID}" Grid.Row="1" Grid.Column="1" Name="idTextBox" Height="54" VerticalAlignment="Center" />
+            <TextBlock  Text="{Binding ProductCatalog.ID}" Grid.Row="1" Grid.Column="1" Name="idTextBox" Height="54" VerticalAlignment="Center" />
 
             <Label Grid.Row="2" Grid.Column="0" Name="nameLabel" Content="name" BorderBrush="#FFF5F0E1" BorderThickness="1,1,0,1" Background="#FF1E3D59" ></Label>
-            <TextBlock Text="{Binding ProductData.Name}" Grid.Row="2" Grid.Column="1" Name="nameTextBox" VerticalAlignment="Center"  />
+            <TextBlock Text="{Binding ProductCatalog.Name}" Grid.Row="2" Grid.Column="1" Name="nameTextBox" VerticalAlignment="Center"  />
 
             <Label Grid.Row="3" Grid.Column="0" Name="priceLabel" Content="price" BorderBrush="#FFF5F0E1" BorderThickness="1,1,0,1" Background="#FF1E3D59" ></Label>
-            <TextBlock Text="{Binding ProductData.Price}" Grid.Row="3" Grid.Column="1" Name="priceTextBox" VerticalAlignment="Center"></TextBlock>
+            <TextBlock Text="{Binding ProductCatalog.Price}" Grid.Row="3" Grid.Column="1" Name="priceTextBox" VerticalAlignment="Center"></TextBlock>
 
             <Label Grid.Row="4" Grid.Column="0" Name="categoryLabel" Content="category" BorderBrush="#FFF5F0E1" BorderThickness="1,1,0,1" Background="#FF1E3D59" ></Label>
-            <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding ProductData.Category}" VerticalAlignment="Center"></TextBlock>
+            <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding ProductCatalog.Category}" VerticalAlignment="Center"></TextBlock>
 
             <Label Grid.Row="5" Grid.Column="0" Name="InStockLabel" Content="in stock" BorderBrush="#FFF5F0E1" BorderThickness="1,1,0,1" Background="#FF1E3D59" ></Label>
-            <TextBlock  Text="{Binding ProductData.InStock }" Grid.Row="5" Grid.Column="1" Name="InStockTextBox" VerticalAlignment="Center"></TextBlock>
+            <TextBlock  Text="{Binding ProductCatalog.InStock }" Grid.Row="5" Grid.Column="1" Name="InStockTextBox" VerticalAlignment="Center"></TextBlock>
 
             <Label Grid.Row="6" Grid.Column="0" Name="amountInCartLabel" Content="Amount in Cart" BorderBrush="#FFF5F0E1" BorderThickness="1,1,1,1" Background="#FF1E3D59" ></Label>
             <Grid Grid.Row="6" Grid.Column="1">
@@ -54,7 +54,7 @@
                     <Button.IsEnabled>
                         <MultiBinding  Converter="{StaticResource MaxAmountToTrue}">
                             <Binding  Path="AmountCart" />
-                            <Binding Path="ProductData.Amount" />
+                            <Binding Path="ProductCatalog.Amount" />
                         </MultiBinding>
                     </Button.IsEnabled>
                 </Button>
