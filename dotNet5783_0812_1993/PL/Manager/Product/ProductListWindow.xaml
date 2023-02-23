@@ -8,13 +8,14 @@
         mc:Ignorable="d"
         Activated="Window_Activated" 
         DataContext="{Binding  RelativeSource={RelativeSource Mode=Self} }"        
-        Title="ProductListWindow" Height="640" Width="800">
-
-    <Grid Name="MainGrid" >
+        Title="ProductListWindow" Height="768" Width="1366">
+    <Grid  Name="MainGrid">
         <Grid.RowDefinitions>
-            <RowDefinition Height="40*"/>
-            <RowDefinition Height="500*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="0.1*"/>
+            <!--<RowDefinition Height="auto"/>-->
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="0.25*"/>
+            <RowDefinition Height="0.25*"/>
         </Grid.RowDefinitions>
         <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" VerticalAlignment="Stretch" Width="auto">
             <Grid.ColumnDefinitions>
@@ -22,28 +23,28 @@
                 <ColumnDefinition Width="391*"/>
                 <ColumnDefinition Width="9*"/>
             </Grid.ColumnDefinitions >
-            <ComboBox Name="categorySelector" SelectionChanged="CategorySelector_SelectionChanged" FontSize="17" Background="#FF17CEB9" Grid.Column="1" Grid.ColumnSpan="2"
-             ItemsSource="{Binding Source= {StaticResource Categorys}}" SelectedItem="{Binding Category }">
+            <ComboBox Name="categorySelector" SelectionChanged="CategorySelector_SelectionChanged" FontSize="17" Background="#ffc13b" Grid.Column="1" Grid.ColumnSpan="2"
+             ItemsSource="{Binding Source= {StaticResource Categorys}}" SelectedItem="{Binding Category }" Margin="0,0,0,62">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
                     </DataTemplate>
-                </ComboBox.ItemTemplate> 
+                </ComboBox.ItemTemplate>
             </ComboBox>
-            <Label Name="categoryLabel" Grid.Column="0" Content="category" Background="#FF17CEB9" FontSize="25" />
+            <Label Name="categoryLabel"  Grid.Column="0" Content="category" Background="#FFFFC13B" FontSize="25" Margin="0,0,0,62" />
         </Grid>
 
         <ListView x:Name="productListView" ItemsSource="{Binding Path=ProductsList }"   MouseDoubleClick="productListView_MouseDoubleClick" 
-                  Background="#FF9AF7D3" FontSize="15" Margin="0,46,0,86" Grid.RowSpan="2"  Foreground="#FF101115">
-            <ListView.View>
+                  Background="#f5f0e1" FontSize="15" Margin="0,63,0,224" Grid.RowSpan="4"  Foreground="#1e3d59">
+            <!--<ListView.View>
                 <GridView>
                     <GridViewColumn/>
                 </GridView>
-            </ListView.View>
+            </ListView.View>-->
         </ListView>
 
-        <Button Name="AddProductBtn" Grid.Row="1" Content="Add Product" Click="AddProductBtn_Click" Margin="0,492,0,0" Background="#FF17CEB9" />
-        <Button Grid.Row="2" Name="back_to_parent" Content=" ➜ " Click="back_to_parent_Click" ></Button>
+        <Button Name="AddProductBtn" Grid.Row="3" Content="Add Product" Click="AddProductBtn_Click" Margin="0,92,0,112" Background="#FFFFC13B" />
+        <Button Grid.Row="3" Name="back_to_parent" Content=" ➜ " Click="back_to_parent_Click" Margin="0,200,0,-1" BorderBrush="{x:Null}" Background="#FFFF6E40" FontSize="25" FontWeight="Bold" />
 
     </Grid>
 </Window>

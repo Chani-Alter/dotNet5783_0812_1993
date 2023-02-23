@@ -5,10 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid Background="#FF9AF7D3">
-        <Button Name="manager" FontSize="16" Cursor="Hand" FontWeight="Bold" Content="Manager" Background="#FF17CEB9" Margin="324,0,324,0" VerticalAlignment="Center"   Height="69" Width="152" Click="manager_Click"/>
-        <Button Name="orderTracking" FontSize="16" Cursor="Hand" FontWeight="Bold" Content="Order tracking" Background="#FF17CEB9"  Margin="324,96,324,0" VerticalAlignment="Top"  Height="68" Width="152" Click="orderTracking_Click"/>
-        <Button Name="newOrder" FontSize="16" Cursor="Hand" FontWeight="Bold" Content="New order" Background="#FF17CEB9"  Margin="0,166,0,100" VerticalAlignment="Bottom"  Height="69" Width="152" Click="newOrder_Click"/>
+        Title="MainWindow" Height="768" Width="1366"
+        >
+    <Window.Resources>
+        <Style x:Key="goldButtons" TargetType="Button" >
+            <Setter Property="Background" Value="#ffc13b" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="BorderBrush" Value="#ffc13b" />
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Images/background.png"/>
+        </Grid.Background>
+        <Button Name="manager" Style="{StaticResource goldButtons}"            FontSize="16"  Content="Manager"  Margin="286,38,431,0" VerticalAlignment="Top"   Height="41" Click="manager_Click" Width="83"/>
+        <Button Style="{StaticResource goldButtons}" Name="orderTracking" FontSize="16"  Content="Order tracking"  Margin="286,100,381,0" VerticalAlignment="Top" Click="orderTracking_Click" Foreground="#FF100F0F" Height="64" Width="133"/>
+        <Button Style="{StaticResource goldButtons}" Name="newOrder" FontSize="24"  Content="New order"  Margin="286,188,286,0" VerticalAlignment="Top"  Height="104" Click="newOrder_Click" Width="228"/>
     </Grid>
 </Window>

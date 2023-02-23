@@ -8,17 +8,17 @@
              DataContext="{Binding  RelativeSource={RelativeSource Mode=Self} }"       
  
     d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+    <Grid Background="#FFFFC13B">
         <Label Content="Name" FontSize="20" HorizontalAlignment="Left" Height="43" Margin="127,80,0,0" VerticalAlignment="Top" Width="71"/>
-        <TextBox Name="NameTxt" Text="{Binding CustomerName}" HorizontalAlignment="Left" Height="42" Margin="246,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="191"/>
+        <TextBox Name="NameTxt" Text="{Binding CustomerName}" HorizontalAlignment="Left" Height="42" Margin="246,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="191" Background="#FFF5F0E1"/>
 
         <Label Content="Email" FontSize="20" HorizontalAlignment="Left" Height="43" Margin="127,148,0,0" VerticalAlignment="Top" Width="71"/>
-        <TextBox Name="EmailTxt" Text="{Binding Email}" HorizontalAlignment="Left" Height="42" Margin="246,149,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="191"/>
+        <TextBox Name="EmailTxt" Text="{Binding Email}" HorizontalAlignment="Left" Height="42" Margin="246,149,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="191" Background="#FFF5F0E1"/>
 
         <Label Content="Address" FontSize="20" HorizontalAlignment="Left" Height="43" Margin="127,217,0,0" VerticalAlignment="Top" Width="85"/>
-        <TextBox Name="AddressTxt" Text="{Binding Adress}" HorizontalAlignment="Left" Height="42" Margin="246,218,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="191"/>
+        <TextBox Name="AddressTxt" Text="{Binding Adress}" HorizontalAlignment="Left" Height="42" Margin="246,218,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="191" Background="#FFF5F0E1"/>
 
-        <Button Content="save order" Name="saveBtn" HorizontalAlignment="Left" Height="30" Margin="299,319,0,0" VerticalAlignment="Top" Width="111" Click="saveBtn_Click">
+        <Button Content="save order" Name="saveBtn" HorizontalAlignment="Left" Height="30" Margin="299,319,0,0" VerticalAlignment="Top" Width="111" Click="saveBtn_Click" Background="#FFFF6E40">
             <Button.IsEnabled>
                 <MultiBinding  Converter="{StaticResource textBoxFullToTrue}">
                     <Binding ElementName="AddressTxt" Path="Text" />
