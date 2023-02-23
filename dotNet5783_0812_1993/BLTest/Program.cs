@@ -234,7 +234,7 @@ public class Program
                     Console.WriteLine("Enter amount of product: ");
                     readString = Console.ReadLine();
                     int.TryParse(readString, out readInt);
-                    orderItem = bl.Order.UpdateAmountOfOProductInOrder(orderId, productId, readInt);
+                    order = bl.Order.UpdateAmountOfOProductInOrder(orderId, productId, readInt);
                     break;
 
                 default:

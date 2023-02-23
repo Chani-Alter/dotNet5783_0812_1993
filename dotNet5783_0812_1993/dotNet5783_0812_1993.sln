@@ -30,12 +30,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{C97BADBE-9EB
 	ProjectSection(SolutionItems) = preProject
 		xml\config.xml = xml\config.xml
 		xml\dal-config.xml = xml\dal-config.xml
-		xml\orderItems.xml = xml\orderItems.xml
-		xml\orders.xml = xml\orders.xml
-		xml\products.xml = xml\products.xml
+		xml\Order.xml = xml\Order.xml
+		xml\OrderItem.xml = xml\OrderItem.xml
+		xml\Product.xml = xml\Product.xml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DalXml", "DalXml\DalXml.csproj", "{A1305BD1-AA59-407C-81DB-7831AA338CC4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalXml", "DalXml\DalXml.csproj", "{A1305BD1-AA59-407C-81DB-7831AA338CC4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InitializeXmlFiles", "InitializeXmlFiles\InitializeXmlFiles.csproj", "{98E56A2B-775D-4DC7-8AF4-3ECAF94550EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -143,6 +145,18 @@ Global
 		{A1305BD1-AA59-407C-81DB-7831AA338CC4}.Release|x64.Build.0 = Release|Any CPU
 		{A1305BD1-AA59-407C-81DB-7831AA338CC4}.Release|x86.ActiveCfg = Release|Any CPU
 		{A1305BD1-AA59-407C-81DB-7831AA338CC4}.Release|x86.Build.0 = Release|Any CPU
+		{98E56A2B-775D-4DC7-8AF4-3ECAF94550EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98E56A2B-775D-4DC7-8AF4-3ECAF94550EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98E56A2B-775D-4DC7-8AF4-3ECAF94550EE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{98E56A2B-775D-4DC7-8AF4-3ECAF94550EE}.Debug|x64.Build.0 = Debug|Any CPU
+		{98E56A2B-775D-4DC7-8AF4-3ECAF94550EE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{98E56A2B-775D-4DC7-8AF4-3ECAF94550EE}.Debug|x86.Build.0 = Debug|Any CPU
+		{98E56A2B-775D-4DC7-8AF4-3ECAF94550EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98E56A2B-775D-4DC7-8AF4-3ECAF94550EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98E56A2B-775D-4DC7-8AF4-3ECAF94550EE}.Release|x64.ActiveCfg = Release|Any CPU
+		{98E56A2B-775D-4DC7-8AF4-3ECAF94550EE}.Release|x64.Build.0 = Release|Any CPU
+		{98E56A2B-775D-4DC7-8AF4-3ECAF94550EE}.Release|x86.ActiveCfg = Release|Any CPU
+		{98E56A2B-775D-4DC7-8AF4-3ECAF94550EE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

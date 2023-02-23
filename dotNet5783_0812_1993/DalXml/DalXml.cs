@@ -31,11 +31,14 @@
 
 //    #region PRIVATE MEMBERS
 
-//    private static readonly object key = new();
+    /// <summary>
+    /// the Key for locking the get of the instance that 2 thred will not take it by the same time.
+    /// </summary>
+    private static readonly object key = new();
 
-//    private static IDal? instance;
+    private static IDal? instance;
 
-//    private DalXml() { }
+    private DalXml() { }
 
 //    #endregion
 //}

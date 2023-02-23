@@ -1,7 +1,7 @@
 ﻿using DO;
 namespace Dal;
 
-static class DataSource
+static public class DataSource
 {
     #region PRIVATE MEMBERS
 
@@ -182,17 +182,17 @@ static class DataSource
     /// <summary>
     /// the product array
     /// </summary>
-    internal static List<Product?> ProductList = new List<Product?>();
+    public static List<Product?> ProductList = new List<Product?>();
 
     /// <summary>
     /// the orders array
     /// </summary>
-    internal static List<Order?> OrderList = new List<Order?>();
+    public static List<Order?> OrderList = new List<Order?>();
 
     /// <summary>
     /// the order items array
     /// </summary>
-    internal static List<OrderItem?> OrderItemList = new List<OrderItem?>();
+    public static List<OrderItem?> OrderItemList = new List<OrderItem?>();
 
     /// <summary>
     /// the static constractor how caled the s_Initialize function

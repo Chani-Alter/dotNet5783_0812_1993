@@ -1,5 +1,4 @@
 ﻿using BO;
-using System.Data.SqlTypes;
 using IProduct = BlApi.IProduct;
 
 
@@ -53,6 +52,11 @@ internal class Product : IProduct
         {
             throw new DoesNotExistedBlException("product does not exist", ex);
         }
+        catch (DO.XMLFileNullExeption ex)
+        {
+            throw new DoesNotExistedBlException("product dosent exsit", ex);
+        }
+
     }
 
     /// <summary>
@@ -76,6 +80,11 @@ internal class Product : IProduct
         {
             throw new BLAlreadyExistException("product already exist", ex);
         }
+        catch (DO.XMLFileNullExeption ex)
+        {
+            throw new DoesNotExistedBlException("product file doesnt exsit", ex);
+        }
+
     }
 
     /// <summary>
@@ -100,6 +109,11 @@ internal class Product : IProduct
         {
             throw new DoesNotExistedBlException("prouct does not exist", ex);
         }
+        catch (DO.XMLFileNullExeption ex)
+        {
+            throw new DoesNotExistedBlException("product dosent exsit", ex);
+        }
+
     }
 
     /// <summary>
@@ -123,6 +137,11 @@ internal class Product : IProduct
         catch (DO.DoesNotExistedDalException ex)
         {
             throw new UpdateErrorBlException("product update fails", ex);
+        }
+        catch (DO.XMLFileNullExeption ex)
+        {
+            throw new UpdateErrorBlException("product update fails", ex);
+
         }
     }
 
@@ -159,6 +178,11 @@ internal class Product : IProduct
         {
             throw new DoesNotExistedBlException("product does not exist", ex);
         }
+        catch (DO.XMLFileNullExeption ex)
+        {
+            throw new DoesNotExistedBlException("product dosent exsit", ex);
+        }
+
 
     }
     public IEnumerable<ProductItem?> GetPopularProductListForCustomer()
