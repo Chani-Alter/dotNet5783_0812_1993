@@ -42,6 +42,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalXml", "DalXml\DalXml.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InitializeXmlFiles", "InitializeXmlFiles\InitializeXmlFiles.csproj", "{98E56A2B-775D-4DC7-8AF4-3ECAF94550EE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simulator", "Simulator\Simulator.csproj", "{EC46CC78-5BFD-4D56-8F38-C88CC7267343}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -160,6 +162,18 @@ Global
 		{98E56A2B-775D-4DC7-8AF4-3ECAF94550EE}.Release|x64.Build.0 = Release|Any CPU
 		{98E56A2B-775D-4DC7-8AF4-3ECAF94550EE}.Release|x86.ActiveCfg = Release|Any CPU
 		{98E56A2B-775D-4DC7-8AF4-3ECAF94550EE}.Release|x86.Build.0 = Release|Any CPU
+		{EC46CC78-5BFD-4D56-8F38-C88CC7267343}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC46CC78-5BFD-4D56-8F38-C88CC7267343}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC46CC78-5BFD-4D56-8F38-C88CC7267343}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{EC46CC78-5BFD-4D56-8F38-C88CC7267343}.Debug|x64.Build.0 = Debug|Any CPU
+		{EC46CC78-5BFD-4D56-8F38-C88CC7267343}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EC46CC78-5BFD-4D56-8F38-C88CC7267343}.Debug|x86.Build.0 = Debug|Any CPU
+		{EC46CC78-5BFD-4D56-8F38-C88CC7267343}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC46CC78-5BFD-4D56-8F38-C88CC7267343}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC46CC78-5BFD-4D56-8F38-C88CC7267343}.Release|x64.ActiveCfg = Release|Any CPU
+		{EC46CC78-5BFD-4D56-8F38-C88CC7267343}.Release|x64.Build.0 = Release|Any CPU
+		{EC46CC78-5BFD-4D56-8F38-C88CC7267343}.Release|x86.ActiveCfg = Release|Any CPU
+		{EC46CC78-5BFD-4D56-8F38-C88CC7267343}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

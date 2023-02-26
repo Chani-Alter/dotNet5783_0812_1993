@@ -1,5 +1,6 @@
 ﻿using DalApi;
 using DO;
+using System.Runtime.CompilerServices;
 
 namespace Dal;
 
@@ -11,6 +12,7 @@ internal class DalOrderItem : IOrderItem
 {
     #region PUBLIC MEMBERS
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// add a orderitem to the file
     /// </summary>
@@ -38,6 +40,7 @@ internal class DalOrderItem : IOrderItem
         return orderItem.ID;
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// get list of order items
     /// </summary>
@@ -51,6 +54,7 @@ internal class DalOrderItem : IOrderItem
         return orderItemList.Where(predicate);
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// get a spesific order item by condition
     /// </summary>
@@ -65,6 +69,7 @@ internal class DalOrderItem : IOrderItem
             throw new DoesNotExistedDalException("There is no order item that matches the condition");
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// delete a order item
     /// </summary>
@@ -84,7 +89,7 @@ internal class DalOrderItem : IOrderItem
 
     }
 
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// update an order item
     /// </summary>

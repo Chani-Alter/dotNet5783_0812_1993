@@ -1,8 +1,6 @@
 ﻿using DO;
 using DalApi;
-using System.Xml.Linq;
-using System.Reflection;
-
+using System.Runtime.CompilerServices;
 namespace Dal;
 
 /// <summary>
@@ -13,6 +11,7 @@ internal class DalCart : ICart
 {
     #region PUBLIC MEMBERS
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// add a cart to the cart file
     /// </summary>
@@ -27,6 +26,8 @@ internal class DalCart : ICart
 
         return cart.ID;
     }
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// get list of carts by condition
     /// </summary>
@@ -39,6 +40,7 @@ internal class DalCart : ICart
         return cartList.Where(predicate);
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// get a spesific cart by condition
     /// </summary>
@@ -53,6 +55,7 @@ internal class DalCart : ICart
             throw new DoesNotExistedDalException("There is no cart that matches the condition");
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// delete an cart
     /// </summary>
@@ -70,9 +73,9 @@ internal class DalCart : ICart
         cartList.Remove(result);
 
         XmlTools.SaveListForXmlSerializer(cartList, entityName);
-
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// update an cart
     /// </summary>

@@ -1,6 +1,6 @@
 ﻿using BO;
 using IUser = BlApi.IUser;
-
+using System.Runtime.CompilerServices;
 
 namespace BlImplementation;
 
@@ -9,6 +9,7 @@ namespace BlImplementation;
 /// </summary>
 internal class User : IUser
 {
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int AddUser(BO.User user)
     {
         try
@@ -26,6 +27,7 @@ internal class User : IUser
         }
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void DeleteUser(int id)
     {
         try
@@ -38,6 +40,7 @@ internal class User : IUser
         }
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.User GetUserByEmailAndPass(string email, string password)
     {
         try
@@ -50,7 +53,7 @@ internal class User : IUser
         }
     }
 
- 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void UpdateUser(BO.User user)
     {
         try
