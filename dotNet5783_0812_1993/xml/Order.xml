@@ -187,6 +187,24 @@
     <CustomerAdress>גכעיח</CustomerAdress>
     <CreateOrderDate>2023-02-23T17:53:23.7992948+02:00</CreateOrderDate>
     <ShippingDate>2023-02-23T19:58:35.1387844+02:00</ShippingDate>
+    <DeliveryDate>2023-02-25T20:54:25.8839823+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <ID>1028</ID>
+    <CustomerName>6u6r6</CustomerName>
+    <CustomerEmail>hrdhu</CustomerEmail>
+    <CustomerAdress>tfrrtfrt</CustomerAdress>
+    <CreateOrderDate>2023-02-25T20:53:15.532188+02:00</CreateOrderDate>
+    <ShippingDate xsi:nil="true" />
+    <DeliveryDate xsi:nil="true" />
+  </Order>
+  <Order>
+    <ID>1029</ID>
+    <CustomerName>חני</CustomerName>
+    <CustomerEmail>@</CustomerEmail>
+    <CustomerAdress>בני ברק</CustomerAdress>
+    <CreateOrderDate>2023-02-26T14:40:20.8453745+02:00</CreateOrderDate>
+    <ShippingDate xsi:nil="true" />
     <DeliveryDate xsi:nil="true" />
   </Order>
 </ArrayOfOrder>

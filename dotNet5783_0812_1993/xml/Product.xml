@@ -15,13 +15,6 @@
     <InStock>80</InStock>
   </Product>
   <Product>
-    <ID>745896</ID>
-    <Name>Dell 24 inch</Name>
-    <Category>Screens</Category>
-    <Price>800</Price>
-    <InStock>46</InStock>
-  </Product>
-  <Product>
     <ID>125458</ID>
     <Name>Xiaomi 30 inch</Name>
     <Category>Screens</Category>
@@ -64,17 +57,17 @@
     <InStock>0</InStock>
   </Product>
   <Product>
-    <ID>958742</ID>
-    <Name>Lenovo IdeaPad</Name>
-    <Category>Laptop</Category>
-    <Price>3400</Price>
-    <InStock>115</InStock>
-  </Product>
-  <Product>
     <ID>563258</ID>
     <Name>Lenovo legion</Name>
     <Category>Desktop_Computer</Category>
     <Price>3100</Price>
     <InStock>91</InStock>
+  </Product>
+  <Product>
+    <ID>745896</ID>
+    <Name>Dell 24 inch</Name>
+    <Category>Screens</Category>
+    <Price>800</Price>
+    <InStock>44</InStock>
   </Product>
 </ArrayOfProduct>

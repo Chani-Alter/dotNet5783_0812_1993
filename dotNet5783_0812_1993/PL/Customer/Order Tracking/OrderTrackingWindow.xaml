@@ -6,18 +6,18 @@
         xmlns:local="clr-namespace:PL.Customer"
         DataContext="{Binding  RelativeSource={RelativeSource Mode=Self} }"        
         mc:Ignorable="d"
-        Title="OrderTrackingWindow" Height="450" Width="800">
+        Title="OrderTrackingWindow" Height="768" Width="1366">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
+            <!--<RowDefinition Height="auto"/>-->
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <Button  Name="back_to_menu" Content=" ➜ " Click="back_to_menu_Click" ></Button>
+        <Button  Name="back_to_menu" Content=" ➜ " Click="back_to_menu_Click" Margin="943,0,0,50" Background="#FFFF6E40" BorderBrush="{x:Null}" FontSize="22" HorizontalAlignment="Left" Width="138" />
         <Grid Grid.Row="1" Visibility="{Binding OrderTrackingData.Tuples, Converter={StaticResource NullToVisible}}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="100"/>
-                <RowDefinition Height="100"/>
-                <RowDefinition Height="100"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Label Content="Enter order ID"/>
             <TextBox Grid.Row="1" Text="{Binding IdTextBox, Converter={StaticResource ZeroIntToEmptyString}}" PreviewKeyDown="IdTextBox_PreviewKeyDown"/>
