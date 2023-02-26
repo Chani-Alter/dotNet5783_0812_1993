@@ -104,4 +104,12 @@
     <CustomerAdress>Hadekel 16 Tel Aviv</CustomerAdress>
     <IsAdmin>false</IsAdmin>
   </User>
+  <User>
+    <ID>18</ID>
+    <CustomerName>ss</CustomerName>
+    <Password>ss</Password>
+    <CustomerEmail>ss</CustomerEmail>
+    <CustomerAdress>ss</CustomerAdress>
+    <IsAdmin>false</IsAdmin>
+  </User>
 </ArrayOfUser>

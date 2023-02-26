@@ -19,7 +19,11 @@
         <Grid.Background>
             <ImageBrush ImageSource="/Images/background.png"/>
         </Grid.Background>
-        <Button Name="manager" Style="{StaticResource goldButtons}"            FontSize="16"  Content="Manager"  Margin="286,38,431,0" VerticalAlignment="Top"   Height="41" Click="manager_Click" Width="83"/>
+        <Button Name="login" Style="{StaticResource goldButtons}"
+            FontSize="16"  Content="log in"  Margin="286,38,431,0" VerticalAlignment="Top"   Height="41" Click="login_Click" Width="83"/>
+        <Button Name="signin" Style="{StaticResource goldButtons}"
+            FontSize="16"  Content="sign in"  Margin="674,38,609,0" VerticalAlignment="Top"   Height="41" Click="signin_Click" Width="83"/>
+
         <Button Style="{StaticResource goldButtons}" Name="orderTracking" FontSize="16"  Content="Order tracking"  Margin="286,100,381,0" VerticalAlignment="Top" Click="orderTracking_Click" Foreground="#FF100F0F" Height="64" Width="133"/>
         <Button Style="{StaticResource goldButtons}" Name="newOrder" FontSize="24"  Content="New order"  Margin="286,188,286,0" VerticalAlignment="Top"  Height="104" Click="newOrder_Click" Width="228"/>
     </Grid>

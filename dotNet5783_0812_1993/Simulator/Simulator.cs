@@ -47,14 +47,17 @@ public static class Simulator
             {
                 Random rnd = new Random();
                 int seconds = rnd.Next(8000, 15000);
-
                 order = bl.Order.GetOrderById((int)orderID);
-                if (order.Status == BO.OrderStatus.ConfirmedOrder)
-                    bl.Order.UpdateSendOrderByManager(order.ID);
-                else
-                    bl.Order.UpdateSupplyOrderByManager(order.ID);
                 propsChanged("", new OrderEventArgs(seconds, order));
                 Thread.Sleep(seconds);
+
+                if (doWork)
+                {
+                    if (order.Status == BO.OrderStatus.ConfirmedOrder)
+                        bl.Order.UpdateSendOrderByManager(order.ID);
+                    else
+                        bl.Order.UpdateSupplyOrderByManager(order.ID);
+                }
             }
         }
     }

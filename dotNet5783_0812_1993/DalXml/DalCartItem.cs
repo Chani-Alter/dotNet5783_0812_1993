@@ -38,6 +38,7 @@ internal class DalCartItem : ICartItem
         List<CartItem?> cartItemList = XmlTools.LoadListFromXmlSerializer<CartItem>(entityName);
         if (predicate == null)
             return cartItemList.Select(CartItem => CartItem);
+        var result = cartItemList.Where(predicate);
         return cartItemList.Where(predicate);
     }
 

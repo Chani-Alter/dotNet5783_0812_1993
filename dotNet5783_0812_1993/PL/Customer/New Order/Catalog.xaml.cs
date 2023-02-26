@@ -28,7 +28,13 @@ public partial class Catalog : Window
     /// <summary>
     /// the customer cart
     /// </summary>
-    public BO.Cart? Cart = new BO.Cart() { Items = new() };
+    public BO.Cart? Cart;
+
+
+    /// <summary>
+    /// the prev window
+    /// </summary>
+    public Window prev_window;
 
     /// <summary>
     /// the category to filter the list acording to him
@@ -38,26 +44,28 @@ public partial class Catalog : Window
     /// <summary>
     /// the catalog window ctor
     /// </summary>
-    public Catalog(Window prev_window)
+    public Catalog(Window prev_window, User user = new User())
     {
         InitializeComponent();
         changeProductList();
-        this.prev_window= prev_window;
-    }
+        this.prev_window = prev_window;
+        this.user = user;
+        var temp = bl.cart.GetUserCart(user.ID);
+        Cart = (temp == null) ? new() : temp;
+}
 
     #endregion
 
-    #region PRIVATE MEMBERS
+        #region PRIVATE MEMBERS
 
-    /// <summary>
-    /// instance of the bl who contains access to all the bl implementation
-    /// </summary>
+        /// <summary>
+        /// instance of the bl who contains access to all the bl implementation
+        /// </summary>
     BlApi.IBl? bl = BlApi.Factory.Get();
 
-    /// <summary>
-    /// the prev window
-    /// </summary>
-    Window prev_window;
+
+    User user;
+
 
     /// <summary>
     /// hopen a window of a specific product

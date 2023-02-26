@@ -14,7 +14,7 @@ public struct User
     public string CustomerEmail { get; set; }
     public string CustomerAdress { get; set; }
 
-    public bool IsAdmin { get; set; }
+    public bool IsAdmin { get; set; } 
     public override string ToString() => this.ToStringProperty();
 
 }
