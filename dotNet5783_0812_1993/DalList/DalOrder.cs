@@ -1,7 +1,7 @@
 ﻿using DO;
 using static Dal.DataSource;
 using DalApi;
-
+using System.Runtime.CompilerServices;
 namespace Dal;
 
 /// <summary>
@@ -12,6 +12,7 @@ internal class DalOrder : IOrder
 {
     #region PUBLIC MEMBERS
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// add a order to the order array
     /// </summary>
@@ -24,7 +25,7 @@ internal class DalOrder : IOrder
         return order.ID;
     }
 
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// get list of orders by condition
     /// </summary>
@@ -36,6 +37,7 @@ internal class DalOrder : IOrder
         return OrderList.Where(predicate);
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// get a spesific order by condition
     /// </summary>
@@ -48,6 +50,7 @@ internal class DalOrder : IOrder
             throw new DoesNotExistedDalException("There is no order that matches the condition");
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// delete an order
     /// </summary>
@@ -63,7 +66,7 @@ internal class DalOrder : IOrder
         OrderList.Remove(result);
     }
 
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// update an order
     /// </summary>

@@ -1,5 +1,6 @@
 ﻿using DO;
 using DalApi;
+using System.Runtime.CompilerServices;
 
 namespace Dal;
 
@@ -11,6 +12,7 @@ internal class DalUser : IUser
 {
     #region PUBLIC MEMBERS
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// add a order to the order file
     /// </summary>
@@ -29,6 +31,7 @@ internal class DalUser : IUser
         return user.ID;
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// get list of orders by condition
     /// </summary>
@@ -41,6 +44,7 @@ internal class DalUser : IUser
         return userList.Where(predicate);
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// get a spesific order by condition
     /// </summary>
@@ -55,6 +59,7 @@ internal class DalUser : IUser
             throw new DoesNotExistedDalException("There is no user that matches the condition");
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// delete an order
     /// </summary>
@@ -75,6 +80,7 @@ internal class DalUser : IUser
 
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// update an order
     /// </summary>

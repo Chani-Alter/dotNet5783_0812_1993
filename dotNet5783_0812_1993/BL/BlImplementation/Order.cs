@@ -1,5 +1,5 @@
 ﻿using BO;
-
+using System.Runtime.CompilerServices;
 namespace BlImplementation;
 
 /// <summary>
@@ -8,6 +8,8 @@ namespace BlImplementation;
 internal class Order : BlApi.IOrder
 {
     #region PUBLIC MEMBERS
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// function that returns the orders
     /// </summary>
@@ -46,7 +48,7 @@ internal class Order : BlApi.IOrder
 
     }
 
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// function that returns order by id
     /// </summary>
@@ -72,7 +74,7 @@ internal class Order : BlApi.IOrder
 
     }
 
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// function that update the send order
     /// </summary>
@@ -110,7 +112,7 @@ internal class Order : BlApi.IOrder
 
     }
 
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     ///  function that update the supply order
     /// </summary>
@@ -153,7 +155,7 @@ internal class Order : BlApi.IOrder
         }
     }
 
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// function that tracks the order
     /// </summary>
@@ -194,7 +196,7 @@ internal class Order : BlApi.IOrder
 
     }
 
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     ///function that updates the quantity of a product in the order
     /// </summary>
@@ -225,8 +227,11 @@ internal class Order : BlApi.IOrder
 
             try
             {
-                dal.OrderItem.Update(ordItem);
-                dal.Product.Update(product);
+                lock (dal)
+                {
+                    dal.OrderItem.Update(ordItem);
+                    dal.Product.Update(product);
+                }
             }
             catch (DO.DoesNotExistedDalException ex)
             {
@@ -257,6 +262,33 @@ internal class Order : BlApi.IOrder
             throw new DoesNotExistedBlException("order dosent exsit", ex);
         }
 
+    }
+
+    public int? SelectOrder()
+    {
+        DateTime? minDate = DateTime.MaxValue;
+        int minOrderId = 1000;
+        List<DO.Order?>? orderList = dal.Order.GetList(o => o?.ShippingDate == null || o?.DeliveryDate == null)?.ToList();
+        foreach (var order in orderList)
+        {
+            if (order?.ShippingDate == null)
+            {
+                if (order?.CreateOrderDate < minDate)
+                {
+                    minDate = order?.CreateOrderDate;
+                    minOrderId =((DO.Order) order!).ID;
+                }
+            }
+            else
+            {
+                if (order?.ShippingDate < minDate)
+                {
+                    minDate = order?.ShippingDate;
+                    minOrderId = ((DO.Order)order!).ID;
+                }
+            }
+        }
+        return minDate == DateTime.MaxValue ? null : minOrderId;
     }
 
     #endregion

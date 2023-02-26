@@ -1,6 +1,6 @@
 ﻿using BO;
 using IProduct = BlApi.IProduct;
-
+using System.Runtime.CompilerServices;
 
 namespace BlImplementation;
 
@@ -11,6 +11,7 @@ internal class Product : IProduct
 {
     #region PUBLIC MEMBER
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// Definition of a function that returns a list of product by category for the manager
     /// </summary>
@@ -21,7 +22,7 @@ internal class Product : IProduct
         return getProductListManager(Filter.FilterByCategory, category);
     }
 
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// Definition of a function that returns All list of product for manager
     /// </summary>
@@ -31,7 +32,7 @@ internal class Product : IProduct
         return getProductListManager();
     }
 
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// function that returns a product by id for the manager
     /// </summary>
@@ -59,6 +60,7 @@ internal class Product : IProduct
 
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// function that add a product
     /// </summary>
@@ -87,6 +89,7 @@ internal class Product : IProduct
 
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// function that delete a product
     /// </summary>
@@ -116,6 +119,7 @@ internal class Product : IProduct
 
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// function that update a product
     /// </summary>
@@ -145,6 +149,7 @@ internal class Product : IProduct
         }
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// function that returns a list of all products for the customer
     /// </summary>
@@ -159,6 +164,7 @@ internal class Product : IProduct
                select castProduct<ProductItem, DO.Product>(product);
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// function that returns a product by id for the customer
     /// </summary>
@@ -185,6 +191,8 @@ internal class Product : IProduct
 
 
     }
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<ProductItem?> GetPopularProductListForCustomer()
     {
         IEnumerable<DO.Product?> products = dal.Product.GetList();
@@ -213,6 +221,7 @@ internal class Product : IProduct
             });
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<ProductItem?> GetcheapestProductListForCustomer()
     {
         IEnumerable<DO.Product?> products = dal.Product.GetList();

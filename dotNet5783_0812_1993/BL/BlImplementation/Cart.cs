@@ -1,5 +1,6 @@
 ﻿using BlApi;
 using BO;
+using System.Runtime.CompilerServices;
 
 namespace BlImplementation;
 
@@ -10,6 +11,7 @@ internal class Cart : ICart
 {
     #region PUBLIC MEMBERS
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     ///Adding product to the cart
     /// </summary>
@@ -18,7 +20,7 @@ internal class Cart : ICart
     /// <returns>the cart after adding</returns>
     /// <exception cref="BO.ImpossibleActionBlException"></exception>
     /// <exception cref="BO.DoesNotExistedBlException"></exception>
-    public BO.Cart AddProductToCart(BO.Cart cart, int productId,int amount)
+    public BO.Cart AddProductToCart(BO.Cart cart, int productId, int amount)
     {
         try
         {
@@ -37,17 +39,34 @@ internal class Cart : ICart
 
             if (product.InStock <= 0)
                 throw new ImpossibleActionBlException("product not exist in stock");
+            int itemId = 0;
+            if (cart.ID != 0)
+                try
+                {
+                  itemId = dal.CartItem.Add(new DO.CartItem
+                    {
+                        Amount = amount,
+                        CartID = cart.ID,
+                        Price = product.Price,
+                        ProductID = productId,
+                    });
+
+                }catch(DO.DuplicateDalException)
+                {
+                    throw new ImpossibleActionBlException("product exist in cart");
+                }
 
             cart.Items.Add(
                 new BO.OrderItem
                 {
+                    ID= itemId,
                     Name = product.Name,
                     ProductID = productId,
                     Amount = amount,
                     Price = product.Price,
                     TotalPrice = product.Price
                 });
-            cart.TotalPrice += product.Price*amount;
+            cart.TotalPrice += product.Price * amount;
 
             return cart;
         }
@@ -55,13 +74,13 @@ internal class Cart : ICart
         {
             throw new DoesNotExistedBlException("product dosent exsit", ex);
         }
-        catch(DO.XMLFileNullExeption ex)
+        catch (DO.XMLFileNullExeption ex)
         {
             throw new DoesNotExistedBlException("product dosent exsit", ex);
         }
     }
 
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     ///function that update the amount of product in the cart
     /// </summary>
@@ -95,6 +114,8 @@ internal class Cart : ICart
             if (amount == 0)
             {
                 cart.Items.Remove(result);
+                if (cart.ID != 0)
+                    dal.CartItem.Delete(result.ID);
             }
             else
             {
@@ -110,6 +131,14 @@ internal class Cart : ICart
                                     TotalPrice = orderItem?.ProductID == productId ? amount * orderItem.Price : orderItem.TotalPrice
                                 };
                 cart.Items = cartItems.ToList();
+                if (cart.ID != 0)
+                    dal.CartItem.Update(new DO.CartItem {
+                        ID=result.ID,
+                        Amount= result.Amount,
+                        Price= result.Price,
+                        CartID= cart.ID,
+                        ProductID =result.ProductID
+                    });
             }
 
             return cart;
@@ -122,10 +151,9 @@ internal class Cart : ICart
         {
             throw new DoesNotExistedBlException("product dosent exsit", ex);
         }
-
     }
 
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// function that confirms an order
     /// </summary>
@@ -144,64 +172,74 @@ internal class Cart : ICart
             if (cart.Items == null)
                 throw new ImpossibleActionBlException("There are no items in the cart.");
 
-            int id = dal.Order.Add(
-                new DO.Order
+            lock (dal)
+            {
+                int id = dal.Order.Add(
+                    new DO.Order
+                    {
+                        CustomerAdress = cart.CustomerAdress,
+                        CustomerEmail = cart.CustomerEmail,
+                        CustomerName = cart.CustomerName,
+                        CreateOrderDate = DateTime.Now,
+                        ShippingDate = null,
+                        DeliveryDate = null
+                    });
+
+                IEnumerable<DO.Product?> products = dal.Product.GetList();
+
+                //return a list of tuples that everyone ave a orderItem to add and a updated product
+                var result = from item in cart.Items
+                             join prod in products on item.ProductID equals prod?.ID into empdept
+                             from ed in empdept.DefaultIfEmpty()
+                             let product = ed ?? throw new ImpossibleActionBlException("product does not exist")
+                             let orderItem = item!
+                             select new
+                             {
+                                 orderItem = new DO.OrderItem
+                                 {
+                                     OrderID = id,
+                                     ProductID = item.ProductID,
+                                     Amount = item.Amount > 0 ? item.Amount : throw new ImpossibleActionBlException("invalid amount"),
+                                     Price = item.Price
+                                 },
+                                 prod = new DO.Product
+                                 {
+                                     ID = product.ID,
+                                     Price = product.Price,
+                                     Category = product.Category,
+                                     InStock = product.InStock > item?.Amount ? product.InStock - item?.Amount ?? 0 : throw new ImpossibleActionBlException("amount not in stock "),
+                                     Name = product.Name
+                                 }
+                             };
+
+                //for each tuple we update the product list and add a orderItem to the order Item list
+                result.ToList().ForEach(res =>
                 {
-                    CustomerAdress= cart.CustomerAdress,
-                    CustomerEmail= cart.CustomerEmail,
-                    CustomerName= cart.CustomerName,
-                    CreateOrderDate = DateTime.Now,
-                    ShippingDate = null,
-                    DeliveryDate = null
+                    try
+                    {
+                        dal.Product.Update(res.prod);
+                    }
+                    catch (DO.DoesNotExistedDalException ex)
+                    {
+                        throw new UpdateErrorBlException("product update failes", ex);
+                    }
+                    try
+                    {
+                        dal.OrderItem.Add(res.orderItem);
+                    }
+                    catch (DO.DuplicateDalException ex)
+                    {
+                        throw new BLAlreadyExistException("order Item alredy exist ", ex);
+                    }
                 });
 
-            IEnumerable<DO.Product?> products = dal.Product.GetList();
-
-            //return a list of tuples that everyone ave a orderItem to add and a updated product
-            var result = from item in cart.Items
-                         join prod in products on item.ProductID equals prod?.ID into empdept
-                         from ed in empdept.DefaultIfEmpty()
-                         let product = ed?? throw new ImpossibleActionBlException("product does not exist")
-                         let orderItem = item! 
-                         select new
-                         {
-                             orderItem = new DO.OrderItem
-                             {
-                                 OrderID = id,
-                                 ProductID = item.ProductID ,
-                                 Amount = item.Amount > 0 ? item.Amount  : throw new ImpossibleActionBlException("invalid amount"),
-                                 Price = item.Price
-                             },
-                             prod = new DO.Product
-                             {
-                                 ID = product.ID,
-                                 Price = product.Price,
-                                 Category = product.Category ,
-                                 InStock = product.InStock > item?.Amount ? product.InStock - item?.Amount ?? 0 : throw new ImpossibleActionBlException("amount not in stock "),
-                                 Name = product.Name
-                             }
-                         };
-
-            //for each tuple we update the product list and add a orderItem to the order Item list
-            result.ToList().ForEach(res =>
-            {
-                try
+                if (cart.ID != 0)
                 {
-                    dal.Product.Update(res.prod);
+                    var cartitems = dal.CartItem.GetList(item => item?.CartID == cart.ID);
+                    cartitems.ToList().ForEach(res => dal.CartItem.Delete(((DO.CartItem)res!).ID));
+                    dal.Cart.Delete(cart.ID);
                 }
-                catch (DO.DoesNotExistedDalException ex)
-                {
-                    throw new UpdateErrorBlException("product update failes" , ex);
-                }
-                try
-                {
-                    dal.OrderItem.Add(res.orderItem);
-                }
-                catch (DO.DuplicateDalException ex)
-                {
-                    throw new BLAlreadyExistException("order Item alredy exist ", ex);
-                }
-            });
+            }
         }
         catch (DO.DoesNotExistedDalException ex)
         {
@@ -214,6 +252,28 @@ internal class Cart : ICart
 
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public BO.Cart GetUserCart(int id)
+    {
+        if (id == 0)
+            return new BO.Cart();
+        else
+        {
+            var result = dal.Cart.GetList(c => c?.ID == id);
+            DO.User user = dal.User.GetByCondition(u => u?.ID == id);
+            if (result.Count() == 0)
+                return creatNewCart(user);
+            DO.Cart? cart = result.FirstOrDefault();
+            return creatNewCart(((DO.Cart)cart!), user);
+        }
+    }
+
+
     #endregion
 
     #region PRIVATE MEMBER
@@ -223,5 +283,48 @@ internal class Cart : ICart
     /// </summary>
     DalApi.IDal? dal = DalApi.Factory.Get();
 
+    private BO.Cart creatNewCart(DO.User user)
+    {
+        int cartid = dal.Cart.Add(new DO.Cart { UserID = user.ID });
+        return new BO.Cart
+        {
+            ID = cartid,
+            CustomerAdress = user.CustomerAdress,
+            CustomerName = user.CustomerName,
+            CustomerEmail = user.CustomerEmail,
+            Items = new(),
+            TotalPrice = 0
+        };
+    }
+
+    private BO.Cart creatNewCart(DO.Cart cart, DO.User user)
+    {
+        IEnumerable<DO.CartItem?> cartItemsDal = dal.CartItem.GetList(item => item?.CartID == cart.ID);
+
+        var cartItems = from item in cartItemsDal
+                        let cartItem = (DO.CartItem)item
+                        let product = dal.Product.GetByCondition(prod => prod?.ID == cartItem.ProductID)
+                        select new BO.OrderItem
+                        {
+                            ID = cartItem.ID,
+                            ProductID = cartItem.ProductID,
+                            Price = cartItem.Price,
+                            Amount = cartItem.Amount,
+                            TotalPrice = cartItem.Amount * cartItem.Price,
+                            Name = product.Name
+                        };
+        return new BO.Cart
+        {
+            ID = cart.ID,
+            CustomerAdress = user.CustomerAdress,
+            CustomerName = user.CustomerName,
+            CustomerEmail = user.CustomerEmail,
+            Items = cartItems.ToList(),
+            TotalPrice = cartItems.Sum(item => item.TotalPrice)
+        };
+    }
+
     #endregion
+
 }
+
