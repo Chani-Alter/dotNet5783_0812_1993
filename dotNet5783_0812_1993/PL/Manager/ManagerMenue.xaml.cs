@@ -23,4 +23,6 @@ public partial class ManagerMenue : Window
     private void showOrdersBtn_Click(object sender, RoutedEventArgs e) => new OrderList(this).Show();
 
     private void showProductBtn_Click(object sender, RoutedEventArgs e) => new ProductListWindow(this).Show();
+
+    private void startSimulatorBtn_Click(object sender, RoutedEventArgs e) => new SimulatorWindow().Show();
 }

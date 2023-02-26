@@ -7,6 +7,8 @@ namespace BlApi;
 /// </summary>
 public interface ICart
 {
+    public Cart GetUserCart(int id);
+
     /// <summary>
     /// A function Defination for Adding a item to the cart
     /// </summary>
@@ -29,5 +31,6 @@ public interface ICart
     /// </summary>
     /// <param name="cart"></param>
     public void MakeOrder(Cart cart);
+
 
 }

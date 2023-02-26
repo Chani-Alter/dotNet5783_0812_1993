@@ -12,6 +12,7 @@
         </Grid.Background>
         <Button Name="showProductBtn" FontSize="30" Cursor="Hand" FontWeight="Bold" Content="show products" Background="#FF1E3D59" Margin="275,24,230,39" Click="showProductBtn_Click" BorderBrush="#FF1E3D59" Width="295" Height="135"/>
         <Button Name="showOrdersBtn" FontSize="30" Cursor="Hand" FontWeight="Bold" Content="show orders" Background="#FF1E3D59"  Margin="275,97,230,0" VerticalAlignment="Top"  Height="135" Click="showOrdersBtn_Click" BorderBrush="#FF1E3D59" Width="295"/>
+        <Button Name="startSimulatorBtn" FontSize="30" Cursor="Hand" FontWeight="Bold" Content="start simulator" Background="#FF1E3D59"  Margin="275,530,230,0" VerticalAlignment="Top"  Height="135" Click="startSimulatorBtn_Click" BorderBrush="#FF1E3D59" Width="295"/>
 
     </Grid>
 </Window>

@@ -49,4 +49,6 @@ public interface IOrder
     /// <param name="amount"></param>
     /// <returns>the updated order item</returns>
     public Order UpdateAmountOfOProductInOrder(int orderId, int productId, int amount);
+
+    public int? SelectOrder();
 }

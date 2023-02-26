@@ -2,6 +2,7 @@
 using DO;
 using System;
 using static Dal.DataSource;
+using System.Runtime.CompilerServices;
 
 namespace Dal;
 
@@ -13,6 +14,7 @@ internal class DalProduct : IProduct
 {
     #region PUBLIC MEMBERS
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// Add a product to the productArray
     /// </summary>
@@ -28,6 +30,7 @@ internal class DalProduct : IProduct
         return product.ID;
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// get list of product by condition
     /// </summary>
@@ -40,6 +43,7 @@ internal class DalProduct : IProduct
         return ProductList.Where(predicate);
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// get a spesific product by condition
     /// </summary>
@@ -52,6 +56,7 @@ internal class DalProduct : IProduct
             throw new DoesNotExistedDalException("There is no order item that matches the condition");
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// delete a product 
     /// </summary>
@@ -68,6 +73,7 @@ internal class DalProduct : IProduct
 
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// update a product
     /// </summary>

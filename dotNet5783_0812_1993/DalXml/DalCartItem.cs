@@ -1,5 +1,6 @@
 ﻿using DO;
 using DalApi;
+using System.Runtime.CompilerServices;
 
 namespace Dal;
 
@@ -11,6 +12,7 @@ internal class DalCartItem : ICartItem
 {
     #region PUBLIC MEMBERS
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// add a CartItem to the CartItem file
     /// </summary>
@@ -26,6 +28,7 @@ internal class DalCartItem : ICartItem
         return item.ID;
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// get list of CartItems by condition
     /// </summary>
@@ -38,6 +41,7 @@ internal class DalCartItem : ICartItem
         return cartItemList.Where(predicate);
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// get a spesific CartItem by condition
     /// </summary>
@@ -52,6 +56,7 @@ internal class DalCartItem : ICartItem
             throw new DoesNotExistedDalException("There is no CartItem that matches the condition");
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// delete an CartItem
     /// </summary>
@@ -72,6 +77,7 @@ internal class DalCartItem : ICartItem
 
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// update an CartItem
     /// </summary>

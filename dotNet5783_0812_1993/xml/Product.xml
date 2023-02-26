@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfProduct xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Product>
     <ID>793154</ID>
@@ -8,11 +8,39 @@
     <InStock>150</InStock>
   </Product>
   <Product>
+    <ID>885632</ID>
+    <Name>Lenovo ThinkBook</Name>
+    <Category>Laptop</Category>
+    <Price>3800</Price>
+    <InStock>180</InStock>
+  </Product>
+  <Product>
+    <ID>958742</ID>
+    <Name>Lenovo IdeaPad</Name>
+    <Category>Laptop</Category>
+    <Price>3400</Price>
+    <InStock>120</InStock>
+  </Product>
+  <Product>
     <ID>125412</ID>
     <Name>Apple Mac mini</Name>
     <Category>Desktop_Computer</Category>
     <Price>5000</Price>
     <InStock>80</InStock>
+  </Product>
+  <Product>
+    <ID>563258</ID>
+    <Name>Lenovo legion</Name>
+    <Category>Desktop_Computer</Category>
+    <Price>3100</Price>
+    <InStock>92</InStock>
+  </Product>
+  <Product>
+    <ID>745896</ID>
+    <Name>Dell 24 inch</Name>
+    <Category>Screens</Category>
+    <Price>800</Price>
+    <InStock>46</InStock>
   </Product>
   <Product>
     <ID>125458</ID>
@@ -57,17 +85,17 @@
     <InStock>0</InStock>
   </Product>
   <Product>
+    <ID>958742</ID>
+    <Name>Lenovo IdeaPad</Name>
+    <Category>Laptop</Category>
+    <Price>3400</Price>
+    <InStock>115</InStock>
+  </Product>
+  <Product>
     <ID>563258</ID>
     <Name>Lenovo legion</Name>
     <Category>Desktop_Computer</Category>
     <Price>3100</Price>
     <InStock>91</InStock>
-  </Product>
-  <Product>
-    <ID>745896</ID>
-    <Name>Dell 24 inch</Name>
-    <Category>Screens</Category>
-    <Price>800</Price>
-    <InStock>44</InStock>
   </Product>
 </ArrayOfProduct>
