@@ -1,60 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfProduct xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Product>
-    <ID>793154</ID>
-    <Name>Dell Vostro</Name>
-    <Category>Laptop</Category>
-    <Price>4500</Price>
-    <InStock>150</InStock>
-  </Product>
-  <Product>
-    <ID>885632</ID>
-    <Name>Lenovo ThinkBook</Name>
-    <Category>Laptop</Category>
-    <Price>3800</Price>
-    <InStock>180</InStock>
-  </Product>
-  <Product>
-    <ID>958742</ID>
-    <Name>Lenovo IdeaPad</Name>
-    <Category>Laptop</Category>
-    <Price>3400</Price>
-    <InStock>120</InStock>
-  </Product>
-  <Product>
     <ID>125412</ID>
     <Name>Apple Mac mini</Name>
     <Category>Desktop_Computer</Category>
     <Price>5000</Price>
     <InStock>80</InStock>
-  </Product>
-  <Product>
-    <ID>563258</ID>
-    <Name>Lenovo legion</Name>
-    <Category>Desktop_Computer</Category>
-    <Price>3100</Price>
-    <InStock>92</InStock>
-  </Product>
-  <Product>
-    <ID>745896</ID>
-    <Name>Dell 24 inch</Name>
-    <Category>Screens</Category>
-    <Price>800</Price>
-    <InStock>46</InStock>
-  </Product>
-  <Product>
-    <ID>125458</ID>
-    <Name>Xiaomi 30 inch</Name>
-    <Category>Screens</Category>
-    <Price>900</Price>
-    <InStock>39</InStock>
-  </Product>
-  <Product>
-    <ID>458796</ID>
-    <Name>JBL tune 510</Name>
-    <Category>Peripheral_Equipment</Category>
-    <Price>250</Price>
-    <InStock>300</InStock>
   </Product>
   <Product>
     <ID>236974</ID>
@@ -69,5 +20,54 @@
     <Category>Peripheral_Equipment</Category>
     <Price>100</Price>
     <InStock>523</InStock>
+  </Product>
+  <Product>
+    <ID>958742</ID>
+    <Name>Lenovo IdeaPad</Name>
+    <Category>Laptop</Category>
+    <Price>3400</Price>
+    <InStock>116</InStock>
+  </Product>
+  <Product>
+    <ID>563258</ID>
+    <Name>Lenovo legion</Name>
+    <Category>Desktop_Computer</Category>
+    <Price>3100</Price>
+    <InStock>90</InStock>
+  </Product>
+  <Product>
+    <ID>885632</ID>
+    <Name>Lenovo ThinkBook</Name>
+    <Category>Laptop</Category>
+    <Price>3800</Price>
+    <InStock>177</InStock>
+  </Product>
+  <Product>
+    <ID>793154</ID>
+    <Name>Dell Vostro</Name>
+    <Category>Laptop</Category>
+    <Price>4500</Price>
+    <InStock>146</InStock>
+  </Product>
+  <Product>
+    <ID>125458</ID>
+    <Name>Xiaomi 30 inch</Name>
+    <Category>Screens</Category>
+    <Price>900</Price>
+    <InStock>37</InStock>
+  </Product>
+  <Product>
+    <ID>745896</ID>
+    <Name>Dell 24 inch</Name>
+    <Category>Screens</Category>
+    <Price>800</Price>
+    <InStock>44</InStock>
+  </Product>
+  <Product>
+    <ID>458796</ID>
+    <Name>JBL tune 510</Name>
+    <Category>Peripheral_Equipment</Category>
+    <Price>250</Price>
+    <InStock>296</InStock>
   </Product>
 </ArrayOfProduct>

@@ -13,6 +13,11 @@
             <Setter Property="Cursor" Value="Hand" />
             <Setter Property="FontSize" Value="15" />
             <Setter Property="BorderBrush" Value="#ffc13b" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="Transparent"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
     </Window.Resources>
 
@@ -35,7 +40,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Button Style="{StaticResource categoryButtons}"  Grid.Column="0" Content="Laptop"  Click="category_click" />
-            <Button Style="{StaticResource categoryButtons}" Grid.Column="1" Content="Desktop&#xD;&#xA; Computer" Click="category_click" />
+            <Button Style="{StaticResource categoryButtons}" Grid.Column="1" Content="Desktop Computer" Click="category_click" />
             <Button Style="{StaticResource categoryButtons}" Grid.Column="2" Content="Screens" Click="category_click" />
             <Button Style="{StaticResource categoryButtons}" Grid.Column="3" Content="Peripheral Equipment" Click="category_click" />
             <Button Style="{StaticResource categoryButtons}" Grid.Column="4" Content="All" Click="category_click" />

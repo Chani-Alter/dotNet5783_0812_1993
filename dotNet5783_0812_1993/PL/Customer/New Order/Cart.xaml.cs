@@ -1,4 +1,5 @@
 ﻿using BO;
+using PL.userLogin;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -186,6 +187,7 @@ public partial class Cart : Window
         {
             int id = ((OrderItem)((Button)sender).DataContext).ProductID;
             bl.cart.UpdateProductAmountInCart(MyCart!, id, 0);
+            CartItems = (MyCart.Items == null) ? new() : new(MyCart.Items!);
         }
         catch (ImpossibleActionBlException ex)
         {
@@ -207,7 +209,45 @@ public partial class Cart : Window
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void confirm_Click(object sender, RoutedEventArgs e) => userDetails.Visibility = Visibility.Visible;
+    private void confirm_Click(object sender, RoutedEventArgs e) {  
+        if(MyCart.ID==0)
+           userDetails.Visibility = Visibility.Visible;
+        else
+            try
+            {
+                bl.cart.MakeOrder(MyCart!);
+                if(myCatalog.prev_window is SignIn)
+                    ((SignIn)myCatalog.prev_window).prev_window.Activate();
+                else
+                    ((Login)myCatalog.prev_window).prev_window.Activate();
+                myCatalog.prev_window.Close();
+                myCatalog.Close();
+                Close();
+            }
+            catch (InvalidInputBlException ex)
+            {
+                MessageBox.Show("in valid input", ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (ImpossibleActionBlException ex)
+            {
+                MessageBox.Show("The system cannot perform this operation", ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (UpdateErrorBlException ex)
+            {
+                MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (BLAlreadyExistException ex)
+            {
+                MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Close();
+            }
+
+
+    }
 
     /// <summary>
     /// Closes the order window and makes the catalog window active

@@ -1,0 +1,33 @@
+﻿<Window x:Class="PL.userLogin.SignIn"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL.userLogin"
+        mc:Ignorable="d"
+        DataContext="{Binding  RelativeSource={RelativeSource Mode=Self} }"        
+        Title="SignIn" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+         </Grid.ColumnDefinitions>
+        <Label  Content="customer name:"></Label>
+        <TextBox Grid.Column="1" Text="{Binding MyUser.CustomerName}"></TextBox>
+        <Label Grid.Row="1" Content="customer Adress:"></Label>
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding MyUser.CustomerAdress}"></TextBox>
+        <Label Grid.Row="2" Content="customer email:"></Label>
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding MyUser.CustomerEmail}"></TextBox>
+        <Label Grid.Row="3" Content="choose password:"></Label>
+        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding MyUser.Password}"></TextBox>
+
+        <Button Grid.Row="4" Content="sign up" Click="confirm_Click"></Button>
+    </Grid>
+</Window>

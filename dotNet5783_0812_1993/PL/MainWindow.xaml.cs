@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 using PL.Customer;
-using PL.Manager;
+using PL.userLogin;
 
 namespace PL;
 
@@ -26,5 +26,8 @@ public partial class MainWindow : Window
     private void newOrder_Click(object sender, RoutedEventArgs e) => new Catalog(this).Show();
   
 
-    private void manager_Click(object sender, RoutedEventArgs e)=> new ManagerMenue().Show();
+    private void signin_Click(object sender, RoutedEventArgs e)=> new SignIn(this).Show();
+
+    private void login_Click(object sender, RoutedEventArgs e) => new Login(this).Show();
+
 }

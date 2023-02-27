@@ -103,7 +103,7 @@ public partial class SimulatorWindow : Window
 
     Duration duration;
     DoubleAnimation? doubleanimation;
-    ProgressBar? ProgressBar=new ProgressBar();
+    ProgressBar? ProgressBar;
     private int seconds;
     DispatcherTimer? _timer;
     TimeSpan _time;
@@ -183,12 +183,8 @@ public partial class SimulatorWindow : Window
         runOnUiThread(new Runnable()
     {
 
-        @Override
-        public void run()
-        {
-            progressBar.dismiss();
-        }
-    });
+        SBar.Items.Remove(ProgressBar);
+        Simulator.Simulator.Stop();
         propsChanged -= progressChanged!;
         Simulator.Simulator.stop -= stop!;
         
@@ -196,7 +192,7 @@ public partial class SimulatorWindow : Window
             Dispatcher.BeginInvoke(stop, sender, e);
         else
         {
-            Close();
+            this.Close();
         }
     }
 
