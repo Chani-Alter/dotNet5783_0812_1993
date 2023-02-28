@@ -39,7 +39,9 @@ internal class Cart : ICart
 
             if (product.InStock <= 0)
                 throw new ImpossibleActionBlException("product not exist in stock");
+
             int itemId = 0;
+
             if (cart.ID != 0)
                 try
                 {
@@ -97,7 +99,7 @@ internal class Cart : ICart
         try
         {
             if (cart.Items == null)
-                throw new BO.ImpossibleActionBlException("There are no items in the cart");
+                throw new ImpossibleActionBlException("There are no items in the cart");
 
             var result = cart.Items.FirstOrDefault(item => item?.ProductID == productId);
 
@@ -130,6 +132,7 @@ internal class Cart : ICart
                                     Amount = orderItem?.ProductID == productId ? amount : orderItem.Amount,
                                     TotalPrice = orderItem?.ProductID == productId ? amount * orderItem.Price : orderItem.TotalPrice
                                 };
+
                 cart.Items = cartItems.ToList();
                 if (cart.ID != 0)
                     dal.CartItem.Update(new DO.CartItem {
@@ -249,7 +252,6 @@ internal class Cart : ICart
         {
             throw new DoesNotExistedBlException("product dosent exsit", ex);
         }
-
     }
 
     [MethodImpl(MethodImplOptions.Synchronized)]
@@ -264,15 +266,20 @@ internal class Cart : ICart
             return new BO.Cart();
         else
         {
-            var result = dal.Cart.GetList(c => c?.ID == id);
-            DO.User user = dal.User.GetByCondition(u => u?.ID == id);
-            if (result.Count() == 0)
-                return creatNewCart(user);
-            DO.Cart? cart = result.FirstOrDefault();
-            return creatNewCart(((DO.Cart)cart!), user);
-        }
+            try {
+                var result = dal.Cart.GetList(c => c?.ID == id);
+                DO.User user = dal.User.GetByCondition(u => u?.ID == id);
+                if (result.Count() == 0)
+                    return creatNewCart(user);
+                DO.Cart? cart = result.FirstOrDefault();
+                return creatNewCart((DO.Cart)cart!, user);
+            }
+            catch (DO.XMLFileNullExeption ex)
+            {
+                throw new DoesNotExistedBlException("cart doesnt exist " ,ex);
+            }
+         }
     }
-
 
     #endregion
 
@@ -283,6 +290,11 @@ internal class Cart : ICart
     /// </summary>
     DalApi.IDal? dal = DalApi.Factory.Get();
 
+    /// <summary>
+    /// create new cart for a registered user
+    /// </summary>
+    /// <param name="user"></param>
+    /// <returns></returns>
     private BO.Cart creatNewCart(DO.User user)
     {
         int cartid = dal.Cart.Add(new DO.Cart { UserID = user.ID });
@@ -297,6 +309,12 @@ internal class Cart : ICart
         };
     }
 
+    /// <summary>
+    /// return the saved cart of a registered user
+    /// </summary>
+    /// <param name="cart"></param>
+    /// <param name="user"></param>
+    /// <returns></returns>
     private BO.Cart creatNewCart(DO.Cart cart, DO.User user)
     {
         IEnumerable<DO.CartItem?> cartItemsDal = dal.CartItem.GetList(item => item?.CartID == cart.ID);

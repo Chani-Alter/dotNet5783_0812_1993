@@ -8,7 +8,8 @@
         mc:Ignorable="d"
         Activated="Window_Activated" 
         DataContext="{Binding  RelativeSource={RelativeSource Mode=Self} }"        
-        Title="ProductListWindow" Height="768" Width="1366">
+        Title="ProductListWindow" Height="768" Width="1366"
+        WindowStyle="ToolWindow" ResizeMode="NoResize" WindowState="Maximized">
     <Grid  Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="0.1*"/>

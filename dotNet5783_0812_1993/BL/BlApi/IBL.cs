@@ -18,8 +18,11 @@ public interface IBl
     /// <summary>
     /// returns the ICart 
     /// </summary>
-    public ICart cart { get; }
+    public ICart Cart { get; }
 
+    /// <summary>
+    /// returns IUser
+    /// </summary>
     public IUser User { get; }
 
 }

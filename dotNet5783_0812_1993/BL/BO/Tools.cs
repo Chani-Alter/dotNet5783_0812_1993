@@ -9,7 +9,7 @@ namespace BO;
 static class Tools
 {
     /// <summary>
-    /// A method that prints attributes of entities
+    /// A method that prints attributes of entities: Bonus!!!!
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="t"></param>

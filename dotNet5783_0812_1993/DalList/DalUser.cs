@@ -11,6 +11,11 @@ namespace Dal;
 /// </summary>
 internal class DalUser : IUser
 {
+    /// <summary>
+    /// add user to list
+    /// </summary>
+    /// <param name="user"></param>
+    /// <returns></returns>
     [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(User user)
     {
@@ -19,6 +24,11 @@ internal class DalUser : IUser
         return user.ID;
     }
 
+    /// <summary>
+    /// delete user from list
+    /// </summary>
+    /// <param name="id"></param>
+    /// <exception cref="DoesNotExistedDalException"></exception>
     [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
@@ -30,6 +40,12 @@ internal class DalUser : IUser
         UserList.Remove(result);
     }
 
+    /// <summary>
+    /// get user that match the condition
+    /// </summary>
+    /// <param name="predicate"></param>
+    /// <returns></returns>
+    /// <exception cref="DoesNotExistedDalException"></exception>
     [MethodImpl(MethodImplOptions.Synchronized)]
     public User GetByCondition(Func<User?, bool> predicate)
     {
@@ -37,6 +53,11 @@ internal class DalUser : IUser
                    throw new DoesNotExistedDalException("There is no user that matches the condition");
     }
 
+    /// <summary>
+    /// get list of users filter by condition
+    /// </summary>
+    /// <param name="predicate"></param>
+    /// <returns></returns>
     [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<User?> GetList(Func<User?, bool>? predicate = null)
     {
@@ -45,6 +66,11 @@ internal class DalUser : IUser
         return UserList.Where(predicate);
     }
 
+    /// <summary>
+    /// oupdate user in list
+    /// </summary>
+    /// <param name="user"></param>
+    /// <exception cref="DoesNotExistedDalException"></exception>
     [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(User user)
     {

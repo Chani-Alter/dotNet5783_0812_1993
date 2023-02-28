@@ -11,6 +11,11 @@ namespace Dal;
 /// </summary>
 internal class DalCart : ICart
 {
+    /// <summary>
+    /// add the cart to the list
+    /// </summary>
+    /// <param name="cart"></param>
+    /// <returns></returns>
     [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(Cart cart)
     {
@@ -19,17 +24,28 @@ internal class DalCart : ICart
         return cart.ID;
     }
 
+    /// <summary>
+    /// delete cart from list
+    /// </summary>
+    /// <param name="id"></param>
+    /// <exception cref="DoesNotExistedDalException"></exception>
     [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
-        var result = OrderList.FirstOrDefault(ord => ord?.ID == id);
+        var result = CartItemList.FirstOrDefault(cart => cart?.ID == id);
 
         if (result == null)
-            throw new DoesNotExistedDalException(id, "order", "order is not exist");
+            throw new DoesNotExistedDalException(id, "cart", "cart is not exist");
 
-        OrderList.Remove(result);
+        CartItemList.Remove(result);
     }
 
+    /// <summary>
+    /// get a cart that match the condition
+    /// </summary>
+    /// <param name="predicate"></param>
+    /// <returns></returns>
+    /// <exception cref="DoesNotExistedDalException"></exception>
     [MethodImpl(MethodImplOptions.Synchronized)]
     public Cart GetByCondition(Func<Cart?, bool> predicate)
     {
@@ -37,6 +53,12 @@ internal class DalCart : ICart
            throw new DoesNotExistedDalException("There is no cart that matches the condition");
     }
 
+    /// <summary>
+    /// get cart list filter by the predicat
+    /// </summary>
+    /// <param name="predicate"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
     [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<Cart?> GetList(Func<Cart?, bool>? predicate = null)
     {
@@ -45,6 +67,11 @@ internal class DalCart : ICart
         return CartList.Where(predicate); throw new NotImplementedException();
     }
 
+    /// <summary>
+    /// update cart in list
+    /// </summary>
+    /// <param name="cart"></param>
+    /// <exception cref="DoesNotExistedDalException"></exception>
     [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(Cart cart)
     {

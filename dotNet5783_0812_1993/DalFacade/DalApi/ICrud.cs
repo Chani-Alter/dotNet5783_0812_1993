@@ -32,6 +32,11 @@ public interface ICrud<T>where T:struct
     /// <returns></returns>
     public IEnumerable<T?> GetList(Func<T ?, bool>? predicate = null);
 
+    /// <summary>
+    /// return the specific item that match the condition
+    /// </summary>
+    /// <param name="predicate"></param>
+    /// <returns></returns>
     public T GetByCondition(Func<T ?, bool> predicate);
 
 }

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using BO;
+using System.Linq;
 using System.Windows;
 
 namespace PL.Customer;
@@ -84,9 +85,21 @@ public partial class Product : Window
     /// <param name="e"></param>
     private void addCart_Click(object sender, RoutedEventArgs e)
     {
-        bl.cart.AddProductToCart(cart!, ProductCatalog.ID, AmountCart);
-        myCatalog.Activate();
-        Close();
+        try
+        {
+            bl.Cart.AddProductToCart(cart!, ProductCatalog.ID, AmountCart);
+            myCatalog.Activate();
+            Close();
+        }
+        catch (DoesNotExistedBlException ex)
+        {
+            MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+        catch (ImpossibleActionBlException ex)
+        {
+            MessageBox.Show("The system cannot perform this operation", ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+
     }
 
     /// <summary>
@@ -134,16 +147,26 @@ public partial class Product : Window
     /// </summary>
     private void updateAmount()
     {
-        bl.cart.UpdateProductAmountInCart(cart!, ProductCatalog.ID, AmountCart);
-        myCatalog.Activate();
-        Close();
+        try
+        {
+            bl.Cart.UpdateProductAmountInCart(cart!, ProductCatalog.ID, AmountCart);
+            myCatalog.Activate();
+            Close();
+        }
+        catch (DoesNotExistedBlException ex)
+        {
+            MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+        catch (InvalidInputBlException ex)
+        {
+            MessageBox.Show("in valid input", ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+        catch (ImpossibleActionBlException ex)
+        {
+            MessageBox.Show("The system cannot perform this operation", ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
 
-    /// <summary>
-    /// close the window and return to the catalog window
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
     private void back_to_catalog_Click(object sender, RoutedEventArgs e)
     {
         myCatalog.Activate();

@@ -50,17 +50,24 @@ public partial class Catalog : Window
         changeProductList();
         this.prev_window = prev_window;
         this.user = user;
-        var temp = bl.cart.GetUserCart(user.ID);
-        Cart = (temp == null) ? new() : temp;
-}
+        try
+        {
+            var temp = bl.Cart.GetUserCart(user.ID);
+            Cart = (temp == null) ? new() : temp;
+        }
+        catch (DoesNotExistedBlException ex)
+        {
+            MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+    }
 
     #endregion
 
-        #region PRIVATE MEMBERS
+    #region PRIVATE MEMBERS
 
-        /// <summary>
-        /// instance of the bl who contains access to all the bl implementation
-        /// </summary>
+    /// <summary>
+    /// instance of the bl who contains access to all the bl implementation
+    /// </summary>
     BlApi.IBl? bl = BlApi.Factory.Get();
 
 
@@ -164,5 +171,4 @@ public partial class Catalog : Window
     }
 
     #endregion
-
 }

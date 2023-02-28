@@ -3,9 +3,12 @@ using System.Reflection;
 
 namespace BlImplementation;
 
-internal class Utils
+/// <summary>
+/// Cast object by reflection : Bonus!!!!
+/// </summary>
+static class Utils
 {
-    internal static S cast<S, T>(T t) where S : new()
+    internal static S Cast<S, T>(this T t) where S : new()
     {
         object s = new S();
         foreach (PropertyInfo prop in t?.GetType().GetProperties() ?? throw new NoBlPropertiesInObject())

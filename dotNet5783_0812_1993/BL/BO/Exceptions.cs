@@ -29,13 +29,13 @@ public class BLAlreadyExistException : Exception
 /// <summary>
 ///A class for errors thrown when an update error occurs
 /// </summary>
-
 public class UpdateErrorBlException : Exception
 {
     public UpdateErrorBlException(string? _message , Exception innerException) : base(_message, innerException)
     { }
     public override string ToString() => base.ToString() + $"fails by updating Entity";
 }
+
 /// <summary>
 /// A class for errors thrown for a invalid input
 /// </summary>

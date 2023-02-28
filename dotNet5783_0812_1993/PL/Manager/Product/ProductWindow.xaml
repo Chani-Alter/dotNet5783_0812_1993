@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         DataContext="{Binding ProductData, RelativeSource={RelativeSource Mode=Self} }" 
-        Title="ProductWindow" Height="768" Width="1366">
+        Title="ProductWindow" Height="768" Width="1366"
+        WindowStyle="ToolWindow" ResizeMode="NoResize" WindowState="Maximized">
     <Window.Resources>
         <Style x:Key="labels" TargetType="Label" >
             <Setter Property="Background" Value="#1e3d59" />

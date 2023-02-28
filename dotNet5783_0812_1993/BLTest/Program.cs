@@ -294,7 +294,7 @@ public class Program
                     Console.WriteLine("Enter product id:");
                     readString = Console.ReadLine();
                     int.TryParse(readString, out readInt);
-                    currentCart = bl.cart.AddProductToCart(currentCart, readInt,1);
+                    currentCart = bl.Cart.AddProductToCart(currentCart, readInt,1);
                     Console.WriteLine(currentCart);
                     break;
                 case CartOptions.Update:
@@ -304,11 +304,11 @@ public class Program
                     Console.WriteLine("Enter a new amount: ");
                     readString = Console.ReadLine();
                     int.TryParse(readString, out readInt1);
-                    currentCart = bl.cart.UpdateProductAmountInCart(currentCart, readInt, readInt1);
+                    currentCart = bl.Cart.UpdateProductAmountInCart(currentCart, readInt, readInt1);
                     Console.WriteLine(currentCart);
                     break;
                 case CartOptions.MakeOrder:
-                    bl.cart.MakeOrder(currentCart);
+                    bl.Cart.MakeOrder(currentCart);
                     currentCart = new Cart();
                     break;
                 default:

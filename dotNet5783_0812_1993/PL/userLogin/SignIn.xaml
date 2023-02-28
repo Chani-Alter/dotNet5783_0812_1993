@@ -6,8 +6,10 @@
         xmlns:local="clr-namespace:PL.userLogin"
         mc:Ignorable="d"
         DataContext="{Binding  RelativeSource={RelativeSource Mode=Self} }"        
-        Title="SignIn" Height="450" Width="800">
-    <Grid>
+        Title="SignIn" Height="450" Width="800"
+        WindowStyle="ToolWindow" ResizeMode="NoResize" WindowState="Maximized" >
+
+    <Grid Background="#FFF5F0E1">
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
@@ -20,14 +22,23 @@
             <ColumnDefinition></ColumnDefinition>
          </Grid.ColumnDefinitions>
         <Label  Content="customer name:"></Label>
-        <TextBox Grid.Column="1" Text="{Binding MyUser.CustomerName}"></TextBox>
+        <TextBox Name="nameTb" Grid.Column="1" Text="{Binding MyUser.CustomerName}"></TextBox>
         <Label Grid.Row="1" Content="customer Adress:"></Label>
-        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding MyUser.CustomerAdress}"></TextBox>
+        <TextBox Name="AdressTb" Grid.Row="1" Grid.Column="1" Text="{Binding MyUser.CustomerAdress}"></TextBox>
         <Label Grid.Row="2" Content="customer email:"></Label>
-        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding MyUser.CustomerEmail}"></TextBox>
+        <TextBox Name="emailTb" Grid.Row="2" Grid.Column="1" Text="{Binding MyUser.CustomerEmail}"></TextBox>
         <Label Grid.Row="3" Content="choose password:"></Label>
-        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding MyUser.Password}"></TextBox>
+        <TextBox Name="passwordTb" Grid.Row="3" Grid.Column="1" Text="{Binding MyUser.Password}"></TextBox>
 
-        <Button Grid.Row="4" Content="sign up" Click="confirm_Click"></Button>
+        <Button Grid.Row="4" Content="sign up" Click="confirm_Click" Background="#FF1E3D59">
+            <Button.IsEnabled>
+                <MultiBinding  Converter="{StaticResource convertTextBoxFullToTrue}">
+                    <Binding ElementName="passwordTb" Path="Text" />
+                    <Binding ElementName="emailTb" Path="Text" />
+                    <Binding ElementName="AdressTb" Path="Text" />
+                    <Binding ElementName="nameTb" Path="Text" />
+                </MultiBinding>
+            </Button.IsEnabled>
+        </Button>
     </Grid>
 </Window>

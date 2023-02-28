@@ -21,6 +21,7 @@
         <localy:MaxAmountToTrue x:Key="MaxAmountToTrue"/>
         <localy:MinAmountToTrue x:Key="MinAmountToTrue"/>
         <localy:textBoxFullToTrue x:Key="textBoxFullToTrue"/>
-        
+        <localy:convertTextBoxFullToTrue x:Key="convertTextBoxFullToTrue"/>
+
     </Application.Resources>
 </Application>

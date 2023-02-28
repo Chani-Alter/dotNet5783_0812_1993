@@ -35,6 +35,7 @@ internal class DalCart : ICart
     public IEnumerable<Cart?> GetList(Func<Cart?, bool>? predicate)
     {
         List<Cart?> cartList = XmlTools.LoadListFromXmlSerializer<Cart>(entityName);
+
         if (predicate == null)
             return cartList.Select(cart => cart);
         return cartList.Where(predicate);

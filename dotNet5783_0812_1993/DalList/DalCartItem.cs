@@ -11,6 +11,11 @@ namespace Dal;
 /// </summary>
 internal class DalCartItem : ICartItem
 {
+    /// <summary>
+    /// add cart item to list
+    /// </summary>
+    /// <param name="cartItem"></param>
+    /// <returns></returns>
     [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(CartItem cartItem)
     {
@@ -19,10 +24,15 @@ internal class DalCartItem : ICartItem
         return cartItem.ID;
     }
 
+    /// <summary>
+    /// delete cart item from list
+    /// </summary>
+    /// <param name="id"></param>
+    /// <exception cref="DoesNotExistedDalException"></exception>
     [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
-        var result = CartItemList.FirstOrDefault(ord => ord?.ID == id);
+        var result = CartItemList.FirstOrDefault(cart => cart?.ID == id);
 
         if (result == null)
             throw new DoesNotExistedDalException(id, "cart item", "cartitem is not exist");
@@ -30,6 +40,12 @@ internal class DalCartItem : ICartItem
         CartItemList.Remove(result);
     }
 
+    /// <summary>
+    /// get cart item that metch the condition
+    /// </summary>
+    /// <param name="predicate"></param>
+    /// <returns></returns>
+    /// <exception cref="DoesNotExistedDalException"></exception>
     [MethodImpl(MethodImplOptions.Synchronized)]
     public CartItem GetByCondition(Func<CartItem?, bool> predicate)
     {
@@ -37,6 +53,11 @@ internal class DalCartItem : ICartItem
                    throw new DoesNotExistedDalException("There is no cart item that matches the condition");
     }
 
+    /// <summary>
+    /// get list of cart items filter by condition
+    /// </summary>
+    /// <param name="predicate"></param>
+    /// <returns></returns>
     [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<CartItem?> GetList(Func<CartItem?, bool>? predicate = null)
     {
@@ -45,6 +66,11 @@ internal class DalCartItem : ICartItem
         return CartItemList.Where(predicate);
     }
 
+    /// <summary>
+    /// update cart item in list
+    /// </summary>
+    /// <param name="cartItem"></param>
+    /// <exception cref="DoesNotExistedDalException"></exception>
     [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(CartItem cartItem)
     {

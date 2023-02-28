@@ -62,7 +62,6 @@ public class NullToHidden : IValueConverter
     }
 }
 
-
 public class NullToVisible : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -140,6 +139,7 @@ public class ZeroToFalse : IValueConverter
         return value;
     }
 }
+
 public class OneToFalse : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -218,7 +218,6 @@ public class textBoxFullToTrue : IMultiValueConverter
     }
 }
 
-
 public class MaxAmountToTrue : IMultiValueConverter
 {
     public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
@@ -245,6 +244,7 @@ public class convertDateAndStatuseToVisibility : IMultiValueConverter
         throw new NotImplementedException();
     }
 }
+
 public class convertDateAndStatuseToHidden : IMultiValueConverter
 {
     public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
@@ -270,7 +270,23 @@ public class convertDateAndStatuseManagerToVisibility : IMultiValueConverter
         throw new NotImplementedException();
     }
 }
-    public class MinAmountToTrue : IValueConverter
+
+public class convertTextBoxFullToTrue : IMultiValueConverter
+{
+    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+    {
+        foreach(var item in values)
+            if (((string)item!).Length == 0) return false;
+        return true;
+    }
+
+    public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+public class MinAmountToTrue : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {

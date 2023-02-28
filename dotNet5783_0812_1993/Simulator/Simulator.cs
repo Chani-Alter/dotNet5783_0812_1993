@@ -3,13 +3,21 @@
 namespace Simulator;
 public static class Simulator
 {
-    private static IBl bl = Factory.Get();
+    #region PUBLIC MEMBERS
 
-    private static BO.Order order = new();
-    private static Thread? myThread { get; set; }
+    /// <summary>
+    /// the stop simulator event
+    /// </summary>
+    public static event EventHandler? stop;
 
-    private static bool doWork = true;
+    /// <summary>
+    /// the props change event
+    /// </summary>
+    public static event EventHandler<OrderEventArgs>? propsChanged;
 
+    /// <summary>
+    /// the event args for the propsChanged
+    /// </summary>
     public class OrderEventArgs : EventArgs
     {
         public BO.Order order;
@@ -21,10 +29,9 @@ public static class Simulator
         }
     }
 
-    public static event EventHandler? stop;
-
-    public static event EventHandler<OrderEventArgs>? propsChanged;
-
+    /// <summary>
+    ///run the simulator
+    /// </summary>
     public static void Run()
     {
         doWork = true;
@@ -32,8 +39,42 @@ public static class Simulator
         myThread.Start();
     }
 
+    /// <summary>
+    /// the stop function
+    /// </summary>
+    public static void Stop()
+    {
+        doWork = false;
+    }
 
-    private static void Simulation()
+    #endregion
+
+    #region PRIVATE MEMBERS
+
+    /// <summary>
+    /// instance of the bl who contains access to all the bl implementation
+    /// </summary>
+    static IBl? bl = Factory.Get();
+
+    /// <summary>
+    /// the order for care of
+    /// </summary>
+    static BO.Order order = new();
+
+    /// <summary>
+    /// the simulator thred
+    /// </summary>
+    static Thread? myThread { get; set; }
+
+    /// <summary>
+    /// a flag to  know if the simulator need to run
+    /// </summary>
+    static bool doWork = true;
+
+    /// <summary>
+    /// the simulator function
+    /// </summary>
+    static void Simulation()
     {
         while (doWork)
         {
@@ -49,8 +90,11 @@ public static class Simulator
                 int seconds = rnd.Next(8000, 15000);
                 order = bl.Order.GetOrderById((int)orderID);
                 propsChanged("", new OrderEventArgs(seconds, order));
-                Thread.Sleep(seconds);
-
+                while (doWork && seconds > 0)
+                {
+                    Thread.Sleep(1000);
+                    seconds -= 1000;
+                }
                 if (doWork)
                 {
                     if (order.Status == BO.OrderStatus.ConfirmedOrder)
@@ -58,12 +102,10 @@ public static class Simulator
                     else
                         bl.Order.UpdateSupplyOrderByManager(order.ID);
                 }
-            }
+           }
         }
     }
 
-    public static void Stop()
-    {
-        doWork = false;
-    }
+    #endregion
+
 }

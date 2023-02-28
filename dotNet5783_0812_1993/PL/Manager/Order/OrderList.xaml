@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:PL.Manager.Order"
         DataContext="{Binding OrdersList, RelativeSource={RelativeSource Mode=Self} }"        
         mc:Ignorable="d"
-        Title="OrderList" Height="768" Width="1366" RenderTransformOrigin="0.5,0">
+        Title="OrderList" Height="768" Width="1366" RenderTransformOrigin="0.5,0"
+        WindowStyle="ToolWindow" ResizeMode="NoResize" WindowState="Maximized">
 
     <Grid>
         <Grid.ColumnDefinitions>

@@ -5,11 +5,7 @@ static public class DataSource
 {
     #region PRIVATE MEMBERS
 
-    /// <summary>
-    /// Random field for drawing numbers in the department
-    /// </summary>
-    private static readonly Random randNum = new Random();
-
+    #region ID OF ENTITYS
     /// <summary>
     /// the starting id of the orders
     /// </summary>
@@ -25,15 +21,33 @@ static public class DataSource
     /// </summary>
     private static int orderItemId = s_startOrderItemId;
 
+    /// <summary>
+    /// the next cart item id
+    /// </summary>
     private static int cartItemId = s_startOrderItemId;
-    private static int userId = s_startOrderItemId;
-    private static int cartId = s_startOrderItemId;
 
+    /// <summary>
+    /// the next user id
+    /// </summary>
+    private static int userId = s_startOrderItemId;
+
+    /// <summary>
+    /// the next cart id
+    /// </summary>
+    private static int cartId = s_startOrderItemId;
 
     /// <summary>
     /// the next order id
     /// </summary>
     private static int orderId = s_startOrderId;
+
+    #endregion
+
+    /// <summary>
+    /// Random field for drawing numbers in the department
+    /// </summary>
+    private static readonly Random randNum = new Random();
+
 
     /// <summary>
     /// the function caled the initializations function
@@ -173,6 +187,9 @@ static public class DataSource
         }
     }
 
+    /// <summary>
+    /// user array initialization
+    /// </summary>
     static private void initUserArray()
     {
         String[] Passwordes = new string[]{
@@ -205,12 +222,18 @@ static public class DataSource
             UserList.Add(new User { ID = UserId, CustomerName = CustomerName[i % 13], CustomerEmail = CustomerEmail[i % 13], CustomerAdress = address[i % 13], Password = Passwordes[i % 13] , IsAdmin=false});
     }
 
-
+    /// <summary>
+    /// cart array initialization
+    /// </summary>
     static private void initCartArray()
     {
         for (int i = 0; i < 12; i++)
             CartList.Add(new Cart { ID = CartId,UserID=i});
     }
+
+    /// <summary>
+    /// item in cart  array initialization
+    /// </summary>
     static private void initCartItemArray()
     {
         foreach (Cart? c in CartList)
@@ -253,14 +276,12 @@ static public class DataSource
     /// </summary>
     internal static int OrderId { get => ++orderId; }
 
-
     /// <summary>
     /// the get propety of the order item id
     /// </summary>
     internal static int OrderItemId { get => ++orderItemId; }
     internal static int CartItemId { get => ++cartItemId; }
     internal static int UserId { get => ++userId; }
-
     internal static int CartId { get => ++cartId; }
 
     /// <summary>

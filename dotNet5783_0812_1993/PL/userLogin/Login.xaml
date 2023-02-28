@@ -6,8 +6,9 @@
         xmlns:local="clr-namespace:PL.userLogin"
         mc:Ignorable="d"
         DataContext="{Binding  RelativeSource={RelativeSource Mode=Self} }"        
-        Title="Login" Height="450" Width="800">
-    <Grid>
+        Title="Login" Height="450" Width="800"
+        WindowStyle="ToolWindow" ResizeMode="NoResize" WindowState="Maximized">
+    <Grid Background="#FFF5F0E1">
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
@@ -19,11 +20,18 @@
         </Grid.ColumnDefinitions>
 
         <Label  Content="customer email:"></Label>
-        <TextBox  Grid.Column="1" Text="{Binding CustomerEmail}"></TextBox>
+        <TextBox Name="emailTxt" Grid.Column="1" Text="{Binding CustomerEmail}"></TextBox>
         <Label Grid.Row="1" Content="password:"></Label>
-        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Password}"></TextBox>
-        <Button Grid.Row="2" Content="log in" Click="logIn_Click" ></Button>
-        <Button Grid.Row="2" Grid.Column="1" Content="sign up" Click="signUp_Click" ></Button>
+        <TextBox Name="passwordtxt" Grid.Row="1" Grid.Column="1" Text="{Binding Password}"></TextBox>
+        <Button Grid.Row="2" Content="log in" Click="logIn_Click" Background="#FF1E3D59" >
+            <Button.IsEnabled>
+                <MultiBinding  Converter="{StaticResource convertTextBoxFullToTrue}">
+                    <Binding ElementName="emailTxt" Path="Text" />
+                    <Binding ElementName="passwordtxt" Path="Text" />
+                </MultiBinding>
+            </Button.IsEnabled>
+        </Button>
+        <Button Grid.Row="2" Grid.Column="1" Content="sign up" Click="signUp_Click" Background="#FF1E3D59" BorderThickness="2,0,0,0" BorderBrush="{x:Null}" ></Button>
 
     </Grid>
 </Window>

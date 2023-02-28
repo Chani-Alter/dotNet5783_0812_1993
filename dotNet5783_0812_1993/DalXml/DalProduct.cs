@@ -22,13 +22,13 @@ internal class DalProduct : IProduct
     public int Add(Product product)
     {
         XElement productRoot = XmlTools.LoadListFromXmlElement(entityName);
-        List<Product?> productList = XmlTools.createList<Product>(productRoot, entityName);
+        List<Product?> productList = XmlTools.CreateList<Product>(productRoot, entityName);
 
         var result = productList.FirstOrDefault(p => p?.ID == product.ID);
         if (result != null)
             throw new DuplicateDalException(product.ID, "product", "product id already exists");
 
-        productRoot.Add(XmlTools.convertToXelement(product, entityName));
+        productRoot.Add(XmlTools.ConvertToXelement(product, entityName));
 
         XmlTools.SaveListForXmlElement(productRoot, entityName);
 
@@ -44,7 +44,7 @@ internal class DalProduct : IProduct
     public IEnumerable<Product?> GetList(Func<Product?, bool>? predicate)
     {
         XElement productRoot = XmlTools.LoadListFromXmlElement(entityName);
-        List<Product?> productList = XmlTools.createList<Product>(productRoot, entityName);
+        List<Product?> productList = XmlTools.CreateList<Product>(productRoot, entityName);
 
         if (predicate == null)
             return productList.Select(product => product);
@@ -61,7 +61,7 @@ internal class DalProduct : IProduct
     public Product GetByCondition(Func<Product?, bool> predicate)
     {
         XElement productRoot = XmlTools.LoadListFromXmlElement(entityName);
-        List<Product?> productList = XmlTools.createList<Product>(productRoot, entityName);
+        List<Product?> productList = XmlTools.CreateList<Product>(productRoot, entityName);
 
         return productList.FirstOrDefault(predicate) ??
             throw new DoesNotExistedDalException("There is no order item that matches the condition");

@@ -114,7 +114,7 @@ public static class XmlTools
     /// <param name="entity"></param>
     /// <param name="entityName"></param>
     /// <returns></returns>
-    public static XElement convertToXelement<T>(T entity ,string entityName) where T : struct
+    public static XElement ConvertToXelement<T>(T entity ,string entityName) where T : struct
     {
         XElement xmlEntity = new XElement(entityName);
         entity.GetType().GetProperties().ToList().ForEach(p => xmlEntity.Add(new XElement(p.Name.ToString(), p.GetValue(entity, null))));
@@ -129,7 +129,7 @@ public static class XmlTools
     /// <param name="entityName"></param>
     /// <returns></returns>
     /// <exception cref="XMLFileNullExeption"></exception>
-    public static List<T?> createList<T>(XElement root , string entityName) where T : struct
+    public static List<T?> CreateList<T>(XElement root , string entityName) where T : struct
     {
         IEnumerable<XElement>? rootXelement = root?.Elements(entityName) ?? throw new XMLFileNullExeption("The Xml filr is in corect");
         object entityObj = new T();
@@ -137,7 +137,7 @@ public static class XmlTools
 
         foreach (XElement xmlElement in rootXelement)
         {
-            xmlElement.Elements().ToList().ForEach(element => initializeXelement(entityObj, element , entityName));
+            xmlElement.Elements().ToList().ForEach(element => InitializeXelement(entityObj, element , entityName));
             list.Add((T)entityObj);
         }
 
@@ -150,7 +150,7 @@ public static class XmlTools
     /// <param name="entityObj"></param>
     /// <param name="xmlElement"></param>
     /// <param name="entityName"></param>
-    public static void initializeXelement(object entityObj, XElement xmlElement, string entityName)
+    public static void InitializeXelement(object entityObj, XElement xmlElement, string entityName)
     {
         PropertyInfo? property = entityObj?.GetType()?.GetProperty(xmlElement.Name.ToString());
         if (entityName == "order")
@@ -214,5 +214,4 @@ public static class XmlTools
     #endregion
 
     const string s_dir = @"..\xml\";
-
 }

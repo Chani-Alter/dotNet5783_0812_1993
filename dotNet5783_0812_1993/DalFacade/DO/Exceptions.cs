@@ -1,12 +1,9 @@
-﻿
-namespace DO;
+﻿namespace DO;
 
 /// <summary>
 ///A class for errors thrown when non-existent items are requested
 /// </summary>
-
 [Serializable]
-
 public class DoesNotExistedDalException : Exception
 {
     public int EntityId;
@@ -36,10 +33,10 @@ public class DoesNotExistedDalException : Exception
         return $"id:{EntityId} of type {EntityName} is not exist.";
     }
 }
+
 /// <summary>
 /// A class for errors thrown when items  exist in duplicates
 /// </summary>
-
 [Serializable]
 public class DuplicateDalException : Exception
 {
@@ -65,6 +62,10 @@ public class DuplicateDalException : Exception
 
     public override string ToString() => $"id:{EntityId} of type {EntityName} is already exist.";
 }
+
+/// <summary>
+/// the erors that throwen in the dal config
+/// </summary>
 [Serializable]
 public class DalConfigException : Exception
 {
@@ -72,6 +73,9 @@ public class DalConfigException : Exception
     public DalConfigException(string msg, Exception ex) : base(msg, ex) { }
 }
 
+/// <summary>
+/// error throwen by using xml files
+/// </summary>
 [Serializable]
 public class XMLFileNullExeption : Exception
 {

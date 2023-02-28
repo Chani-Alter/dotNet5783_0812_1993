@@ -20,8 +20,11 @@ sealed internal class Bl : IBl
     /// <summary>
     ///Returns the cart entity
     /// </summary>
-    public ICart cart { get; } = new Cart();
+    public ICart Cart { get; } = new Cart();
 
+    /// <summary>
+    /// Returns the user entity
+    /// </summary>
     public IUser User { get; } = new User();
 
 

@@ -42,7 +42,7 @@ public interface IOrder
     public OrderTracking TrackingOrder(int id);
 
     /// <summary>
-    /// A function Defination that updates the quantity of a product in the order
+    /// A function Defination that updates the quantity of a product in the order :Bonus!!!!!
     /// </summary>
     /// <param name="orderId"></param>
     /// <param name="productId"></param>
@@ -50,5 +50,9 @@ public interface IOrder
     /// <returns>the updated order item</returns>
     public Order UpdateAmountOfOProductInOrder(int orderId, int productId, int amount);
 
+    /// <summary>
+    /// select the oldest non completedd order
+    /// </summary>
+    /// <returns></returns>
     public int? SelectOrder();
 }

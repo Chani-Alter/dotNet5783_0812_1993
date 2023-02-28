@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Reflection;
-using System.Linq;
 
 namespace DO;
 
@@ -10,7 +9,7 @@ namespace DO;
 static class Tools
 {
     /// <summary>
-    ///A function that prints the field values of an entity
+    ///A function that prints the field values of an entity : Bonus!!!!!
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="t"></param>
@@ -44,9 +43,7 @@ static class Tools
     public static void ToStringPropertyToIEnumerable(IEnumerable collection, string st)
     {
         foreach (var item in collection)
-        {
-
-            st += item;
+        {            st += item;
         }
     }
 }

@@ -86,7 +86,6 @@ internal class Product : IProduct
         {
             throw new DoesNotExistedBlException("product file doesnt exsit", ex);
         }
-
     }
 
     [MethodImpl(MethodImplOptions.Synchronized)]
@@ -116,7 +115,6 @@ internal class Product : IProduct
         {
             throw new DoesNotExistedBlException("product dosent exsit", ex);
         }
-
     }
 
     [MethodImpl(MethodImplOptions.Synchronized)]
@@ -177,8 +175,6 @@ internal class Product : IProduct
         {
             DO.Product product = dal.Product.GetByCondition(prod => prod?.ID == id);
             return castProduct<ProductItem, DO.Product>(product);
-
-
         }
         catch (DO.DoesNotExistedDalException ex)
         {
@@ -188,11 +184,13 @@ internal class Product : IProduct
         {
             throw new DoesNotExistedBlException("product dosent exsit", ex);
         }
-
-
     }
 
     [MethodImpl(MethodImplOptions.Synchronized)]
+    /// <summary>
+    /// return the most popular product from each category
+    /// </summary>
+    /// <returns></returns>
     public IEnumerable<ProductItem?> GetPopularProductListForCustomer()
     {
         IEnumerable<DO.Product?> products = dal.Product.GetList();
@@ -222,6 +220,10 @@ internal class Product : IProduct
     }
 
     [MethodImpl(MethodImplOptions.Synchronized)]
+    /// <summary>
+    /// return the cheapest product from each category
+    /// </summary>
+    /// <returns></returns>
     public IEnumerable<ProductItem?> GetcheapestProductListForCustomer()
     {
         IEnumerable<DO.Product?> products = dal.Product.GetList();
@@ -250,20 +252,19 @@ internal class Product : IProduct
     DalApi.IDal? dal = DalApi.Factory.Get();
 
     /// <summary>
-    /// cast from BO prodact to a DO product
+    /// Cast from BO prodact to a DO product
     /// </summary>
     /// <param name="pBO"></param>
     /// <returns></returns>
     private DO.Product castBOToDO(BO.Product pBO)
     {
-
-        DO.Product pDO = Utils.cast<DO.Product, BO.Product>(pBO);
+        DO.Product pDO = pBO.Cast<DO.Product, BO.Product>();
         pDO.Category =(DO.Category) pBO.Category;
         return pDO;
     }
 
     /// <summary>
-    /// cast from DO prodact to all kinds af bo products
+    /// Cast from DO prodact to all kinds af bo products
     /// </summary>
     /// <typeparam name="S"></typeparam>
     /// <typeparam name="T"></typeparam>
@@ -272,7 +273,7 @@ internal class Product : IProduct
     /// <exception cref="BlNullValueException"></exception>
     private S castProduct<S, T>(T t) where S : new()
     {
-        S s = Utils.cast<S, T>(t);
+        S s = t.Cast<S, T>();
         var value = t?.GetType().GetProperty("Category")?.GetValue(t, null) ?? throw new BlNullValueException();
         s?.GetType().GetProperty("Category")?.SetValue(s, (Category?)(int)value);
         if(s?.GetType().Name == "Product")

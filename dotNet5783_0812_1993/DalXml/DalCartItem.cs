@@ -65,7 +65,7 @@ internal class DalCartItem : ICartItem
     /// <exception cref="Exception">if the CartItem didoes notdnt exist</exception>
     public void Delete(int id)
     {
-        List<Cart?> cartItemList = XmlTools.LoadListFromXmlSerializer<Cart>(entityName);
+        List<CartItem?> cartItemList = XmlTools.LoadListFromXmlSerializer<CartItem>(entityName);
 
         var result = cartItemList.FirstOrDefault(ord => ord?.ID == id);
 

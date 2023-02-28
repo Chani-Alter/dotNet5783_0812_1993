@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="MainWindow" Height="768" Width="1366"
-        >
+        WindowStyle="ToolWindow" ResizeMode="NoResize" WindowState="Maximized" >
     <Window.Resources>
         <Style x:Key="goldButtons" TargetType="Button" >
             <Setter Property="Background" Value="#ffc13b" />

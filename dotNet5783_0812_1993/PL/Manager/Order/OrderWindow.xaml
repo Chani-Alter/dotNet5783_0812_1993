@@ -6,7 +6,8 @@
         mc:Ignorable="d"
         xmlns:local="clr-namespace:PL"
         DataContext="{Binding  RelativeSource={RelativeSource Mode=Self} }" 
-        Title="OrderWindow" Height="450" Width="800">
+        Title="OrderWindow" Height="450" Width="800"
+        WindowStyle="ToolWindow" ResizeMode="NoResize" WindowState="Maximized">
     <Window.Resources>
         <local:NullToStringShiping x:Key="NullToStringShiping"/>
         <local:NullToStringDelivery x:Key="NullToStringDelivery"/>
@@ -126,7 +127,7 @@
                     </MultiBinding>
                 </Button.Visibility>
             </Button>
-            <Button Content="update order" Click="update_Status_Click" >
+            <Button Grid.Row="10" Content="update order" Click="update_Status_Click" >
                 <Button.Visibility>
                     <MultiBinding  Converter="{StaticResource convertDateAndStatuseManagerToVisibility}">
                         <Binding Path="OrderData.DeliveryDate" />
@@ -135,7 +136,7 @@
                 </Button.Visibility>
             </Button>
 
-            <Button  Grid.Row="10" Name="back_to_parent" Content=" ➜ " Click="back_to_parent_Click" Background="#FFFF6E30" BorderBrush="{x:Null}" Grid.ColumnSpan="2" FontSize="18" FontWeight="Bold" />
+            <Button Grid.Column="1"  Grid.Row="10" Name="back_to_parent" Content=" ➜ " Click="back_to_parent_Click" Background="#FFFF6E30" BorderBrush="{x:Null}"  FontSize="18" FontWeight="Bold" />
 
         </Grid>
     </ScrollViewer>

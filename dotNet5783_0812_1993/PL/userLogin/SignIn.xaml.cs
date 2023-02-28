@@ -1,57 +1,75 @@
-﻿using PL.Customer;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BO;
+using PL.Customer;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
-namespace PL.userLogin
+namespace PL.userLogin;
+
+/// <summary>
+/// Interaction logic for SignIn.xaml
+/// </summary>
+public partial class SignIn : Window
 {
+    #region PUBLIC MEMBERS
+
     /// <summary>
-    /// Interaction logic for SignIn.xaml
+    /// a dependency property for the user
     /// </summary>
-    public partial class SignIn : Window
+    public BO.User MyUser
     {
-        public Window prev_window;
+        get { return (BO.User)GetValue(MyUserProperty); }
+        set { SetValue(MyUserProperty, value); }
+    }
 
-        /// <summary>
-        /// instance of the bl who contains access to all the bl implementation
-        /// </summary>
-        BlApi.IBl? bl = BlApi.Factory.Get();
+    // Using a DependencyProperty as the backing store for MyUser.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty MyUserProperty =
+        DependencyProperty.Register("MyUser", typeof(BO.User), typeof(Window), new PropertyMetadata(null));
 
+    /// <summary>
+    /// the window ctor
+    /// </summary>
+    /// <param name="prev_window"></param>
+    public SignIn(Window prev_window)
+    {
+        InitializeComponent();
+        this.prev_window = prev_window;
+    }
 
+    /// <summary>
+    /// the prev window
+    /// </summary>
+    public Window prev_window;
 
-        public BO.User MyUser
-        {
-            get { return (BO.User)GetValue(MyUserProperty); }
-            set { SetValue(MyUserProperty, value); }
-        }
+    #endregion
 
-        // Using a DependencyProperty as the backing store for MyUser.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty MyUserProperty =
-            DependencyProperty.Register("MyUser", typeof(BO.User), typeof(Window), new PropertyMetadata(null));
+    #region PRIVATE MEMBERS
 
+    /// <summary>
+    /// instance of the bl who contains access to all the bl implementation
+    /// </summary>
+    BlApi.IBl? bl = BlApi.Factory.Get();
 
-        public SignIn(Window prev_window)
-        {
-            InitializeComponent();
-            this.prev_window = prev_window;
-        }
-
-        private void confirm_Click(object sender, RoutedEventArgs e)
-        {
-            BO.User user = MyUser;        
+    /// <summary>
+    /// THE FUNCTION FOR CONFIRM THE SIGN IN
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void confirm_Click(object sender, RoutedEventArgs e)
+    {
+        try {
+            BO.User user = MyUser;
             int id = bl.User.AddUser(user);
             user.ID = id;
             new Catalog(this, user).Show();
+        }catch(DoesNotExistedBlException ex)
+        {
+            MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+        catch (BLAlreadyExistException ex) 
+        {
+            MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
+
+    #endregion
 }
+

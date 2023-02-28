@@ -7,7 +7,8 @@
         xmlns:local="clr-namespace:PL.Customer"
         mc:Ignorable="d"
         DataContext="{Binding  RelativeSource={RelativeSource Mode=Self} }"        
-    Title="Cart" Height="768" Width="1366">
+    Title="Cart" Height="768" Width="1366"
+        WindowStyle="ToolWindow" ResizeMode="NoResize" WindowState="Maximized">
 
     <ScrollViewer>
         <Grid Background="#FFF5F0E1">

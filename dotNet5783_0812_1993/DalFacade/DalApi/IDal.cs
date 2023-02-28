@@ -1,5 +1,4 @@
-﻿
-namespace DalApi;
+﻿namespace DalApi;
 
 /// <summary>
 /// A main interface that centers all the interfaces of the data layer
@@ -21,9 +20,18 @@ public interface IDal
     /// </summary>
     public IProduct Product { get; }
 
-    public IUser User { get; } 
-    
+    /// <summary>
+    /// A property that returns the IUser entity
+    /// </summary>
+    public IUser User { get; }
+
+    /// <summary>
+    /// A property that returns the Icart entity
+    /// </summary>
     public ICart Cart { get; }
 
+    /// <summary>
+    /// A property that returns the ICartItem entity
+    /// </summary>
     public ICartItem CartItem { get; }
 }

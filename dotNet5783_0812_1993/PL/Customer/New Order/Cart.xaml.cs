@@ -72,7 +72,7 @@ public partial class Cart : Window
             MyCart.CustomerName = name;
             MyCart.CustomerAdress = adress;
             MyCart.CustomerEmail = email;
-            bl.cart.MakeOrder(MyCart);
+            bl.Cart.MakeOrder(MyCart);
             myCatalog.Close();
             Close();
         }
@@ -127,7 +127,7 @@ public partial class Cart : Window
             OrderItem item = (OrderItem)((Button)sender).DataContext;
             int amount = item.Amount;
             amount += 1;
-            bl.cart.UpdateProductAmountInCart(MyCart!, item.ProductID, amount);
+            bl.Cart.UpdateProductAmountInCart(MyCart!, item.ProductID, amount);
             CartItems = (MyCart.Items == null) ? new() : new(MyCart.Items!);
             MyTotalPrice = MyCart.TotalPrice;
         }
@@ -157,7 +157,7 @@ public partial class Cart : Window
             OrderItem item = (OrderItem)((Button)sender).DataContext;
             int amount = item.Amount;
             amount -= 1;
-            bl.cart.UpdateProductAmountInCart(MyCart!, item.ProductID, amount);
+            bl.Cart.UpdateProductAmountInCart(MyCart!, item.ProductID, amount);
             CartItems = (MyCart.Items == null) ? new() : new(MyCart.Items!);
             MyTotalPrice = MyCart.TotalPrice;
         }
@@ -186,7 +186,7 @@ public partial class Cart : Window
         try
         {
             int id = ((OrderItem)((Button)sender).DataContext).ProductID;
-            bl.cart.UpdateProductAmountInCart(MyCart!, id, 0);
+            bl.Cart.UpdateProductAmountInCart(MyCart!, id, 0);
             CartItems = (MyCart.Items == null) ? new() : new(MyCart.Items!);
         }
         catch (ImpossibleActionBlException ex)
@@ -215,7 +215,7 @@ public partial class Cart : Window
         else
             try
             {
-                bl.cart.MakeOrder(MyCart!);
+                bl.Cart.MakeOrder(MyCart!);
                 if(myCatalog.prev_window is SignIn)
                     ((SignIn)myCatalog.prev_window).prev_window.Activate();
                 else

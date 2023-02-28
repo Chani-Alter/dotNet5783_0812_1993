@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:PL.Manager"
         mc:Ignorable="d"
         DataContext="{Binding  RelativeSource={RelativeSource Mode=Self} }"        
-        Title="SimulatorWindow" Height="450" Width="800">
+        Title="SimulatorWindow" Height="450" Width="800"
+        WindowStyle="ToolWindow" ResizeMode="NoResize" WindowState="Maximized">
     <Grid Background="#FFF5F0E1">
         <TextBox x:Name="tbTime" Text="{Binding tbTime}" FontSize="20" Margin="684,320,24,107" />
         <Button Content="Stop Simulation" Name="stopSimulatorBtn" HorizontalAlignment="Left" Height="64" Margin="641,15,0,0" VerticalAlignment="Top" Width="135" Click="stopSimulatorBtn_Click" Background="#FF1E3D59" FontSize="16" FontWeight="Bold"/>
@@ -17,7 +18,6 @@
             </StatusBarItem>
         </StatusBar>
         <TextBox Name="orderIDTxt" Text="{Binding OrderIDTxt}" HorizontalAlignment="Left" Height="36" Margin="320,147,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="123"/>
-        <TextBlock Name="timeTxt" Text="{Binding timeTxt}" HorizontalAlignment="Left" Height="36" Margin="137,147,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="146"/>
         <TextBox Name="statusTxt" Text="{Binding StatusTxt}" HorizontalAlignment="Left" Height="45" Margin="320,217,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="123"/>
     </Grid>
 </Window>

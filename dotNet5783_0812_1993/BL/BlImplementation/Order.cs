@@ -57,7 +57,6 @@ internal class Order : BlApi.IOrder
     /// <exception cref="BO.DoesNotExistedBlException"></exception>
     public BO.Order GetOrderById(int id)
     {
-
         try
         {
             DO.Order orderDal = dal.Order.GetByCondition(ord => ord?.ID == id);
@@ -71,7 +70,6 @@ internal class Order : BlApi.IOrder
         {
             throw new DoesNotExistedBlException("order dosent exsit", ex);
         }
-
     }
 
     [MethodImpl(MethodImplOptions.Synchronized)]
@@ -109,7 +107,6 @@ internal class Order : BlApi.IOrder
         {
             throw new DoesNotExistedBlException("order dosent exsit", ex);
         }
-
     }
 
     [MethodImpl(MethodImplOptions.Synchronized)]
@@ -193,7 +190,6 @@ internal class Order : BlApi.IOrder
         {
             throw new DoesNotExistedBlException("order dosent exsit", ex);
         }
-
     }
 
     [MethodImpl(MethodImplOptions.Synchronized)]
@@ -261,13 +257,17 @@ internal class Order : BlApi.IOrder
         {
             throw new DoesNotExistedBlException("order dosent exsit", ex);
         }
-
     }
 
+    /// <summary>
+    /// select the oldest order that didnt complete yet
+    /// </summary>
+    /// <returns></returns>
     public int? SelectOrder()
     {
         DateTime? minDate = DateTime.MaxValue;
         int minOrderId = 1000;
+
         List<DO.Order?>? orderList = dal.Order.GetList(o => o?.ShippingDate == null || o?.DeliveryDate == null)?.ToList();
         foreach (var order in orderList)
         {
@@ -288,6 +288,7 @@ internal class Order : BlApi.IOrder
                 }
             }
         }
+
         return minDate == DateTime.MaxValue ? null : minOrderId;
     }
 

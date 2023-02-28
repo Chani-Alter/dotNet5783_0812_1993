@@ -6,13 +6,14 @@
         xmlns:local="clr-namespace:PL.Customer"
         DataContext="{Binding  RelativeSource={RelativeSource Mode=Self} }"        
         mc:Ignorable="d"
-        Title="OrderTrackingWindow" Height="768" Width="1366">
+        Title="OrderTrackingWindow" Height="768" Width="1366"
+        WindowStyle="ToolWindow" ResizeMode="NoResize" WindowState="Maximized">
     <Grid>
         <Grid.RowDefinitions>
-            <!--<RowDefinition Height="auto"/>-->
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <Button  Name="back_to_menu" Content=" ➜ " Click="back_to_menu_Click" Margin="943,0,0,50" Background="#FFFF6E40" BorderBrush="{x:Null}" FontSize="22" HorizontalAlignment="Left" Width="138" />
+        <Button  Name="back_to_menu" Content=" ➜ " Click="back_to_menu_Click" Grid.Row="0" Margin="943,0,0,50" Background="#FFFF6E40" BorderBrush="{x:Null}" FontSize="22" HorizontalAlignment="Left" Width="138" />
         <Grid Grid.Row="1" Visibility="{Binding OrderTrackingData.Tuples, Converter={StaticResource NullToVisible}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -23,7 +24,7 @@
             <TextBox Grid.Row="1" Text="{Binding IdTextBox, Converter={StaticResource ZeroIntToEmptyString}}" PreviewKeyDown="IdTextBox_PreviewKeyDown"/>
             <Button Grid.Row="2" Content="confirm" Name="confirmBtn" Click="confirmBtn_Click"/>
         </Grid>
-        <Grid Grid.Row="1" Visibility="{Binding OrderTrackingData.Tuples, Converter={StaticResource NullToHidden}}">
+        <Grid  Grid.Row="1" Visibility="{Binding OrderTrackingData.Tuples, Converter={StaticResource NullToHidden}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="100"/>
                 <RowDefinition Height="100"/>
